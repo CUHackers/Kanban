@@ -4,9 +4,17 @@
   "description": "check in system v2",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "angular-route": "^1.8.0",
+    "aws-sdk": "^2.699.0",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "dynamoose": "^2.2.1",
+    "express": "^4.17.1",
+    "validator": "^13.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "angular": "^1.8.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

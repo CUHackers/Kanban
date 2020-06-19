@@ -1,0 +1,76 @@
+* { box-sizing: border-box }
+
+body{
+    background-color: #fff; 
+    padding-top: 5%;
+}
+
+.outline{
+    width: 300px;
+    margin: 0 auto;
+    padding: 1em 1em;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #696969;
+    text-align: center;
+}
+
+.logo{
+    margin-top: 1em;
+}
+
+.login input[type = "email"], .login input[type = "password"] {
+    width: 240px;
+    margin: 2em auto;
+    padding: 1em;
+    display: block;
+    border: 1px solid #696969;
+    outline: none;
+    transition: .25s;
+}
+
+.login input[type = "email"]:focus , .login input[type = "password"]:focus {
+    width: 270px;
+    border-radius: 10px;
+    border-color: #1e90ff;
+}
+
+.login button[type = "login"] {
+    width: 240px;
+    margin: 2em auto;
+    padding: .7em;
+    display: block;
+    border: 1px solid #1e90ff;
+    background-color: #1e90ff;
+    color: #fff;
+    font-weight: 700;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.links a{
+    display: inline;
+    color: #217ed9;
+    text-decoration: none;
+}
+
+.links a:hover{
+    text-decoration: underline;
+}
+
+.reg{
+    margin-right: 3em;
+}
+
+.pas{
+    margin-left: 3em;
+}
+
+.divider{
+    border-bottom: 1px solid #696969;
+    opacity: 50%;
+    margin: 2em 0;
+    height: 0;
+}
