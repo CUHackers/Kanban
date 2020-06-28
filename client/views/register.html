@@ -1,36 +1,36 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="../stylesheets/login.css" rel="stylesheet" type="text/css">
-		<link href="../assets/logo.png" rel="icon" type="image/png" />
-		
-		<title>CUhackit -- Register</title>
-	</head>
-	<body>
-		<img src="../assets/logo.png">
-		<h1>Register</h1>
-		<div class="divider"></div>
+<!-- Register Page -->
+<img src="../assets/logo.png" alt="CUhackit Logo">
+<h1>Register</h1>
+<div class="divider"></div>
+<div>
+	<!-- just copied the action and method from login.html - not sure what to put -->
+	<form class="user-info" action="register" method="POST">
+		<h2>Basic Information</h2>
 		<div>
-			<!-- just copied the action and method from login.html - not sure what to put -->
-			<form class="user-info" action="register" method="POST">
-				<h2>Basic Information</h2>
-				<input type = "first-name" id="first-name" placeholder="First Name">
-				<input type = "last-name" id ="last-name" placeholder= "Last Name">
-				<input type = "gender" id="gender" placeholder = "Gender">
-				<br><br>
-				<h2>Contact Information</h2>
-				<input type = "email" id = "email" placeholder = "email">
-				<input type = "phone" id = "phone" placeholder = "phone #">
-				<br><br>
-				<h2>School Information</h2>
-				<input type = "school" id = "school" placeholder = "School">
-				<input type = "gradyr" id = "gradyr" placeholder = "Graduation Year">
-				
-			</form>
+		<input type = "first-name" id="first-name" placeholder="First Name">
+		<input type = "last-name" id ="last-name" placeholder= "Last Name">
+		<input type = "gender" id="gender" placeholder = "Gender">
 		</div>
-	</body>
-</html>
+		<br>
+		<h2>Contact Information</h2>
+		<div>
+		<input type = "email" id = "email" placeholder = "email">
+		<input type = "phone" id = "phone" placeholder = "phone #">
+		</div>
+		<br>
+		<h2>School Information</h2>
+		<div>
+		<input type = "school" id = "school" placeholder = "School">
+		<input type = "gradyr" id = "gradyr" placeholder = "Graduation Year">
+		</div>
+		<br>
+		<button type="submit">Submit</button>
+	</form>
+</div>
+	<br>
+	<div class = "links">
+		<a class = "login" href="login.html">Already registered? Log in here</a>
+	</div>
+
+
 
