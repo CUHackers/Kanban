@@ -1,25 +1,21 @@
 var app = angular.module('app', ['ngRoute', 'angularCSS']);
 
+var AuthService = require('./services/AuthService.js');
+var AuthInterceptor = require('./services/AuthInterceptor.js');
+var UserService = require('./services/UserService.js')
+var Session = require('./services/Session.js')
+var Routes = require('./route.js')
 
-// routes
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
-    
-    $routeProvider
-    .when('/login', {
-        templateUrl: 'views/login.html',
-        css: 'stylesheets/login.css'
-    })
+app.config(['$httpProvider', function($httpProvider){
 
-    .when('/register', {
-        templateUrl: 'views/register.html',
-    })
-    
-    .otherwise({
-        redirectTo : '/'
-    });
+    $httpProvider.interceptors.push('AuthInterceptor');
 
-    $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-    });
 }])
+.run(['AuthService', 'Session',function(AuthService, Session){
+
+    var token = Session.getToken();
+    if (token){
+        AuthService.tokenLogin(token);
+    }
+    
+}]);

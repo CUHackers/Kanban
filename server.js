@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var dynamoose = require("dynamoose");
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 
 // database
@@ -17,7 +18,8 @@ dynamoose.aws.sdk.config.update({
 var port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(methodOverride());
 
 app.use(express.static('client'));
 
@@ -28,6 +30,9 @@ app.route('/*').get(function(req, res) {
 
 api = require('./server/routes/api');
 app.use('/api', api)
+
+auth = require('./server/routes/auth');
+app.use('/auth', auth)
 
 app.listen(port, function() {
     console.log('app running');
