@@ -5,6 +5,7 @@ var UserController = {};
 
 // REGISTERATION METHODS 
 UserController.createUser = async function(email, password, callback) {
+    email = email.toLowerCase();
 
     if (typeof email !== "string"){
         return callback({
@@ -25,7 +26,6 @@ UserController.createUser = async function(email, password, callback) {
     }
 
     // creating the user and adding it to the database 
-    email = email.toLowerCase();
     var u = new User();
     u.email = email
     u.password = await User.hashPassword(password);
@@ -81,7 +81,7 @@ UserController.loginWithPassword = function(email, password, callback){
         }
         if (!user) {
             return callback({
-                message: "The email or password is incorrect"
+                message: "The email or password is incorrect!"
             });
         }
         // check for password 

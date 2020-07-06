@@ -15,13 +15,12 @@ var schema = new dynamoose.Schema({
 
     password: {
         type: String,
-        required: true,
+        required: true
     },
 
     id: {
         type: String,
-        require: true,
-        rangeKey: true
+        require: true
     },
 
     // basic user info from registration 
@@ -59,6 +58,18 @@ var schema = new dynamoose.Schema({
             },
         }
 
+    },
+
+    status: {
+        type: Object,
+        schema: {
+            verify: {
+                type: Boolean,
+                required: true,
+                default: false
+            }
+        
+        }
 
     }
     
@@ -88,7 +99,7 @@ User.methods.set("verifyToken", function (token, callback) {
         if (err) {
             return callback(err);
         }
-        this.get(id, callback);
+        this.scan('id').eq(id).exec(callback);
     }.bind(this));
 });
 

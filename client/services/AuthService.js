@@ -44,6 +44,11 @@ angular.module('app')
                 cb(response.data);
             });
         }
+
+        authService.logout = function() {
+            Session.end();
+            $location.path("/login");
+        }
     
         return authService;
     }])

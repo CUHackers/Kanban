@@ -1,0 +1,43 @@
+#sidebar{
+    width: 300px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #5A6ADA;
+    position: fixed;
+}
+
+#sidebar .logo img{
+    display: block;
+    margin: 2em auto;
+    
+}
+
+#sidebar .option{
+    color: #fff;
+    font-size: large;
+    background: #5A6ADA;
+    padding: 1em;
+}
+
+#sidebar .option .link{
+    color: #fff;
+    font-size: large;
+    text-decoration: none;
+}
+
+#sidebar .option:hover{
+    cursor: pointer;
+    background: #6576f3;
+}
+
+#sidebar .active{
+    background: #4a56b3;
+}
+
+#sidebar .divider{
+    border-bottom: 3px solid #fff;
+    opacity: 75%;
+    margin: 2em .5em;
+    height: 0;
+}

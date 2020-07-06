@@ -1,5 +1,6 @@
 var LoginCtrl = require('./controllers/loginController.js');
 var RegisterCtrl = require('./controllers/registerController.js');
+var sidebarCtrl = require('./controllers/sidebarController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -23,6 +24,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
 
     .when('/', {
         templateUrl: 'views/dashboard.html',
+        css: 'stylesheets/dashboard.css',
         data: {
             Login: true
          }

@@ -1,0 +1,17 @@
+<div id="sidebar" ng-controller="sidebarController">
+    <div class="logo">
+        <img src="/assets/logo.png">
+    </div>
+
+    <div class="divider"></div>
+    <div class="option" ng-class="{active : isRouteActive('/')}">
+        <a class="link" href="/">Home</a>
+    </div>
+
+    <div class="option" ng-click="logout()"> 
+        Logout
+    </div>
+
+    <div class="divider"></div>
+
+</div>

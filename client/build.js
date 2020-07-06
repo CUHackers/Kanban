@@ -21,7 +21,7 @@ app.config(['$httpProvider', function($httpProvider){
     
 }]);
 
-},{"./route.js":4,"./services/AuthInterceptor.js":5,"./services/AuthService.js":6,"./services/Session.js":7,"./services/UserService.js":8}],2:[function(require,module,exports){
+},{"./route.js":5,"./services/AuthInterceptor.js":6,"./services/AuthService.js":7,"./services/Session.js":8,"./services/UserService.js":9}],2:[function(require,module,exports){
 angular.module('app')
     .controller('loginController', ['$scope', 'AuthService', function($scope, AuthService){
 
@@ -68,8 +68,23 @@ angular.module('app')
 
     }])
 },{}],4:[function(require,module,exports){
+angular.module('app')
+    .controller('sidebarController', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
+
+        $scope.isRouteActive = function(route) { 
+            console.log(route === $location.path());
+            return route === $location.path();
+        }
+
+        $scope.logout = function(){
+            AuthService.logout();
+        };
+
+    }])
+},{}],5:[function(require,module,exports){
 var LoginCtrl = require('./controllers/loginController.js');
 var RegisterCtrl = require('./controllers/registerController.js');
+var sidebarCtrl = require('./controllers/sidebarController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -93,6 +108,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
 
     .when('/', {
         templateUrl: 'views/dashboard.html',
+        css: 'stylesheets/dashboard.css',
         data: {
             Login: true
          }
@@ -134,7 +150,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
 
     });
 }])
-},{"./controllers/loginController.js":2,"./controllers/registerController.js":3}],5:[function(require,module,exports){
+},{"./controllers/loginController.js":2,"./controllers/registerController.js":3,"./controllers/sidebarController":4}],6:[function(require,module,exports){
 angular.module('app').
     factory('AuthInterceptor', ['Session', function (Session) {
         return {
@@ -147,7 +163,7 @@ angular.module('app').
             }
         };
     }]);
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 angular.module('app')
     .factory('AuthService', ['$http', '$location', 'Session', function ($http, $location, Session) {
         var authService = {};
@@ -194,10 +210,15 @@ angular.module('app')
                 cb(response.data);
             });
         }
+
+        authService.logout = function() {
+            Session.end();
+            $location.path("/login");
+        }
     
         return authService;
     }])
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 angular.module('app').
     factory('Session', ['$window', function ($window){ 
         var session = {};
@@ -230,7 +251,7 @@ angular.module('app').
 
 
     }])
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 angular.module('app').
     factory('UserService', ['$http', function ($http){ 
         var userService = {};
