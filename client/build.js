@@ -72,7 +72,6 @@ angular.module('app')
     .controller('sidebarController', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
 
         $scope.isRouteActive = function(route) { 
-            console.log(route === $location.path());
             return route === $location.path();
         }
 
@@ -226,7 +225,7 @@ angular.module('app').
         session.create = function(token, user){
             $window.localStorage.token = token;
             $window.localStorage.id = user.id;
-            $window.localStorage.user = user;
+            $window.localStorage.user = JSON.stringify(user);
         };
 
         session.end = function() {

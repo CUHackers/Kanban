@@ -5,7 +5,7 @@ angular.module('app').
         session.create = function(token, user){
             $window.localStorage.token = token;
             $window.localStorage.id = user.id;
-            $window.localStorage.user = user;
+            $window.localStorage.user = JSON.stringify(user);
         };
 
         session.end = function() {

@@ -53,9 +53,10 @@ UserController.createUser = async function(email, password, callback) {
 UserController.loginWithToken = function(token, callback){
     User.verifyToken(token, function(err, user){
         if (user) {
-            delete user.password;
+            var u = user[0]
+            delete u.password;
         }
-        return callback(err, token, user);
+        return callback(err, token, u);
     });
 };
 
