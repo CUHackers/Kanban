@@ -21,18 +21,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-app.use(express.static('client'));
+app.use(express.static(__dirname +'/client'));
 
 //route
-app.route('/*').get(function(req, res) {
-    res.sendFile(__dirname + '/client/index.html');
-});
-
 api = require('./server/routes/api');
 app.use('/api', api)
 
 auth = require('./server/routes/auth');
 app.use('/auth', auth)
+
+app.get('/*', function(req, res) {
+    res.sendFile(__dirname + '/client/index.html');
+});
+
 
 app.listen(port, function() {
     console.log('app running');

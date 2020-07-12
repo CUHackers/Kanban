@@ -14,6 +14,7 @@ angular.module('app').
             delete $window.localStorage.user;
         };
 
+        // getters
         session.getToken = function() {
             return $window.localStorage.token;
         };

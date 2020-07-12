@@ -1,4 +1,17 @@
 <div ng-include="'views/sidebar.html'"></div>
 <div class="container">
-    <h1>Dashboard</h1>
+    <div class="title">
+        <h1>Dashboard</h1>
+    </div>
+
+    <div class="status-container">
+        <div>Status:</div>
+
+        <div class="status" ng-if="!user.status.verify">
+            <div> Your email not verified</div>
+            <div class="divider"></div>
+            <div class="button" ng-click="sendEmail()">Send Verification Email</div>
+        </div>
+
+    </div>
 </div>

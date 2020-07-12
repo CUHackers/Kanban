@@ -41,3 +41,9 @@
     margin: 2em .5em;
     height: 0;
 }
+
+@media screen and (max-width: 768px) {
+    #sidebar{
+        display:none;
+    }
+}

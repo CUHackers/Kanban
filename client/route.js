@@ -1,6 +1,8 @@
-var LoginCtrl = require('./controllers/loginController.js');
-var RegisterCtrl = require('./controllers/registerController.js');
+var LoginCtrl = require('./controllers/loginController');
+var RegisterCtrl = require('./controllers/registerController');
 var sidebarCtrl = require('./controllers/sidebarController')
+var dashboardCtrl = require('./controllers/dashboardController')
+var verifyCtrl = require('./controllers/verifyController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -24,9 +26,23 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
 
     .when('/', {
         templateUrl: 'views/dashboard.html',
+        controller: 'dashboardController',
         css: 'stylesheets/dashboard.css',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+              },
+        },
         data: {
             Login: true
+         }
+    })
+
+    .when('/verify/:token', {
+        templateUrl: 'views/verify.html',
+        controller: 'verifyController',
+        data: {
+            Login: false
          }
     })
 

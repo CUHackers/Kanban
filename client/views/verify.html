@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="title">
+      EMAIL VERIFICATION
+    </div>
+
+    <div class="verify-status">
+        <div ng-show="verify && !loading">
+            <h1>Your email is verified</h1>
+            <div class="home" >
+                <a class="link" href="/">Return to Home</a>
+            </div>
+        </div>
+
+        <div ng-show="!verify && !loading">
+            <h1>Invalid Token</h1>
+        </div>
+    </div>
+  </div>

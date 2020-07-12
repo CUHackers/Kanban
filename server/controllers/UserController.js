@@ -1,9 +1,17 @@
 var validator = require('validator');
 var User = require('../models/User');
+var Mailer = require('../services/email');
 
 var UserController = {};
 
 // REGISTERATION METHODS 
+
+/**
+ * register user in the database
+ * @param {String} email user email
+ * @param {String} password user password
+ * @param {Function} callback callback function  
+ */
 UserController.createUser = async function(email, password, callback) {
     email = email.toLowerCase();
 
@@ -50,6 +58,12 @@ UserController.createUser = async function(email, password, callback) {
 }
 
 // LOGIN METHODS 
+
+/**
+ * log in user with auth token 
+ * @param {String} token auth token  
+ * @param {Function} callback callback function  
+ */
 UserController.loginWithToken = function(token, callback){
     User.verifyToken(token, function(err, user){
         if (user) {
@@ -60,6 +74,12 @@ UserController.loginWithToken = function(token, callback){
     });
 };
 
+ /**
+  * log in user using email and password
+  * @param {String} email user email 
+  * @param {String} password user password
+  * @param {Function} callback callback function  
+  */
 UserController.loginWithPassword = function(email, password, callback){
     // check for empty password
     if (!password || password.length === 0){
@@ -98,7 +118,80 @@ UserController.loginWithPassword = function(email, password, callback){
     });
 }
 
-// UPDATE METHODS 
+// VERIFICATION METHODS
+
+/**
+ * sends email verification
+ * @param {String} email user email
+ * @param {Function} callback callback function
+ */
+UserController.sendVerificationEmail = function(id, callback) {
+    User.scan('id').eq(id).exec(async function(err, result) {
+        if (err || !result) {
+            return callback(err);
+        }
+        var user = result[0];
+        var token = await user.generateEmailVerificationToken();
+        Mailer.sendVerificationEmail(user.email, token);
+        return callback(null, user);
+    })
+}
+
+/**
+ * verify email auth token and updates user status(verify)
+ * @param {String} token email auth token 
+ * @param {Function} callback callback function 
+ */
+UserController.verifyEmail = function(token, callback) {
+    User.verifyEmailToken(token, function(err, email) {
+        if (email) {
+            email.toLowerCase();
+            User.get(email, function(err, user) {
+                user.status.verify = true;
+                var status = user.status;
+                User.update(
+                    {
+                        email: email.toLowerCase()
+                    },
+                    {
+                        $SET: {
+                            status: status
+                        }
+                    }, callback)
+            })
+        }
+    })
+}
+
+
+// GETTER METHODS
+
+/**
+ * get an user from the database using user id
+ * @param {String} id user's id
+ * @param {Function} callback callback function 
+ */
+UserController.getUserById = function(id, callback) {
+    User.scan('id').eq(id).exec(function(err, user){
+        if (err) {
+            return callback({
+                message: "No user found"
+              });
+        }
+        var u = user[0];
+        delete u.password;
+        return callback(null, u);
+    });
+}
+
+// SETTER METHODS 
+
+/**
+ * updates user info in the database 
+ * @param {String} id user id 
+ * @param {Object} info info objects that contains basic registration info
+ * @param {Function} callback callback function 
+ */
 UserController.updateInfo = async function(id, info, callback) {
     var result = await User.scan('id').eq(id).exec();
     var u = result[0];
