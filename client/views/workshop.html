@@ -1,0 +1,8 @@
+<h1>Workshop</h1>
+<div id="workshop" ng-controller="workshopController">
+    <button ng-if="isAdmin" ng-click="create()">Create</button>
+    <button ng-if="isAdmin" ng-click="remove()">Remove</button>
+    <button ng-if="!isAdmin" ng-click="signUp()">Sign Up</button>
+    <button ng-if="!isAdmin" ng-click="optOut()">Opt Out</button>
+    <button ng-click="view()">View</button>
+</div>

@@ -24,6 +24,19 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
          }
     })
 
+    .when('/workshop', {
+        templateUrl: 'views/workshop.html',
+        controller: 'workshopController',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+              },
+        },
+        data: {
+            Login: true
+        }
+    })
+
     .when('/', {
         templateUrl: 'views/dashboard.html',
         controller: 'dashboardController',
