@@ -4,8 +4,14 @@
     </div>
 
     <div class="divider"></div>
-    <div class="option" ng-class="{active : isRouteActive('/')}">
-        <a class="link" href="/">Home</a>
+    <div class="option" ng-class="{active : isRouteActive('/')}"
+        ng-click="link('/')">
+        Home
+    </div>
+
+    <div class="option" ng-class="{active : isRouteActive('/workshop')}"
+        ng-click="link('/workshop')">
+        workshop
     </div>
 
     <div class="option" ng-click="logout()"> 

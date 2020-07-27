@@ -1,5 +1,8 @@
-<h1>Workshop</h1>
-<div id="workshop" ng-controller="workshopController">
+<div ng-include="'views/sidebar.html'"></div>
+<div class="container">
+    <div class="title">
+        <h1>Workshop</h1>
+    </div>
     <button ng-if="isAdmin" ng-click="create()">Create</button>
     <button ng-if="isAdmin" ng-click="remove()">Remove</button>
     <button ng-if="!isAdmin" ng-click="signUp()">Sign Up</button>

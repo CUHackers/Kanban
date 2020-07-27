@@ -1,0 +1,16 @@
+.container {
+    margin-left: 300px;
+    text-align: center;
+}
+
+.container .title {
+    font-size: 2em;
+    margin-top: 1em;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        text-align: center;
+    }
+}

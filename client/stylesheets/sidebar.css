@@ -20,12 +20,6 @@
     padding: 1em;
 }
 
-#sidebar .option .link{
-    color: #fff;
-    font-size: large;
-    text-decoration: none;
-}
-
 #sidebar .option:hover{
     cursor: pointer;
     background: #6576f3;

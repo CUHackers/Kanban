@@ -3,6 +3,7 @@ var RegisterCtrl = require('./controllers/registerController');
 var sidebarCtrl = require('./controllers/sidebarController')
 var dashboardCtrl = require('./controllers/dashboardController')
 var verifyCtrl = require('./controllers/verifyController')
+var workshopCtrl = require('./controllers/workshopController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -27,6 +28,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
     .when('/workshop', {
         templateUrl: 'views/workshop.html',
         controller: 'workshopController',
+        css: 'stylesheets/workshop.css',
         resolve: {
             currentUser: function(UserService){
                 return UserService.getCurrentUser();

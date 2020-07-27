@@ -5,6 +5,10 @@ angular.module('app')
             return route === $location.path();
         }
 
+        $scope.link = function(link) {
+            $location.path(link);
+        }
+
         $scope.logout = function(){
             AuthService.logout();
         };
