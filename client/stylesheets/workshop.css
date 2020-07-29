@@ -1,5 +1,6 @@
 .container {
     margin-left: 300px;
+    padding: 0 10%;
     text-align: center;
 }
 
@@ -10,6 +11,7 @@
 
 @media screen and (max-width: 768px) {
     .container {
+        padding: 0;
         margin-left: 0;
         text-align: center;
     }

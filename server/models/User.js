@@ -23,38 +23,50 @@ var schema = new dynamoose.Schema({
         require: true
     },
 
-    // basic user info from registration 
+    // basic user info from registration/application
     info: {
         type: Object,
         schema: {
             name: {
                 type: String,
                 required: true,
-                default: "NA"
+                default: ""
             },
         
             gender: {
                 type: String,
                 required: true,
-                default: "NA"
+                default: ""
             },
 
             phone: {
                 type: String,
                 required: true,
-                default: "NA"
+                default: ""
             },
 
             school: {
                 type: String,
                 required: true,
-                default: "NA"
+                default: ""
             },
 
             gradyr: {
                 type: String,
                 required: true,
-                default: "NA"
+                default: ""
+            },
+
+            frq1: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            frq2: {
+                type: String,
+                required: true,
+                default: ""
             },
         }
 
