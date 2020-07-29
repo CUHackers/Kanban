@@ -4,6 +4,7 @@ var sidebarCtrl = require('./controllers/sidebarController')
 var dashboardCtrl = require('./controllers/dashboardController')
 var verifyCtrl = require('./controllers/verifyController')
 var workshopCtrl = require('./controllers/workshopController')
+var applicationCtrl = require('./controllers/applicationController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -25,20 +26,6 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
          }
     })
 
-    .when('/workshop', {
-        templateUrl: 'views/workshop.html',
-        controller: 'workshopController',
-        css: 'stylesheets/workshop.css',
-        resolve: {
-            currentUser: function(UserService){
-                return UserService.getCurrentUser();
-              },
-        },
-        data: {
-            Login: true
-        }
-    })
-
     .when('/', {
         templateUrl: 'views/dashboard.html',
         controller: 'dashboardController',
@@ -51,6 +38,34 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         data: {
             Login: true
          }
+    })
+
+    .when('/application', {
+        templateUrl: 'views/application.html',
+        controller: 'applicationController',
+        css: 'stylesheets/application.css',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+              },
+        },
+        data: {
+            Login: true
+        }
+    })
+
+    .when('/workshop', {
+        templateUrl: 'views/workshop.html',
+        controller: 'workshopController',
+        css: 'stylesheets/workshop.css',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+              },
+        },
+        data: {
+            Login: true
+        }
     })
 
     .when('/verify/:token', {

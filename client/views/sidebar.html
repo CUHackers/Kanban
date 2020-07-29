@@ -9,9 +9,14 @@
         Home
     </div>
 
+    <div class="option" ng-class="{active : isRouteActive('/application')}"
+        ng-click="link('/application')">
+        Application
+    </div>
+
     <div class="option" ng-class="{active : isRouteActive('/workshop')}"
         ng-click="link('/workshop')">
-        workshop
+        Workshop
     </div>
 
     <div class="option" ng-click="logout()"> 
