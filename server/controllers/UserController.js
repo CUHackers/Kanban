@@ -192,21 +192,52 @@ UserController.getUserById = function(id, callback) {
  * @param {Object} info info objects that contains basic registration info
  * @param {Function} callback callback function 
  */
-UserController.updateInfo = async function(id, info, callback) {
-    var result = await User.scan('id').eq(id).exec();
-    var u = result[0];
-    u.info = info;
-    u.save(function(err){
-        if(err) {
+UserController.updateInfo = function(id, info, app, callback) {
+    User.scan('id').eq(id).exec(function(err, result) {
+        user = result[0];
+
+        if (err) {
             return callback({
                 message: err
-              });
+            });
         }
-        else {
-            delete u.password;
-            return callback(null, u);
+
+        // check if updateInfo is called from completing applcation 
+        if (app) {
+            user.status.application = true;
+            var status = user.status;
+            User.update(
+                {
+                    email: user.email.toLowerCase()
+                },
+                {
+                    $SET: {
+                        status: status
+                    }
+                })
         }
-    });
+
+        User.update(
+            {
+                email: user.email.toLowerCase()
+            },
+            {
+                $SET: {
+                    info: info
+                }
+            }, 
+            function(err, u){
+                if(err) {
+                    return callback({
+                        message: err
+                    });
+                }
+                else {
+                    delete u.password;
+                    return callback(null, u);
+                }
+            })
+        });
 
 }
 

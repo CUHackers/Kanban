@@ -23,6 +23,12 @@ var schema = new dynamoose.Schema({
         require: true
     },
 
+    admin: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+
     // basic user info from registration/application
     info: {
         type: Object,
@@ -75,7 +81,15 @@ var schema = new dynamoose.Schema({
     status: {
         type: Object,
         schema: {
+            // email verify status
             verify: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+
+            // completed application or not
+            application: {
                 type: Boolean,
                 required: true,
                 default: false

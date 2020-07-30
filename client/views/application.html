@@ -4,7 +4,7 @@
         <h1>Application</h1>
     </div>
 
-    <div class="application-container">
+    <div class="application-container" ng-show="!appStatus">
         <form ng-submit="submitApp()" class="application">
             <div class="input">
                 <label>Full Name</label>
@@ -37,9 +37,9 @@
 
             <div class="input">
                 <label>
-                    What would you like to learn or get out of CUhackit? (optional)
+                    What would you like to learn or get out of CUhackit?
                 </label>
-                <textarea ng-model="user.info.frq1">
+                <textarea ng-model="user.info.frq1" required>
                 </textarea>
             </div>
 
@@ -55,6 +55,15 @@
                 <button type="submit">Submit</button>
             </div>
         </form>
-        
+    </div>
+
+    <div class="complete" ng-show="appStatus">
+        <label>Your Application is Complete</label>
+        <div class="edit" ng-click="edit()">
+            Edit
+        </div>
+        <div class="home" ng-click="home()">
+            Home
+        </div>
     </div>
 </div>

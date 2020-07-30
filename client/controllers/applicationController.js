@@ -1,10 +1,9 @@
-var swal = require('sweetalert');
-
 angular.module('app')
-    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', 
-        function($scope, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
+     function($scope, $location, currentUser, UserService, Session){
 
         $scope.user = currentUser.data;
+        $scope.appStatus = $scope.user.status.application
 
         $scope.genders = [
             {value: '', display: 'Gender'},
@@ -22,9 +21,17 @@ angular.module('app')
         ];
 
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
-                swal("Applcation Submitted");
+            UserService.updateInfo(Session.getID(), $scope.user.info, true).then(function(res){
+                $scope.appStatus = true;
             });
         };
+
+        $scope.edit = function(){
+            $scope.appStatus = false;
+        }
+
+        $scope.home = function(){
+            $location.path("/");
+        }
 
     }])

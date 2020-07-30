@@ -23,8 +23,10 @@ angular.module('app')
 
         $scope.register = async function(){
             $scope.error = null;
+            $scope.info.frq1 = "";
+            $scope.info.frq2 = "";
             await AuthService.register($scope.info.email, $scope.info.password, onError);
-            UserService.updateInfo(Session.getID(), $scope.info);
+            UserService.updateInfo(Session.getID(), $scope.info, false);
         };
 
 

@@ -14,7 +14,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         controller: 'loginController',
         css: 'stylesheets/login.css',
         data: {
-            Login: false
+            login: false
          }
     })
 
@@ -22,7 +22,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         templateUrl: 'views/register.html',
         controller: 'registerController',
         data: {
-            Login: false
+            login: false
          }
     })
 
@@ -36,7 +36,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            login: true
          }
     })
 
@@ -50,7 +50,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            login: true,
+            verified: true
         }
     })
 
@@ -64,7 +65,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            Login: true,
+            verified: true
         }
     })
 
@@ -93,7 +95,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
     });
 
 }])
-.run(['$rootScope', '$location', 'Session', function($rootScope, $location, Session){
+.run(['$rootScope', '$location', 'Session', 'UserService', function($rootScope, $location, Session, UserService){
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         // if logged in, go to dashboard
         if (next.templateUrl === 'views/login.html' && Session.getToken()) {
@@ -105,10 +107,16 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         }
 
         // check if user logged in
-        if (next.data.Login && !Session.getToken()) {
+        if (next.data.login && !Session.getToken()) {
             $location.path("/login");
         }
-
+        
+        // check if user is verified or not
+        // problem here with to get access to page by changing local storage value
+        // but should be okay since actions still checks permission 
+        if (next.data.verified && !Session.getUser().status.verify) {
+            $location.path("/");
+        }
 
     });
 }])

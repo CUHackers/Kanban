@@ -1,4 +1,4 @@
-const swal = require('sweetalert');
+var swal = require('sweetalert');
 
 angular.module('app')
     .controller('dashboardController', ['$scope', 'currentUser', 'AuthService', function($scope, currentUser, AuthService){

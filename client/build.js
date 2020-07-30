@@ -287,13 +287,12 @@ app.config(['$httpProvider', function($httpProvider){
 }]);
 
 },{"./route.js":11,"./services/AuthInterceptor.js":12,"./services/AuthService.js":13,"./services/Session.js":14,"./services/UserService.js":15}],4:[function(require,module,exports){
-var swal = require('sweetalert');
-
 angular.module('app')
-    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', 
-        function($scope, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
+     function($scope, $location, currentUser, UserService, Session){
 
         $scope.user = currentUser.data;
+        $scope.appStatus = $scope.user.status.application
 
         $scope.genders = [
             {value: '', display: 'Gender'},
@@ -311,14 +310,22 @@ angular.module('app')
         ];
 
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
-                swal("Applcation Submitted");
+            UserService.updateInfo(Session.getID(), $scope.user.info, true).then(function(res){
+                $scope.appStatus = true;
             });
         };
 
+        $scope.edit = function(){
+            $scope.appStatus = false;
+        }
+
+        $scope.home = function(){
+            $location.path("/");
+        }
+
     }])
-},{"sweetalert":16}],5:[function(require,module,exports){
-const swal = require('sweetalert');
+},{}],5:[function(require,module,exports){
+var swal = require('sweetalert');
 
 angular.module('app')
     .controller('dashboardController', ['$scope', 'currentUser', 'AuthService', function($scope, currentUser, AuthService){
@@ -372,15 +379,20 @@ angular.module('app')
 
         $scope.register = async function(){
             $scope.error = null;
+            $scope.info.frq1 = "";
+            $scope.info.frq2 = "";
             await AuthService.register($scope.info.email, $scope.info.password, onError);
-            UserService.updateInfo(Session.getID(), $scope.info);
+            UserService.updateInfo(Session.getID(), $scope.info, false);
         };
 
 
     }])
 },{}],8:[function(require,module,exports){
 angular.module('app')
-    .controller('sidebarController', ['$scope', '$location', 'AuthService', function($scope, $location, AuthService){
+    .controller('sidebarController', ['$scope', '$rootScope', '$location', 'AuthService',
+     function($scope, $rootScope, $location, AuthService){
+
+        $scope.user = $rootScope.currentUser;
 
         $scope.isRouteActive = function(route) { 
             return route === $location.path();
@@ -461,7 +473,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         controller: 'loginController',
         css: 'stylesheets/login.css',
         data: {
-            Login: false
+            login: false
          }
     })
 
@@ -469,7 +481,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         templateUrl: 'views/register.html',
         controller: 'registerController',
         data: {
-            Login: false
+            login: false
          }
     })
 
@@ -483,7 +495,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            login: true
          }
     })
 
@@ -497,7 +509,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            login: true,
+            verified: true
         }
     })
 
@@ -511,7 +524,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true
+            Login: true,
+            verified: true
         }
     })
 
@@ -540,7 +554,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
     });
 
 }])
-.run(['$rootScope', '$location', 'Session', function($rootScope, $location, Session){
+.run(['$rootScope', '$location', 'Session', 'UserService', function($rootScope, $location, Session, UserService){
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
         // if logged in, go to dashboard
         if (next.templateUrl === 'views/login.html' && Session.getToken()) {
@@ -552,10 +566,16 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         }
 
         // check if user logged in
-        if (next.data.Login && !Session.getToken()) {
+        if (next.data.login && !Session.getToken()) {
             $location.path("/login");
         }
-
+        
+        // check if user is verified or not
+        // problem here with to get access to page by changing local storage value
+        // but should be okay since actions still checks permission 
+        if (next.data.verified && !Session.getUser().status.verify) {
+            $location.path("/");
+        }
 
     });
 }])
@@ -664,19 +684,21 @@ angular.module('app')
     }])
 },{}],14:[function(require,module,exports){
 angular.module('app').
-    factory('Session', ['$window', function ($window){ 
+    factory('Session', ['$window', '$rootScope', function ($window, $rootScope){ 
         var session = {};
 
         session.create = function(token, user){
             $window.localStorage.token = token;
             $window.localStorage.id = user.id;
             $window.localStorage.user = JSON.stringify(user);
+            $rootScope.currentUser = user;
         };
 
         session.end = function() {
             delete $window.localStorage.token;
             delete $window.localStorage.id;
             delete $window.localStorage.user;
+            $rootScope.currentUser = null;
         };
 
         // getters
@@ -689,7 +711,7 @@ angular.module('app').
         };
 
         session.getUser = function() {
-            return $window.localStorage.user;
+            return JSON.parse($window.localStorage.user);
         };
 
         return session;
@@ -712,10 +734,12 @@ angular.module('app').
          * updates user info 
          * @param {String} id user id
          * @param {Object} info basic registration info
+         * @param {Boolean} app if called from completing applcation 
          */
-        userService.updateInfo = function(id, info) {
+        userService.updateInfo = function(id, info, app) {
             return $http.put('/api/users/' + id + '/info', {
-                info: info
+                info: info,
+                app: app
               });
         }
         return userService;

@@ -10,12 +10,14 @@
     </div>
 
     <div class="option" ng-class="{active : isRouteActive('/application')}"
-        ng-click="link('/application')">
+        ng-click="link('/application')"
+        ng-show="user.status.verify">
         Application
     </div>
 
     <div class="option" ng-class="{active : isRouteActive('/workshop')}"
-        ng-click="link('/workshop')">
+        ng-click="link('/workshop')"
+        ng-show="user.status.verify">
         Workshop
     </div>
 
