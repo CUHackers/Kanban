@@ -2,12 +2,67 @@ var express = require('express');
 var router = express.Router();
 var UserController = require('../controllers/UserController');
 
-// still need permission work 
+/**
+ * helper function for checking permission
+ * returns token from header
+ */
+function getToken(req){
+    return req.headers.authorization.slice(7);
+}
+
+/**
+* check if user is admin
+*/
+function isAdmin(req, res, next){
+
+    var token = getToken(req);
+
+    UserController.getByToken(token, function(err, user) {
+
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        if (user && user.admin){
+            req.user = user;
+            return next();
+        }
+
+        return res.status(401).send({
+            message: 'Get outta here, punk!'
+        });
+
+    });
+}
+
+/**
+*   check if you are owner or admin
+*   used for updating user info 
+*/
+function isOwnerOrAdmin(req, res, next){
+    var token = getToken(req);
+    var userId = req.params.id;
+
+    UserController.getByToken(token, function(err, user){
+
+        if (err || !user) {
+            return res.status(500).send(err);
+        }
+
+        if (user.id == userId || user.admin){
+            return next();
+        }
+        return res.status(400).send({
+            message: 'Token does not match user id.'
+        });
+    });
+}
+
 /**
  * get user based on id 
  * id = :id
  */
-router.get('/users/:id', function(req, res){
+router.get('/users/:id', isOwnerOrAdmin, function(req, res){
     var id = req.params.id;
     UserController.getUserById(id, function(err, user) {
         if (err){
@@ -25,7 +80,7 @@ router.get('/users/:id', function(req, res){
  *  info: info 
  * }
  */
-router.put('/users/:id/info', function(req, res){
+router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
     var info = req.body.info;
     var app = req.body.app;
     var id = req.params.id;

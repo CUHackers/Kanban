@@ -74,6 +74,21 @@ UserController.loginWithToken = function(token, callback){
     });
 };
 
+/**
+ * get user based on the token
+ * @param {String} token 
+ * @param {Function} callback 
+ */
+UserController.getByToken = function(token, callback){
+    User.verifyToken(token, function(err, user){
+        if (user) {
+            var u = user[0]
+            delete u.password;
+        }
+        return callback(err, u);
+    });
+};
+
  /**
   * log in user using email and password
   * @param {String} email user email 
