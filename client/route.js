@@ -5,6 +5,7 @@ var dashboardCtrl = require('./controllers/dashboardController')
 var verifyCtrl = require('./controllers/verifyController')
 var workshopCtrl = require('./controllers/workshopController')
 var applicationCtrl = require('./controllers/applicationController')
+var adminCtrl = require('./controllers/adminController')
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     
@@ -65,8 +66,24 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
               },
         },
         data: {
-            Login: true,
+            login: true,
             verified: true
+        }
+    })
+
+    .when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'adminController',
+        css: 'stylesheets/admin.css',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+              },
+        },
+        data: {
+            login: true,
+            verified: true,
+            admin: true
         }
     })
 
@@ -74,14 +91,14 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         templateUrl: 'views/verify.html',
         controller: 'verifyController',
         data: {
-            Login: false
+            login: false
          }
     })
 
     .when('/404', {
         templateUrl: 'views/404.html',
         data: {
-            Login: false
+            login: false
          }
     })
     
@@ -115,6 +132,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
         // problem here with to get access to page by changing local storage value
         // but should be okay since actions still checks permission 
         if (next.data.verified && !Session.getUser().status.verify) {
+            $location.path("/");
+        }
+
+        // check for admin status
+        if (next.data.admin && !Session.getUser().admin) {
             $location.path("/");
         }
 

@@ -21,6 +21,12 @@
         Workshop
     </div>
 
+    <div class="option" ng-class="{active : isRouteActive('/admin')}"
+        ng-click="link('/admin')"
+        ng-show="user.admin">
+        Admin
+    </div>
+
     <div class="option" ng-click="logout()"> 
         Logout
     </div>
