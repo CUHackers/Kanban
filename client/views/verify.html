@@ -1,9 +1,12 @@
-<div class="container">
+<div class="container" id="verify">
     <div class="title">
       EMAIL VERIFICATION
     </div>
 
     <div class="verify-status">
+        <div ng-show="loading">
+            <h1>loading</h1>
+        </div>
         <div ng-show="verify && !loading">
             <h1>Your email is verified</h1>
             <div class="home" >

@@ -4,25 +4,29 @@
     </div>
 
     <div class="divider"></div>
-    <div class="option" ng-class="{active : isRouteActive('/')}"
-        ng-click="link('/')">
+    <div class="option" 
+        ui-sref-active="active"
+        ui-sref="app.dashboard">
         Home
     </div>
 
-    <div class="option" ng-class="{active : isRouteActive('/application')}"
-        ng-click="link('/application')"
+    <div class="option" 
+        ui-sref-active="active"
+        ui-sref="app.application"
         ng-show="user.status.verify">
         Application
     </div>
 
-    <div class="option" ng-class="{active : isRouteActive('/workshop')}"
-        ng-click="link('/workshop')"
+    <div class="option"
+        ui-sref-active="active"
+        ui-sref="app.workshop"
         ng-show="user.status.verify">
         Workshop
     </div>
 
-    <div class="option" ng-class="{active : isRouteActive('/admin')}"
-        ng-click="link('/admin')"
+    <div class="option"
+        ui-sref-active="active"
+        ui-sref="app.admin.stats"
         ng-show="user.admin">
         Admin
     </div>

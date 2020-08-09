@@ -1,33 +1,21 @@
-.container {
-    margin-left: 300px;
-    text-align: center;
-    padding: 0 10%;
-}
-
-.container .title {
-    font-size: 2em;
-    margin-top: 1em;
-}
-
-
-.container .application .input {
+#application .application .input {
     display: block;
     margin-top: 1em;
 }
 
-.container .application .input>label {
+#application .application .input>label {
     display: block;
     text-align: left;
 }
 
-.container .application .input>input, select, textarea {
+#application .application .input>input, select, textarea {
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
-    .container {
-        margin-left: 0;
-        padding: 0;
-        text-align: center;
-    }
+#application .application .button {
+    cursor: pointer;
+}
+
+#application .complete .option:hover{
+    cursor: pointer;
 }

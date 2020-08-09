@@ -4,7 +4,8 @@
   "description": "check in system v2",
   "main": "server.js",
   "dependencies": {
-    "angular-route": "^1.8.0",
+    "@uirouter/angularjs": "^1.0.28",
+    "angular-ui-router": "^1.0.28",
     "aws-sdk": "^2.699.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",

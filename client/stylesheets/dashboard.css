@@ -1,21 +1,10 @@
-.container {
-    margin-left: 300px;
-    text-align: center;
-    padding: 0 10%;
-}
-
-.container .title {
-    font-size: 2em;
-    margin-top: 1em;
-}
-
-.container .status-container {
+#dashboard .status-container {
     font-weight: bold;
     font-size: 2em;
     border: 1px solid #000;
 }
 
-.button {
+#dashboard .button {
     width: 200px;
     font-size: medium;
     color: #fff;
@@ -25,21 +14,13 @@
     margin: 1.5em auto 1.5em;
 }
 
-.button:hover{
+#dashboard .button:hover{
     cursor: pointer;
 }
 
-.divider{
+#dashboard .divider{
     border-bottom: 2px solid #000;
     opacity: 75%;
     margin: .5em 2em 0;
     height: 0;
-}
-
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 0;
-        margin-left: 0;
-        text-align: center;
-    }
 }

@@ -1,7 +1,7 @@
 angular.module('app')
-    .controller('verifyController', ['$scope', '$routeParams', 'AuthService', function($scope, $routeParams, AuthService){
+    .controller('verifyController', ['$scope', '$stateParams', 'AuthService', function($scope, $stateParams, AuthService){
 
-        var token = $routeParams.token;
+        var token = $stateParams.token;
 
         $scope.loading = true;
 
@@ -10,6 +10,7 @@ angular.module('app')
                 if (res) {
                     $scope.verify = true;
                     $scope.loading = false;
+                    console.log("done")
                 }
                 else {
                     $scope.loading = false;

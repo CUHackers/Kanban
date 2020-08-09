@@ -1,7 +1,6 @@
 angular.module('app')
-    .controller('adminController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
-     function($scope, $location, currentUser, UserService, Session){
+    .controller('adminController', ['$scope',
+     function($scope){
 
-        $scope.user = currentUser.data;
 
     }])

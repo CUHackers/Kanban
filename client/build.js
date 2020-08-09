@@ -264,7 +264,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
 },{"process/browser.js":1,"timers":2}],3:[function(require,module,exports){
-var app = angular.module('app', ['ngRoute', 'angularCSS']);
+var app = angular.module('app', ['ui.router']);
 
 var AuthService = require('./services/AuthService.js');
 var AuthInterceptor = require('./services/AuthInterceptor.js');
@@ -288,16 +288,15 @@ app.config(['$httpProvider', function($httpProvider){
 
 },{"./route.js":12,"./services/AuthInterceptor.js":13,"./services/AuthService.js":14,"./services/Session.js":15,"./services/UserService.js":16}],4:[function(require,module,exports){
 angular.module('app')
-    .controller('adminController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
-     function($scope, $location, currentUser, UserService, Session){
+    .controller('adminController', ['$scope',
+     function($scope){
 
-        $scope.user = currentUser.data;
 
     }])
 },{}],5:[function(require,module,exports){
 angular.module('app')
-    .controller('applicationController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
-     function($scope, $location, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', '$state', 'currentUser', 'UserService', 'Session', 
+     function($scope, $state, currentUser, UserService, Session){
 
         $scope.user = currentUser.data;
         $scope.appStatus = $scope.user.status.application
@@ -325,10 +324,6 @@ angular.module('app')
 
         $scope.edit = function(){
             $scope.appStatus = false;
-        }
-
-        $scope.home = function(){
-            $location.path("/");
         }
 
     }])
@@ -402,14 +397,6 @@ angular.module('app')
 
         $scope.user = $rootScope.currentUser;
 
-        $scope.isRouteActive = function(route) { 
-            return route === $location.path();
-        }
-
-        $scope.link = function(link) {
-            $location.path(link);
-        }
-
         $scope.logout = function(){
             AuthService.logout();
         };
@@ -417,9 +404,9 @@ angular.module('app')
     }])
 },{}],10:[function(require,module,exports){
 angular.module('app')
-    .controller('verifyController', ['$scope', '$routeParams', 'AuthService', function($scope, $routeParams, AuthService){
+    .controller('verifyController', ['$scope', '$stateParams', 'AuthService', function($scope, $stateParams, AuthService){
 
-        var token = $routeParams.token;
+        var token = $stateParams.token;
 
         $scope.loading = true;
 
@@ -428,6 +415,7 @@ angular.module('app')
                 if (res) {
                     $scope.verify = true;
                     $scope.loading = false;
+                    console.log("done")
                 }
                 else {
                     $scope.loading = false;
@@ -474,87 +462,102 @@ var workshopCtrl = require('./controllers/workshopController')
 var applicationCtrl = require('./controllers/applicationController')
 var adminCtrl = require('./controllers/adminController')
 
-angular.module('app').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
+ function($stateProvider, $locationProvider, $urlRouterProvider){
     
-    $routeProvider
-    .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'loginController',
-        css: 'stylesheets/login.css',
-        data: {
-            login: false
-         }
-    })
+    $urlRouterProvider.otherwise("/404");
 
-    .when('/register', {
+    $stateProvider
+    .state('login', {
+        url: "/login",
+        templateUrl: "views/login.html",
+        controller: 'loginController',
+        data: {
+          login: false
+        }
+    })
+    
+    .state('register', {
+        url: "/register",
         templateUrl: 'views/register.html',
         controller: 'registerController',
         data: {
             login: false
-         }
+        }
     })
 
-    .when('/', {
+    .state('app', {
+        views: {
+            '': {
+                templateUrl: "views/base.html"
+        },
+            'sidebar@app': {
+                templateUrl: "views/sidebar.html",
+                controller: 'sidebarController',
+            }
+        },
+        data: {
+          login: true
+        }
+    })
+
+    .state('app.dashboard', {
+        url: "/",
         templateUrl: 'views/dashboard.html',
         controller: 'dashboardController',
-        css: 'stylesheets/dashboard.css',
         resolve: {
             currentUser: function(UserService){
                 return UserService.getCurrentUser();
-              },
-        },
-        data: {
-            login: true
-         }
+            },
+        }
     })
 
-    .when('/application', {
+    .state('app.application', {
+        url: "/application",
         templateUrl: 'views/application.html',
         controller: 'applicationController',
-        css: 'stylesheets/application.css',
         resolve: {
             currentUser: function(UserService){
                 return UserService.getCurrentUser();
-              },
+            },
         },
         data: {
-            login: true,
             verified: true
         }
     })
 
-    .when('/workshop', {
+    .state('app.workshop', {
+        url: "/workshop",
         templateUrl: 'views/workshop.html',
         controller: 'workshopController',
-        css: 'stylesheets/workshop.css',
         resolve: {
             currentUser: function(UserService){
                 return UserService.getCurrentUser();
-              },
+            },
         },
         data: {
-            login: true,
             verified: true
         }
     })
 
-    .when('/admin', {
-        templateUrl: 'views/admin.html',
-        controller: 'adminController',
-        css: 'stylesheets/admin.css',
-        resolve: {
-            currentUser: function(UserService){
-                return UserService.getCurrentUser();
-              },
+    .state('app.admin', {
+        views: {
+            '': {
+                templateUrl: "views/admin.html",
+                controller: 'adminController',
+            }
         },
         data: {
-            login: true,
-            verified: true,
-            admin: true
+          admin: true
         }
     })
 
-    .when('/verify/:token', {
+    .state('app.admin.stats', {
+        url: "/admin"
+    })
+
+    .state('verify', {
+        url: "/verify/:token",
         templateUrl: 'views/verify.html',
         controller: 'verifyController',
         data: {
@@ -562,16 +565,13 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
          }
     })
 
-    .when('/404', {
+    .state('404', {
+        url: "/404",
         templateUrl: 'views/404.html',
         data: {
             login: false
          }
     })
-    
-    .otherwise({
-        redirectTo : '/404'
-    });
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -579,36 +579,42 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function($r
     });
 
 }])
-.run(['$rootScope', '$location', 'Session', 'UserService', function($rootScope, $location, Session, UserService){
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+.run($transitions => {
+    $transitions.onStart({}, transition => {
+        const Session = transition.injector().get("Session");
+
+        var requireLogin = transition.to().data.login;
+        var requireVerified = transition.to().data.verified;
+        var requireAdmin = transition.to().data.admin;
+
         // if logged in, go to dashboard
-        if (next.templateUrl === 'views/login.html' && Session.getToken()) {
-            $location.path("/");
+        if (transition.to().name === 'login' && Session.getToken()) {
+            return transition.router.stateService.target("app.dashboard");
         }
 
-        if (next.templateUrl === 'views/register.html' && Session.getToken()) {
-            $location.path("/");
+        if (transition.to().name === 'register' && Session.getToken()) {
+            return transition.router.stateService.target("app.dashboard");
         }
 
         // check if user logged in
-        if (next.data.login && !Session.getToken()) {
-            $location.path("/login");
+        if (requireLogin && !Session.getToken()) {
+            return transition.router.stateService.target("login");
         }
         
         // check if user is verified or not
         // problem here with to get access to page by changing local storage value
         // but should be okay since actions still checks permission 
-        if (next.data.verified && !Session.getUser().status.verify) {
-            $location.path("/");
+        if (requireVerified && !Session.getUser().status.verify) {
+            return transition.router.stateService.target("app.dashboard");
         }
 
         // check for admin status
-        if (next.data.admin && !Session.getUser().admin) {
-            $location.path("/");
+        if (requireAdmin && !Session.getUser().admin) {
+            return transition.router.stateService.target("app.dashboard");
         }
 
     });
-}])
+})
 },{"./controllers/adminController":4,"./controllers/applicationController":5,"./controllers/dashboardController":6,"./controllers/loginController":7,"./controllers/registerController":8,"./controllers/sidebarController":9,"./controllers/verifyController":10,"./controllers/workshopController":11}],13:[function(require,module,exports){
 angular.module('app').
     factory('AuthInterceptor', ['Session', function (Session) {
@@ -624,7 +630,7 @@ angular.module('app').
     }]);
 },{}],14:[function(require,module,exports){
 angular.module('app')
-    .factory('AuthService', ['$http', '$location', 'Session', function ($http, $location, Session) {
+    .factory('AuthService', ['$http', '$state', 'Session', function ($http, $state, Session) {
         var authService = {};
         
         /**
@@ -641,9 +647,9 @@ angular.module('app')
             })
             .then(function successCallback(response) {
                 Session.create(response.data.token, response.data.user);
-                $location.path("/");
+                $state.go('app.dashboard');
             }, function errorCallback(response) {
-                $location.path("/login");
+                $state.go('login');
                 cb(response.data);
             });
         };
@@ -661,7 +667,7 @@ angular.module('app')
                 Session.create(response.data.token, response.data.user);
             }, function errorCallback(response) {
                 Session.end();
-                $location.path("/login");
+                $state.go('login');
             });
         }
 
@@ -679,9 +685,9 @@ angular.module('app')
             })
             .then(function successCallback(response) {
                 Session.create(response.data.token, response.data.user);
-                $location.path("/");
+                $state.go('app.dashboard');
             }, function errorCallback(response) {
-                $location.path("/register");
+                $state.go('register');
                 cb(response.data);
             });
         }
@@ -689,7 +695,7 @@ angular.module('app')
         // log out function
         authService.logout = function() {
             Session.end();
-            $location.path("/login");
+            $state.go('login');
         }
 
         // sends verification email to user

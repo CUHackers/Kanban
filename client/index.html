@@ -4,13 +4,12 @@
         <base href="/">
         <title>CUhackit</title>
         <script src="./libs/angular.js"></script>
-        <script src="./libs/angular-route.js"></script>
-        <script src="./libs/angular-css.js"></script>
+        <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
         <script src="./build.js"></script>
 
-        <link rel="stylesheet" href="./stylesheets/sidebar.css">
+        <link rel="stylesheet" href="./stylesheets/site.css">
     </head>
     <body>
-        <div ng-view></div>
+        <div ui-view></div>
     </body>
 </html>

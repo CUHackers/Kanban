@@ -25,11 +25,11 @@ body{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.logo{
+.outline .logo{
     margin-top: 1em;
 }
 
-.login input[type = "email"], .login input[type = "password"] {
+.outline .login input[type = "email"], .login input[type = "password"] {
     width: 240px;
     margin: 2em auto;
     padding: 1em;
@@ -39,13 +39,13 @@ body{
     transition: .25s;
 }
 
-.login input[type = "email"]:focus , .login input[type = "password"]:focus {
+.outline .login input[type = "email"]:focus , .login input[type = "password"]:focus {
     width: 270px;
     border-radius: 10px;
     border-color: #1e90ff;
 }
 
-.login button[type = "login"] {
+.outline .login button[type = "login"] {
     width: 240px;
     margin: 2em auto;
     padding: .7em;
@@ -61,30 +61,30 @@ body{
     border-radius: 9px;
 }
 
-.links{
+.outline .links{
     display: flex;
     text-align: center;
     /* justify-content: center; */
 }
 
-.links a{
+.outline .links a{
     color: #222;
     text-decoration: none;
 }
 
-.links a:hover{
+.outline .links a:hover{
     text-decoration: underline;
 }
 
-.reg{
+.outline .reg{
     margin-right: 3em;
 }
 
-.pas{
+.outline .pas{
     margin-left: 3em;
 }
 
-.divider{
+.outline .divider{
     border-bottom: 1px solid #343D3A;
     opacity: 50%;
     margin: 2em 0;

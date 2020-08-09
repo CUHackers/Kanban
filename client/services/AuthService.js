@@ -1,5 +1,5 @@
 angular.module('app')
-    .factory('AuthService', ['$http', '$location', 'Session', function ($http, $location, Session) {
+    .factory('AuthService', ['$http', '$state', 'Session', function ($http, $state, Session) {
         var authService = {};
         
         /**
@@ -16,9 +16,9 @@ angular.module('app')
             })
             .then(function successCallback(response) {
                 Session.create(response.data.token, response.data.user);
-                $location.path("/");
+                $state.go('app.dashboard');
             }, function errorCallback(response) {
-                $location.path("/login");
+                $state.go('login');
                 cb(response.data);
             });
         };
@@ -36,7 +36,7 @@ angular.module('app')
                 Session.create(response.data.token, response.data.user);
             }, function errorCallback(response) {
                 Session.end();
-                $location.path("/login");
+                $state.go('login');
             });
         }
 
@@ -54,9 +54,9 @@ angular.module('app')
             })
             .then(function successCallback(response) {
                 Session.create(response.data.token, response.data.user);
-                $location.path("/");
+                $state.go('app.dashboard');
             }, function errorCallback(response) {
-                $location.path("/register");
+                $state.go('register');
                 cb(response.data);
             });
         }
@@ -64,7 +64,7 @@ angular.module('app')
         // log out function
         authService.logout = function() {
             Session.end();
-            $location.path("/login");
+            $state.go('login');
         }
 
         // sends verification email to user

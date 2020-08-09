@@ -1,5 +1,4 @@
-<div ng-include="'views/sidebar.html'"></div>
-<div class="container">
+<div class="container" id="application">
     <div class="title">
         <h1>Application</h1>
     </div>
@@ -51,7 +50,7 @@
                 </textarea>
             </div>
 
-            <div class="input">
+            <div class="button">
                 <button type="submit">Submit</button>
             </div>
         </form>
@@ -59,10 +58,10 @@
 
     <div class="complete" ng-show="appStatus">
         <label>Your Application is Complete</label>
-        <div class="edit" ng-click="edit()">
+        <div class="option" ng-click="edit()">
             Edit
         </div>
-        <div class="home" ng-click="home()">
+        <div class="option" ui-sref="app.dashboard">
             Home
         </div>
     </div>

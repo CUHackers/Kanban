@@ -159,6 +159,10 @@ UserController.sendVerificationEmail = function(id, callback) {
  */
 UserController.verifyEmail = function(token, callback) {
     User.verifyEmailToken(token, function(err, email) {
+        if (err) {
+            return callback(err);
+        }
+        
         if (email) {
             email.toLowerCase();
             User.get(email, function(err, user) {

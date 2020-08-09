@@ -1,6 +1,6 @@
 angular.module('app')
-    .controller('applicationController', ['$scope', '$location', 'currentUser', 'UserService', 'Session', 
-     function($scope, $location, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', '$state', 'currentUser', 'UserService', 'Session', 
+     function($scope, $state, currentUser, UserService, Session){
 
         $scope.user = currentUser.data;
         $scope.appStatus = $scope.user.status.application
@@ -28,10 +28,6 @@ angular.module('app')
 
         $scope.edit = function(){
             $scope.appStatus = false;
-        }
-
-        $scope.home = function(){
-            $location.path("/");
         }
 
     }])

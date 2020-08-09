@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute', 'angularCSS']);
+var app = angular.module('app', ['ui.router']);
 
 var AuthService = require('./services/AuthService.js');
 var AuthInterceptor = require('./services/AuthInterceptor.js');

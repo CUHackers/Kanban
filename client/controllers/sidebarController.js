@@ -4,14 +4,6 @@ angular.module('app')
 
         $scope.user = $rootScope.currentUser;
 
-        $scope.isRouteActive = function(route) { 
-            return route === $location.path();
-        }
-
-        $scope.link = function(link) {
-            $location.path(link);
-        }
-
         $scope.logout = function(){
             AuthService.logout();
         };
