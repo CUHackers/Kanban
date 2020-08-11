@@ -38,7 +38,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         },
             'sidebar@app': {
                 templateUrl: "views/sidebar.html",
-                controller: 'sidebarController',
+                controller: 'sidebarController'
             }
         },
         data: {

@@ -1,6 +1,45 @@
 <div class="container" id="admin">
     <div class="title">
-        <h1>Admin
+        Admin
     </div>
+
+    <div class="ui five item menu">
+        <a
+          class="active item"
+          ui-sref="app.admin.stats"
+          ui-sref-active="active">
+          Stats
+        </a>
+    
+        <a
+          class="item"
+          ui-sref="app.admin.users"
+          ui-sref-active="active">
+          Users
+        </a>
+    
+        <a
+          class="item"
+          ui-sref="app.admin.settings"
+          ui-sref-active="active">
+          Settings
+        </a>
+
+        <a
+          class="item"
+          ui-sref="app.admin.checkin"
+          ui-sref-active="active">
+          Check In/Out
+        </a>
+
+        <a
+          class="item"
+          ui-sref="app.admin.meal"
+          ui-sref-active="active">
+          Meal
+        </a>
+      </div>
+      <!-- View for admin panel content -->
+      <ui-view></ui-view>
 
 </div>

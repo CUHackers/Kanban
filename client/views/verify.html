@@ -1,21 +1,32 @@
-<div class="container" id="verify">
-    <div class="title">
-      EMAIL VERIFICATION
-    </div>
+<div id="verify">
+    <div class="ui text container">
 
-    <div class="verify-status">
-        <div ng-show="loading">
-            <h1>loading</h1>
-        </div>
-        <div ng-show="verify && !loading">
-            <h1>Your email is verified</h1>
-            <div class="home" >
-                <a class="link" href="/">Return to Home</a>
+        <div class="ui segment">
+            <h1 class="ui header">
+                EMAIL VERIFICATION
+            </h1>
+    
+            <div class="ui divider"></div>
+
+            <div class="ui loading segment" ng-show="loading">
+                <br>
+                <p></p>
+                <p></p>
+            </div>
+
+            <div ng-show="verify && !loading">
+                <i class="green check icon"></i>
+                <h1>Your email is verified</h1>
+                <div class="home" >
+                    <a class="link" href="/">Return to Home</a>
+                </div>
+            </div>
+    
+            <div ng-show="!verify && !loading">
+                <i class="red circle remove icon"></i>
+                <h1>Invalid Token</h1>
             </div>
         </div>
 
-        <div ng-show="!verify && !loading">
-            <h1>Invalid Token</h1>
-        </div>
     </div>
-  </div>
+</div>

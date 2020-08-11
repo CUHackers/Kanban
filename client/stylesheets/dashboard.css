@@ -1,26 +1,26 @@
-#dashboard .status-container {
-    font-weight: bold;
-    font-size: 2em;
-    border: 1px solid #000;
-}
-
-#dashboard .button {
-    width: 200px;
-    font-size: medium;
+#dashboard #status{
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: large;
+    font-weight: 14px;
     color: #fff;
-    background-color: #5A6ADA;
-    border: 1px solid #5A6ADA;
-    padding: .5em .5em;
-    margin: 1.5em auto 1.5em;
+    padding: 1em 0;
+    margin: 1.5em 1.5em;
 }
 
-#dashboard .button:hover{
-    cursor: pointer;
+#dashboard .status-red{
+    background-color: red;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+#dashboard .status-green {
+    background-color: green;
 }
 
 #dashboard .divider{
-    border-bottom: 2px solid #000;
-    opacity: 75%;
-    margin: .5em 2em 0;
-    height: 0;
+    margin-right: 1.5em;
+}
+
+#dashboard .button{
+    margin-top: .5em;
+    margin-bottom: .5em;
 }

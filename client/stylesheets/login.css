@@ -7,13 +7,12 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    padding-top: 5%;
     height: 100%;
 }
 
 .outline{
     width: 300px;
-    margin: 0 auto;
+    margin: 5% auto;
     padding: 1em 1em;
     position: relative;
     /* background-color: skyblue; */

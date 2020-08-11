@@ -1,14 +1,10 @@
-#application .application .input {
-    display: block;
-    margin-top: 1em;
-}
-
-#application .application .input>label {
+#application .ui.form .field>label {
     display: block;
     text-align: left;
 }
 
-#application .application .input>input, select, textarea {
+#application .ui.form .field>button {
+    margin-top: 20px;
     width: 100%;
 }
 

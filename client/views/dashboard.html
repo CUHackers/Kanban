@@ -1,16 +1,32 @@
 <div class="container" id="dashboard">
     <div class="title">
-        <h1>Dashboard</h1>
+        Dashboard
     </div>
 
-    <div class="status-container">
-        <div>Status:</div>
+    <div class="ui container">
 
-        <div class="status" ng-if="!user.status.verify">
-            <div> Your email is not verified</div>
-            <div class="divider"></div>
-            <div class="button" ng-click="sendEmail()">Send Verification Email</div>
+        <div class="ui attached segment">
+
+            <h1 class="ui center aligned header">
+                Status:
+            </h1>
+
+            <div class="status-red" id="status" ng-if="!user.status.verify">
+                Your email is not verified
+            </div>
+
+            <div class="status-green" id="status" ng-if="user.status.verify">
+                Your email is verified
+            </div>
+
+            <div class="ui divider"></div>
+
+            <div class="ui blue large button" ng-if="!user.status.verify" ng-click="sendEmail()">Send Verification Email</div>
+
+            <div class="ui blue large button" ng-if="user.status.verify" ui-sref="app.application">Edit Application</div>
+
         </div>
 
     </div>
+
 </div>

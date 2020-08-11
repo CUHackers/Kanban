@@ -1,6 +1,6 @@
 angular.module('app')
-    .controller('sidebarController', ['$scope', '$rootScope', '$location', 'AuthService',
-     function($scope, $rootScope, $location, AuthService){
+    .controller('sidebarController', ['$scope', '$rootScope', 'AuthService',
+     function($scope, $rootScope, AuthService){
 
         $scope.user = $rootScope.currentUser;
 

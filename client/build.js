@@ -392,8 +392,8 @@ angular.module('app')
     }])
 },{}],9:[function(require,module,exports){
 angular.module('app')
-    .controller('sidebarController', ['$scope', '$rootScope', '$location', 'AuthService',
-     function($scope, $rootScope, $location, AuthService){
+    .controller('sidebarController', ['$scope', '$rootScope', 'AuthService',
+     function($scope, $rootScope, AuthService){
 
         $scope.user = $rootScope.currentUser;
 
@@ -493,7 +493,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         },
             'sidebar@app': {
                 templateUrl: "views/sidebar.html",
-                controller: 'sidebarController',
+                controller: 'sidebarController'
             }
         },
         data: {
