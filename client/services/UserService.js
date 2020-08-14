@@ -19,9 +19,18 @@ angular.module('app').
             return $http.put('/api/users/' + id + '/info', {
                 info: info,
                 app: app
-              });
+            });
         }
-        return userService;
 
+        userService.getUsers = function(query, filter) {
+            return $http.get('/api/users?' + $.param(
+                {
+                  query: query,
+                  filter: filter
+                })
+            );
+        }
+
+        return userService;
 
     }])

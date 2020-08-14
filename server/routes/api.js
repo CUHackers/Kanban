@@ -72,7 +72,6 @@ router.get('/users/:id', isOwnerOrAdmin, function(req, res){
     });
 });
 
-// for updating user info (need perimission work)
 /**
  * updating user info in the database
  * id = :id
@@ -92,6 +91,33 @@ router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
     });
     
 });
+
+
+/**
+* Get all users or based on the filter
+*/
+router.get('/users', isAdmin, function(req, res){
+    var query = req.query;
+
+    if (query.query){
+        UserController.getUsers(query, function(err, users) {
+            if (err){
+                return res.status(400).send(err);
+            } 
+            return res.status(200).send(users);
+            });
+    } 
+    else {
+        UserController.getAll(function(err, users) {
+            if (err){
+                return res.status(400).send(err);
+            } 
+            return res.status(200).send(users);
+        });
+    }
+});
+
+
 
 
 module.exports = router

@@ -6,6 +6,7 @@ var verifyCtrl = require('./controllers/verifyController')
 var workshopCtrl = require('./controllers/workshopController')
 var applicationCtrl = require('./controllers/applicationController')
 var adminCtrl = require('./controllers/adminController')
+var adminCtrl = require('./controllers/adminUsersController')
 
 angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
  function($stateProvider, $locationProvider, $urlRouterProvider){
@@ -99,6 +100,12 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
 
     .state('app.admin.stats', {
         url: "/admin"
+    })
+
+    .state('app.admin.users', {
+        url: "/admin/users",
+        templateUrl: "views/users.html",
+        controller: 'adminUsersController'
     })
 
     .state('verify', {

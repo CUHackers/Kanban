@@ -203,6 +203,59 @@ UserController.getUserById = function(id, callback) {
     });
 }
 
+/**
+ * get users based on the filter
+ * @param {*} query contains query text and search filter
+ * @param {Function} callback callback function 
+ */
+UserController.getUsers = function(query, callback) {
+    var searchText = query.query;
+    var filter = query.filter;
+    const attributes = ['email', 'info', 'status'];
+
+    if (filter) {
+        User.scan(filter).contains(searchText).attributes(attributes).exec(function(err, result) {
+            if (err || !result) {
+                return callback(err);
+            }
+
+            return callback(null, result);
+        })
+    }
+    else {
+        User.scan()
+         .filter('email').contains(searchText).attributes(attributes).or()
+         .filter('info.name').contains(searchText).attributes(attributes).or()
+         .filter('info.gradyr').contains(searchText).attributes(attributes).or()
+         .filter('info.school').contains(searchText).attributes(attributes).or()
+         .exec(function(err, result) {
+            if (err || !result) {
+                return callback(err);
+            }
+
+            return callback(null, result);
+        })
+    }
+
+}
+
+/**
+ * get all user from the database
+ * @param {*} callback callback function
+ */
+UserController.getAll = function(callback) {
+    const attributes = ['email', 'info', 'status'];
+
+    User.scan().attributes(attributes).exec(function(err, result){
+        if (err || !result) {
+            return callback(err);
+        }
+
+        return callback(null, result);
+    })
+
+}
+
 // SETTER METHODS 
 
 /**
