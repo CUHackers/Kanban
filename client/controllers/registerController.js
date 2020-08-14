@@ -1,6 +1,6 @@
 angular.module('app')
-    .controller('registerController', ['$scope', 'AuthService', 'UserService', 'Session', 
-    function($scope, AuthService, UserService, Session){
+    .controller('registerController', ['$scope', 'AuthService', 'UserService', 'Session', '$state',
+    function($scope, AuthService, UserService, Session, $state){
 
         $scope.genders = [
             {value: '', display: 'Gender'},
@@ -17,16 +17,21 @@ angular.module('app')
             {value: '2024', display: '2024'}
         ];
 
+        function onSucess(data){
+            UserService.updateInfo(Session.getID(), $scope.info, false).then(function(res){
+                $state.go('app.dashboard');
+            });
+        }
+
         function onError(data){
             $scope.error = data.message;
         }
 
-        $scope.register = async function(){
+        $scope.register = function(){
             $scope.error = null;
             $scope.info.frq1 = "";
             $scope.info.frq2 = "";
-            await AuthService.register($scope.info.email, $scope.info.password, onError);
-            UserService.updateInfo(Session.getID(), $scope.info, false);
+            AuthService.register($scope.info.email, $scope.info.password, onSucess, onError);
         };
 
 

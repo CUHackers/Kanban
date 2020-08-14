@@ -46,7 +46,7 @@ angular.module('app')
          * @param {String} password user password
          * @param {Function} cb callback function
          */
-        authService.register = function (email, password, cb) {
+        authService.register = function (email, password, onSucess, onFailure) {
             return $http
             .post('/auth/register', {
                 email: email,
@@ -54,10 +54,10 @@ angular.module('app')
             })
             .then(function successCallback(response) {
                 Session.create(response.data.token, response.data.user);
-                $state.go('app.dashboard');
+                onSucess(response.data);
             }, function errorCallback(response) {
                 $state.go('register');
-                cb(response.data);
+                onFailure(response.data);
             });
         }
 

@@ -48,6 +48,7 @@ UserController.createUser = async function(email, password, callback) {
         }
         else {
             var token = await u.generateToken();
+            delete u.password;
 
             return callback(null, {
                 token: token,
