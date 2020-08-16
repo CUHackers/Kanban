@@ -8,7 +8,7 @@ angular.module('app')
 
             if (rfid) {
                 UserService.checkin(rfid).then(res => {
-                    console.log(res)
+                    $scope.rfid = null;
                     if (res.data.status.checkin) {
                         swal("Checked In", res.data.info.name + " has been checked in.", "success");
                     }
@@ -17,7 +17,7 @@ angular.module('app')
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    $scope.rfid = null;
                     swal("Oh noes!", err.data.message, "error");
                 });
             }

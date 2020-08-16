@@ -297,16 +297,16 @@ angular.module('app')
 
             if (rfid) {
                 UserService.checkin(rfid).then(res => {
-                    console.log(res)
+                    $scope.rfid = null;
                     if (res.data.status.checkin) {
-                        swal("Accepted", res.data.info.name + " has been checked in.", "success");
+                        swal("Checked In", res.data.info.name + " has been checked in.", "success");
                     }
                     else {
-                        swal("Accepted", res.data.info.name + " has been checked out.", "success");
+                        swal("Checked Out", res.data.info.name + " has been checked out.", "success");
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    $scope.rfid = null;
                     swal("Oh noes!", err.data.message, "error");
                 });
             }
