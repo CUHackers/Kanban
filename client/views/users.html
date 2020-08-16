@@ -32,6 +32,7 @@
                     <th>School</th>
                     <th>Grad</th>
                     <th>Status</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +42,12 @@
                     <td data-label="School">{{user.info.school}}</td>
                     <td data-label="Grad">{{user.info.gradyr}}</td>
                     <td data-label="Status"></td>
+                    <td>
+                        <button
+                         ng-click="assignID($event, user, $index)"
+                         class="ui circular mini basic green icon button">
+                        <i class="id card icon"></i>
+                    </td>
                 </tr>
             </tbody>
         </table>

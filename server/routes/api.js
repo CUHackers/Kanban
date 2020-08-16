@@ -117,6 +117,33 @@ router.get('/users', isAdmin, function(req, res){
     }
 });
 
+/**
+ * assign RFID to an user
+ */
+router.post('/users/:id/assign', isAdmin, function(req, res){
+    var id = req.params.id;
+    var rfid = req.body.rfid;
+    UserController.assignID(id, rfid, function(err, user) {
+        if (err){
+            return res.status(400).send(err);
+        } 
+        return res.status(200).send(user);
+    })
+})
+
+/**
+ * checks in/out of an user based on the rfid
+ */
+router.post('/users/checkin', isAdmin, function(req, res){
+    var rfid = req.body.rfid;
+    UserController.checkin(rfid, function(err, user) {
+        if (err){
+            return res.status(400).send(err);
+        } 
+        return res.status(200).send(user);
+    })
+})
+
 
 
 

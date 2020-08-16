@@ -22,6 +22,11 @@ angular.module('app').
             });
         }
 
+        /**
+         * gets users based on the query text and filter
+         * @param {String} query the query text
+         * @param {String} filter the search filter
+         */
         userService.getUsers = function(query, filter) {
             return $http.get('/api/users?' + $.param(
                 {
@@ -29,6 +34,22 @@ angular.module('app').
                   filter: filter
                 })
             );
+        }
+
+        /**
+         * assign RFID to an user adn check in 
+         * @param {String} id uid of user
+         */
+        userService.assignID = function(id, rfid) {
+            return $http.post('/api/users/' + id + '/assign', {
+                rfid: rfid
+            });
+        }
+
+        userService.checkin = function(rfid) {
+            return $http.post('/api/users/checkin', {
+                rfid: rfid
+            });
         }
 
         return userService;

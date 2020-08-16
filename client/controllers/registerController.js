@@ -17,10 +17,9 @@ angular.module('app')
             {value: '2024', display: '2024'}
         ];
 
-        function onSucess(data){
-            UserService.updateInfo(Session.getID(), $scope.info, false).then(function(res){
-                $state.go('app.dashboard');
-            });
+        function onSucess(){
+            UserService.updateInfo(Session.getID(), $scope.info, false)
+            $state.go('app.dashboard');
         }
 
         function onError(data){

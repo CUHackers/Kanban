@@ -10,7 +10,6 @@ angular.module('app')
                 if (res) {
                     $scope.verify = true;
                     $scope.loading = false;
-                    console.log("done")
                 }
                 else {
                     $scope.loading = false;

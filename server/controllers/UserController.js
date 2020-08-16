@@ -212,7 +212,7 @@ UserController.getUserById = function(id, callback) {
 UserController.getUsers = function(query, callback) {
     var searchText = query.query;
     var filter = query.filter;
-    const attributes = ['email', 'info', 'status'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status'];
 
     if (filter) {
         User.scan(filter).contains(searchText).attributes(attributes).exec(function(err, result) {
@@ -245,7 +245,7 @@ UserController.getUsers = function(query, callback) {
  * @param {*} callback callback function
  */
 UserController.getAll = function(callback) {
-    const attributes = ['email', 'info', 'status'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status'];
 
     User.scan().attributes(attributes).exec(function(err, result){
         if (err || !result) {
@@ -267,7 +267,6 @@ UserController.getAll = function(callback) {
  */
 UserController.updateInfo = function(id, info, app, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
-        user = result[0];
 
         if (err) {
             return callback({
@@ -275,6 +274,7 @@ UserController.updateInfo = function(id, info, app, callback) {
             });
         }
 
+        user = result[0];
         // check if updateInfo is called from completing applcation 
         if (app) {
             user.status.application = true;
@@ -309,9 +309,145 @@ UserController.updateInfo = function(id, info, app, callback) {
                     delete u.password;
                     return callback(null, u);
                 }
-            })
-        });
+        })
+    });
 
+}
+
+/**
+ * assign RFID to user and check in the user
+ * @param {String} id uid of user
+ * @param {Function} callback callback function
+ */
+UserController.assignID = function(id, rfid, callback) {
+    User.scan('id').eq(id).exec(function(err, result) {
+
+        if (err) {
+            return callback({
+                message: err
+            });
+        }
+
+        user = result[0];
+        // make sure rfid is not already assigned
+        User.scan('rfid').eq(rfid).exec(function(err, result) {
+
+            if (err) {
+                return callback({
+                    message: err
+                });
+            }
+
+            if (result.count === 0) {
+                // checks user in and assign rfid
+                user.status.checkin = true;
+                var status = user.status;
+                User.update(
+                    {
+                        email: user.email.toLowerCase()
+                    },
+                    {
+                        $SET: {
+                            status: status,
+                            rfid: rfid
+                        }
+                    }, 
+                    function(err, u){
+                        if(err) {
+                            return callback({
+                                message: err
+                            });
+                        }
+                        else {
+                            delete u.password;
+                            return callback(null, u);
+                        }
+                })     
+            }
+            else {
+                return callback({
+                    message: "RFID already assigned to another user"
+                });
+            }
+        })
+    })
+}
+
+/**
+ * checks in/out of an user based on rfid
+ * @param {String} rfid rfid of an user
+ * @param {*} callback 
+ */
+UserController.checkin = function(rfid, callback) {
+    User.scan('rfid').eq(rfid).exec(function(err, result) {
+
+        if (err) {
+            return callback({
+                message: err
+            });
+        }
+
+        // if no user is associated with rfid
+        if (result.count === 0) {
+            return callback({
+                message: "RFID is not assigned to any user"
+            });
+        }
+
+        user = result[0];
+        // check in/out based on current status
+        if (user.status.checkin) {
+            // check out user
+            user.status.checkin = false;
+            var status = user.status;
+            User.update(
+                {
+                    email: user.email.toLowerCase()
+                },
+                {
+                    $SET: {
+                        status: status
+                    }
+                }, 
+                function(err, u){
+                    if(err) {
+                        return callback({
+                            message: err
+                        });
+                    }
+                    else {
+                        delete u.password;
+                        return callback(null, u);
+                    }
+            })
+        }
+        else {
+            // check in user
+            user.status.checkin = true;
+            var status = user.status;
+            User.update(
+                {
+                    email: user.email.toLowerCase()
+                },
+                {
+                    $SET: {
+                        status: status
+                    }
+                }, 
+                function(err, u){
+                    if(err) {
+                        return callback({
+                            message: err
+                        });
+                    }
+                    else {
+                        delete u.password;
+                        return callback(null, u);
+                    }
+            })
+        }
+        
+    })
 }
 
 module.exports = UserController;

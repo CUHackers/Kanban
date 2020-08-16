@@ -291,6 +291,27 @@ angular.module('app')
     .controller('adminCheckInController', ['$scope', 'UserService',
      function($scope, UserService){
 
+        // checks in/out an user based on the rfid
+        $scope.checkin = function(){
+            var rfid = $scope.rfid;
+
+            if (rfid) {
+                UserService.checkin(rfid).then(res => {
+                    console.log(res)
+                    if (res.data.status.checkin) {
+                        swal("Accepted", res.data.info.name + " has been checked in.", "success");
+                    }
+                    else {
+                        swal("Accepted", res.data.info.name + " has been checked out.", "success");
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    swal("Oh noes!", err.data.message, "error");
+                });
+            }
+        }
+
     }])
 },{}],5:[function(require,module,exports){
 angular.module('app')
@@ -310,6 +331,7 @@ angular.module('app')
             $scope.users = data;
         }
 
+        // query for the user table, watches the search input
         $scope.$watch('queryText', function(queryText){
             UserService
               .getUsers(queryText, $scope.filter)
@@ -317,6 +339,47 @@ angular.module('app')
                     updateTable(response.data);
               });
           });
+
+        // assign rfid 
+        $scope.assignID = function($event, user, index) {
+            $event.stopPropagation();
+
+            if (!user.rfid) {
+                swal({
+                    text: 'Scan the RFID',
+                    content: "input",
+                    button: {
+                      text: "Enter!",
+                      closeModal: false,
+                    },
+                })
+                .then(rfid => {
+                    if (!rfid) throw null;
+
+                    // assign RFID not uid
+                    UserService.assignID(user.id, rfid).then(res => {
+                        $scope.users[index].rfid = res.data.rfid;
+                        swal("Accepted", res.data.info.name + " has been checked in.", "success");
+                    })
+                    .catch(err => {
+                        if (err) {
+                            swal("Oh noes!", err.data.message, "error");
+                        }
+                        else {
+                            swal.stopLoading();
+                            swal.close();
+                        }
+                    });
+                })
+            }
+            else {
+                swal({
+                    title: "Error!",
+                    text: "User already have a RFID assigned to him/her",
+                    icon: "warning",
+                })
+            }
+        }
 
     }])
 },{}],7:[function(require,module,exports){
@@ -402,11 +465,9 @@ angular.module('app')
             {value: '2024', display: '2024'}
         ];
 
-        function onSucess(data){
-            UserService.updateInfo(Session.getID(), $scope.info, false).then(function(res){
-                $state.go('app.dashboard');
-                $state.reload();
-            });
+        function onSucess(){
+            UserService.updateInfo(Session.getID(), $scope.info, false)
+            $state.go('app.dashboard');
         }
 
         function onError(data){
@@ -447,7 +508,6 @@ angular.module('app')
                 if (res) {
                     $scope.verify = true;
                     $scope.loading = false;
-                    console.log("done")
                 }
                 else {
                     $scope.loading = false;
@@ -825,6 +885,11 @@ angular.module('app').
             });
         }
 
+        /**
+         * gets users based on the query text and filter
+         * @param {String} query the query text
+         * @param {String} filter the search filter
+         */
         userService.getUsers = function(query, filter) {
             return $http.get('/api/users?' + $.param(
                 {
@@ -832,6 +897,22 @@ angular.module('app').
                   filter: filter
                 })
             );
+        }
+
+        /**
+         * assign RFID to an user adn check in 
+         * @param {String} id uid of user
+         */
+        userService.assignID = function(id, rfid) {
+            return $http.post('/api/users/' + id + '/assign', {
+                rfid: rfid
+            });
+        }
+
+        userService.checkin = function(rfid) {
+            return $http.post('/api/users/checkin', {
+                rfid: rfid
+            });
         }
 
         return userService;

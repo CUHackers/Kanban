@@ -18,6 +18,12 @@ var schema = new dynamoose.Schema({
         required: true
     },
 
+    rfid: {
+        type: String,
+        require: true,
+        default: ""
+    },
+
     id: {
         type: String,
         require: true
@@ -90,6 +96,13 @@ var schema = new dynamoose.Schema({
 
             // completed application or not
             application: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+
+            // checked in with rfid
+            checkin: {
                 type: Boolean,
                 required: true,
                 default: false
