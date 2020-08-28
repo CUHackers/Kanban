@@ -35,7 +35,7 @@ var schema = new dynamoose.Schema({
         default: false
     },
 
-    // basic user info from registration/application
+    // basic user info from application
     info: {
         type: Object,
         schema: {
@@ -44,27 +44,51 @@ var schema = new dynamoose.Schema({
                 required: true,
                 default: ""
             },
+
+            cuid: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            first: {
+                type: Boolean,
+                required: true,
+                default: ""
+            },
         
-            gender: {
+            sex: {
                 type: String,
                 required: true,
                 default: ""
             },
 
-            phone: {
+            pronouns: {
                 type: String,
                 required: true,
                 default: ""
             },
 
-            school: {
+            race: {
                 type: String,
                 required: true,
                 default: ""
             },
 
-            gradyr: {
+            teammates: {
                 type: String,
+                required: true,
+                default: ""
+            },
+
+            experience: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            discord: {
+                type: Boolean,
                 required: true,
                 default: ""
             },
@@ -77,6 +101,30 @@ var schema = new dynamoose.Schema({
 
             frq2: {
                 type: String,
+                required: true,
+                default: ""
+            },
+
+            frq3: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            frq4: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            frq5: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            mlh: {
+                type: Boolean,
                 required: true,
                 default: ""
             },

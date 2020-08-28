@@ -8,6 +8,15 @@
     width: 100%;
 }
 
+#application .ui.form .field #mlhcoc>label {
+    display: block;
+    text-align: left;
+}
+
+.mlhlink {
+    font-size: larger;
+}
+
 #application .application .button {
     cursor: pointer;
 }
