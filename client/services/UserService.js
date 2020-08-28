@@ -13,12 +13,10 @@ angular.module('app').
          * updates user info 
          * @param {String} id user id
          * @param {Object} info basic registration info
-         * @param {Boolean} app if called from completing applcation 
          */
-        userService.updateInfo = function(id, info, app) {
+        userService.updateInfo = function(id, info) {
             return $http.put('/api/users/' + id + '/info', {
-                info: info,
-                app: app
+                info: info
             });
         }
 

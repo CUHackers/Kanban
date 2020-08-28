@@ -21,9 +21,9 @@ UserController.createUser = async function(email, password, callback) {
         });
     }
 
-    if (!email.endsWith(".edu")) {
+    if (!email.endsWith("clemson.edu")) {
         return callback({
-            message: "Use your educational email"
+            message: "Use your Clemson email"
         });
     }
 
@@ -43,6 +43,11 @@ UserController.createUser = async function(email, password, callback) {
             if (err.code === 'ConditionalCheckFailedException' && err.statusCode === 400) {
                 return callback({
                   message: 'An account for this email already exists.'
+                });
+            }
+            else {
+                return callback({
+                    message: err
                 });
             }
         }
@@ -265,7 +270,7 @@ UserController.getAll = function(callback) {
  * @param {Object} info info objects that contains basic registration info
  * @param {Function} callback callback function 
  */
-UserController.updateInfo = function(id, info, app, callback) {
+UserController.updateInfo = function(id, info, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
 
         if (err) {
@@ -275,20 +280,9 @@ UserController.updateInfo = function(id, info, app, callback) {
         }
 
         user = result[0];
-        // check if updateInfo is called from completing applcation 
-        if (app) {
-            user.status.application = true;
-            var status = user.status;
-            User.update(
-                {
-                    email: user.email.toLowerCase()
-                },
-                {
-                    $SET: {
-                        status: status
-                    }
-                })
-        }
+        // user completes application
+        user.status.application = true;
+        var status = user.status;
 
         User.update(
             {
@@ -296,7 +290,8 @@ UserController.updateInfo = function(id, info, app, callback) {
             },
             {
                 $SET: {
-                    info: info
+                    info: info,
+                    status: status
                 }
             }, 
             function(err, u){

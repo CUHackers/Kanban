@@ -52,7 +52,7 @@ var schema = new dynamoose.Schema({
             },
 
             first: {
-                type: Boolean,
+                type: String,
                 required: true,
                 default: ""
             },
@@ -88,7 +88,7 @@ var schema = new dynamoose.Schema({
             },
 
             discord: {
-                type: Boolean,
+                type: String,
                 required: true,
                 default: ""
             },
@@ -124,7 +124,7 @@ var schema = new dynamoose.Schema({
             },
 
             mlh: {
-                type: Boolean,
+                type: String,
                 required: true,
                 default: ""
             },

@@ -11,7 +11,7 @@ angular.module('app')
         }
 
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info, true).then(function(res){
+            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
                 $scope.appStatus = true;
             });
         };

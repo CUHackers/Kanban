@@ -81,9 +81,8 @@ router.get('/users/:id', isOwnerOrAdmin, function(req, res){
  */
 router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
     var info = req.body.info;
-    var app = req.body.app;
     var id = req.params.id;
-    UserController.updateInfo(id, info, app, function(err, user) {
+    UserController.updateInfo(id, info, function(err, user) {
         if (err){
             return res.status(400).send(err);
         } 

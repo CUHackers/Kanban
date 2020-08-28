@@ -390,13 +390,13 @@ angular.module('app')
         $scope.user = currentUser.data;
         $scope.appStatus = $scope.user.status.application
 
+        // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
         if (!$scope.user.info.frq5) {
             $scope.user.info.frq5 = "";
         }
 
-
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info, true).then(function(res){
+            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
                 $scope.appStatus = true;
             });
         };
@@ -437,26 +437,10 @@ angular.module('app')
     }])
 },{}],10:[function(require,module,exports){
 angular.module('app')
-    .controller('registerController', ['$scope', 'AuthService', 'UserService', 'Session', '$state',
-    function($scope, AuthService, UserService, Session, $state){
-
-        $scope.genders = [
-            {value: '', display: 'Gender'},
-            {value: 'male', display: 'Male'},
-            {value: 'female', display: 'Female'},
-            {value: 'other', display: 'Other'},
-        ];
-
-        $scope.year = [
-            {value: '', display: 'Graduation Year'},
-            {value: '2021', display: '2021'},
-            {value: '2022', display: '2022'},
-            {value: '2023', display: '2023'},
-            {value: '2024', display: '2024'}
-        ];
+    .controller('registerController', ['$scope', 'AuthService', '$state',
+    function($scope, AuthService, $state){
 
         function onSucess(){
-            UserService.updateInfo(Session.getID(), $scope.info, false)
             $state.go('app.dashboard');
         }
 
@@ -466,8 +450,6 @@ angular.module('app')
 
         $scope.register = function(){
             $scope.error = null;
-            $scope.info.frq1 = "";
-            $scope.info.frq2 = "";
             AuthService.register($scope.info.email, $scope.info.password, onSucess, onError);
         };
 
@@ -866,12 +848,10 @@ angular.module('app').
          * updates user info 
          * @param {String} id user id
          * @param {Object} info basic registration info
-         * @param {Boolean} app if called from completing applcation 
          */
-        userService.updateInfo = function(id, info, app) {
+        userService.updateInfo = function(id, info) {
             return $http.put('/api/users/' + id + '/info', {
-                info: info,
-                app: app
+                info: info
             });
         }
 

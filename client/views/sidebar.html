@@ -13,21 +13,21 @@
     <div class="option" 
         ui-sref-active="active"
         ui-sref="app.application"
-        ng-show="user.status.verify">
+        ng-show="currentUser.status.verify">
         Application
     </div>
 
     <div class="option"
         ui-sref-active="active"
         ui-sref="app.workshop"
-        ng-show="user.status.verify">
+        ng-show="currentUser.status.verify">
         Workshop
     </div>
 
     <div class="option"
         ui-sref-active="active"
         ui-sref="app.admin.stats"
-        ng-show="user.admin">
+        ng-show="currentUser.admin">
         Admin
     </div>
 
