@@ -50,6 +50,10 @@ angular.module('app').
             });
         }
 
+        userService.accpetUser = function(id) {
+            return $http.post('/api/users/' + id + '/accept');
+        }
+
         return userService;
 
     }])

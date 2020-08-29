@@ -217,7 +217,7 @@ UserController.getUserById = function(id, callback) {
 UserController.getUsers = function(query, callback) {
     var searchText = query.query;
     var filter = query.filter;
-    const attributes = ['email', 'id', 'rfid', 'info', 'status'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt'];
 
     if (filter) {
         User.scan(filter).contains(searchText).attributes(attributes).exec(function(err, result) {
@@ -229,11 +229,11 @@ UserController.getUsers = function(query, callback) {
         })
     }
     else {
+        // without special query filter
         User.scan()
          .filter('email').contains(searchText).attributes(attributes).or()
          .filter('info.name').contains(searchText).attributes(attributes).or()
-         .filter('info.gradyr').contains(searchText).attributes(attributes).or()
-         .filter('info.school').contains(searchText).attributes(attributes).or()
+         .filter('info.cuid').contains(searchText).attributes(attributes).or()
          .exec(function(err, result) {
             if (err || !result) {
                 return callback(err);
@@ -250,7 +250,7 @@ UserController.getUsers = function(query, callback) {
  * @param {*} callback callback function
  */
 UserController.getAll = function(callback) {
-    const attributes = ['email', 'id', 'rfid', 'info', 'status'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt'];
 
     User.scan().attributes(attributes).exec(function(err, result){
         if (err || !result) {
@@ -444,5 +444,47 @@ UserController.checkin = function(rfid, callback) {
         
     })
 }
+
+/**
+ * accepts an user
+ * @param {String} id user id
+ * @param {Function} callback callback function 
+ */
+UserController.acceptUser = function(id, callback) {
+    User.scan('id').eq(id).exec(function(err, result) {
+
+        if (err) {
+            return callback({
+                message: err
+            });
+        }
+
+        user = result[0];
+        user.status.acceptance = true;
+        var status = user.status;
+
+        User.update(
+            {
+                email: user.email.toLowerCase()
+            },
+            {
+                $SET: {
+                    status: status
+                }
+            }, 
+            function(err, u){
+                if(err) {
+                    return callback({
+                        message: err
+                    });
+                }
+                else {
+                    delete u.password;
+                    return callback(null, u);
+                }
+        })
+    })
+}
+
 
 module.exports = UserController;

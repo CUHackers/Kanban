@@ -149,6 +149,13 @@ var schema = new dynamoose.Schema({
                 default: false
             },
 
+            // user accpeted or not 
+            acceptance: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+
             // checked in with rfid
             checkin: {
                 type: Boolean,

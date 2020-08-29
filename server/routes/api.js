@@ -143,6 +143,19 @@ router.post('/users/checkin', isAdmin, function(req, res){
     })
 })
 
+/**
+ * accepts an user
+ */
+router.post('/users/:id/accept', isAdmin, function(req, res){
+    var id = req.params.id;
+    UserController.acceptUser(id, function(err, user) {
+        if (err){
+            return res.status(400).send(err);
+        } 
+        return res.status(200).send(user);
+    })
+})
+
 
 
 

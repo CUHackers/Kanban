@@ -13,40 +13,87 @@
             </div>
         </div>
 
+        <div class="ui long user modal">
+            <i class="close icon"></i>
+            <div class="header">
+                {{selectedUser.info.name ? selectedUser.info.name : selectedUser.email}}
+            </div>
+
+            <div class="content">
+                <div ng-repeat="section in selectedUser.sections">
+                    <h3> {{section.title}} </h3>
+        
+                    <p ng-repeat="field in section.fields">
+                        <strong> {{field.name}}: </strong>
+
+                        <span ng-show="field.type === 'boolean'">
+                            <i class="red circle remove icon" ng-show="!field.value"></i>
+                            <i class="green circle check icon" ng-show="field.value"></i>
+                        </span>
+        
+                        <span ng-if="field.type == null">
+                        {{field.value}}
+                        </span>
+                    </p>
+
+                    <div class="ui divider"></div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="ui positive right labeled icon button">
+                    Done
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+
         <div class="six wide column">
             <i class="filter icon"></i>
             <select class="ui dropdown" ng-model="filter">
                 <option value="">Search Filter</option>
+                <option value="info.cuid">CUID</option>
                 <option value="email">Email</option>
-                <option value="info.gradyr">Graduation Year</option>
                 <option value="info.name">Name</option>
-                <option value="info.school">school</option>
+                <option value="accpeted">Accepted Users</option>
+                <option value="verified">Verified Users</option>
             </select>
         </div>
         
-        <table class="ui celled table">
+        <table class="ui celled selectable compact users table">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>School</th>
-                    <th>Grad</th>
+                    <th>CUID</th>
+                    <th>Sex</th>
+                    <th>Ethnicity</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user in users">
-                    <td data-label="Name">{{user.info.name}}</td>
-                    <td data-label="Email">{{user.email}}</td>
-                    <td data-label="School">{{user.info.school}}</td>
-                    <td data-label="Grad">{{user.info.gradyr}}</td>
-                    <td data-label="Status"></td>
-                    <td>
+                <tr ng-click="selectUser(user)" ng-repeat="user in users">
+                    <td class="collapsing">{{user.info.name}}</td>
+                    <td class="collapsing">{{user.email}}</td>
+                    <td class="collapsing">{{user.info.cuid}}</td>
+                    <td class="collapsing">{{user.info.sex}}</td>
+                    <td class="collapsing">{{user.info.race}}</td>
+                    <td class="collapsing"></td>
+                    <td class="right aligned collapsing">
+
+                        <button
+                         ng-click="accpetUser($event, user, $index)"
+                         class="ui circular mini basic green icon button">
+                        <i class="user plus icon"></i>
+                        </button>
+
                         <button
                          ng-click="assignID($event, user, $index)"
                          class="ui circular mini basic green icon button">
                         <i class="id card icon"></i>
+                        </button>
+
                     </td>
                 </tr>
             </tbody>
