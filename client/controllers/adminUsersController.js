@@ -12,14 +12,41 @@ angular.module('app')
         $scope.selectedUser.sections = generateSections({status: '', info: ''});
 
         function updateTable(data){
-            $scope.users = data;
+            if ($scope.filter === 'accepted') {
+                data.forEach(function(x){
+                    if (!x.status.acceptance) {
+                        delete x;
+                    }
+                });
+                $scope.users = data;
+            }
+            else if ($scope.filter === 'verified') {
+                data.forEach(function(x, index){
+                    if (!x.status.verify) {
+                        data.splice(index, 1);
+                    }
+                });
+                $scope.users = data;
+            }
+            else {
+                $scope.users = data;
+            }
         }
 
         // query for the user table, watches the search input
-        $scope.$watch('queryText', function(queryText){
-            UserService.getUsers(queryText, $scope.filter).then(res => {
-                updateTable(res.data);
-            });
+        $scope.$watchGroup(['queryText','filter'], function(query){
+            queryText = query[0];
+            filter = query[1];
+            if (filter === 'accepted' || filter === 'verified') {
+                UserService.getUsers(queryText, null).then(res => {
+                    updateTable(res.data);
+                });
+            }
+            else {
+                UserService.getUsers(queryText, filter).then(res => {
+                    updateTable(res.data);
+                });
+            }
         });
 
         // modal system based on quill
@@ -38,6 +65,10 @@ angular.module('app')
                     title: "Warning",
                     text: "Are you sure you want to accept this user",
                     icon: "warning",
+                    button: {
+                        text: "OK",
+                        closeModal: false,
+                    },
                 })
                 .then(value => {
                     if (!value) {

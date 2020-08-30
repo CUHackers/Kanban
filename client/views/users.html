@@ -84,13 +84,17 @@
 
                         <button
                          ng-click="accpetUser($event, user, $index)"
-                         class="ui circular mini basic green icon button">
+                         class="ui circular mini basic green icon button"
+                         data-tooltip="Accept User"
+                         data-position="top left">
                         <i class="user plus icon"></i>
                         </button>
 
                         <button
                          ng-click="assignID($event, user, $index)"
-                         class="ui circular mini basic green icon button">
+                         class="ui circular mini basic green icon button"
+                         data-tooltip="Assign RFID"
+                         data-position="top center">
                         <i class="id card icon"></i>
                         </button>
 
