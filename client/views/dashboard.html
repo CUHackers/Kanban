@@ -11,19 +11,19 @@
                 Status:
             </h1>
 
-            <div class="status-red" id="status" ng-if="!user.status.verify">
+            <div class="status-red" id="status" ng-if="!user.status.verified">
                 Your email is not verified
             </div>
 
-            <div class="status-green" id="status" ng-if="user.status.verify">
+            <div class="status-green" id="status" ng-if="user.status.verified">
                 Your email is verified
             </div>
 
             <div class="ui divider"></div>
 
-            <div class="ui blue large button" ng-if="!user.status.verify" ng-click="sendEmail()">Send Verification Email</div>
+            <div class="ui blue large button" ng-if="!user.status.verified" ng-click="sendEmail()">Send Verification Email</div>
 
-            <div class="ui blue large button" ng-if="user.status.verify" ui-sref="app.application">Edit Application</div>
+            <div class="ui blue large button" ng-if="user.status.verified" ui-sref="app.application">Edit Application</div>
 
         </div>
 

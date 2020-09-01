@@ -8,6 +8,7 @@ var applicationCtrl = require('./controllers/applicationController')
 var adminCtrl = require('./controllers/adminController')
 var adminUsersCtrl = require('./controllers/adminUsersController')
 var adminCheckInCtrl = require('./controllers/adminCheckInController')
+var confirmationCtrl = require('./controllers/confirmationController')
 
 angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
  function($stateProvider, $locationProvider, $urlRouterProvider){
@@ -70,6 +71,21 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         },
         data: {
             verified: true
+        }
+    })
+
+    .state('app.confirmation', {
+        url: "/confirmation",
+        templateUrl: 'views/confirmation.html',
+        controller: 'confirmationController',
+        resolve: {
+            currentUser: function(UserService){
+                return UserService.getCurrentUser();
+            },
+        },
+        data: {
+            verified: true,
+            accepted: true
         }
     })
 
@@ -145,6 +161,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         var requireLogin = transition.to().data.login;
         var requireVerified = transition.to().data.verified;
         var requireAdmin = transition.to().data.admin;
+        var requireAccepted = transition.to().data.accepted;
 
         // if logged in, go to dashboard
         if (transition.to().name === 'login' && Session.getToken()) {
@@ -163,12 +180,16 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         // check if user is verified or not
         // problem here with to get access to page by changing local storage value
         // but should be okay since actions still checks permission 
-        if (requireVerified && !Session.getUser().status.verify) {
+        if (requireVerified && !Session.getUser().status.verified) {
             return transition.router.stateService.target("app.dashboard");
         }
 
         // check for admin status
         if (requireAdmin && !Session.getUser().admin) {
+            return transition.router.stateService.target("app.dashboard");
+        }
+
+        if (requireAccepted && !Session.getUser().accepted) {
             return transition.router.stateService.target("app.dashboard");
         }
 

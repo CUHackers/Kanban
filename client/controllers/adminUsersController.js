@@ -12,17 +12,18 @@ angular.module('app')
         $scope.selectedUser.sections = generateSections({status: '', info: ''});
 
         function updateTable(data){
+            // different filter for accepted/verified users
             if ($scope.filter === 'accepted') {
-                data.forEach(function(x){
-                    if (!x.status.acceptance) {
-                        delete x;
+                data.forEach(function(x, index){
+                    if (!x.status.accepted) {
+                        data.splice(index, 1);
                     }
                 });
                 $scope.users = data;
             }
             else if ($scope.filter === 'verified') {
                 data.forEach(function(x, index){
-                    if (!x.status.verify) {
+                    if (!x.status.verified) {
                         data.splice(index, 1);
                     }
                 });
@@ -60,7 +61,7 @@ angular.module('app')
         $scope.accpetUser = function($event, user, index) {
             $event.stopPropagation();
 
-            if (!user.status.acceptance) {
+            if (!user.status.accepted) {
                 swal({
                     title: "Warning",
                     text: "Are you sure you want to accept this user",
@@ -76,7 +77,7 @@ angular.module('app')
                     }
 
                     UserService.accpetUser(user.id).then(res => {
-                        $scope.users[index].status.acceptance = res.data.status.acceptance;
+                        $scope.users[index].status.accepted = res.data.status.accepted;
                         swal("Accepted", res.data.info.name + ' has been Accepted.', "success");
                     })
                     .catch(err => {
@@ -154,17 +155,17 @@ angular.module('app')
                     fields: [
                         {
                             name: 'Verified',
-                            value: user.status.verify,
+                            value: user.status.verified,
                             type: 'boolean'
                         },
                         {
                             name: 'Completed Application',
-                            value: user.status.application,
+                            value: user.status.completedApp,
                             type: 'boolean'
                         },
                         {
                             name: 'Accepted',
-                            value: user.status.acceptance,
+                            value: user.status.accepted,
                             type: 'boolean'
                         },
                         {

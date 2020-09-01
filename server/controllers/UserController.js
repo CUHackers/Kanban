@@ -172,7 +172,7 @@ UserController.verifyEmail = function(token, callback) {
         if (email) {
             email.toLowerCase();
             User.get(email, function(err, user) {
-                user.status.verify = true;
+                user.status.verified = true;
                 var status = user.status;
                 User.update(
                     {
@@ -281,7 +281,7 @@ UserController.updateInfo = function(id, info, callback) {
 
         user = result[0];
         // user completes application
-        user.status.application = true;
+        user.status.completedApp = true;
         var status = user.status;
 
         User.update(
@@ -460,7 +460,7 @@ UserController.acceptUser = function(id, callback) {
         }
 
         user = result[0];
-        user.status.acceptance = true;
+        user.status.accepted = true;
         var status = user.status;
 
         User.update(

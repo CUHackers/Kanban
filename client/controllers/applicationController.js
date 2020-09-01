@@ -3,7 +3,7 @@ angular.module('app')
      function($scope, $state, currentUser, UserService, Session){
 
         $scope.user = currentUser.data;
-        $scope.appStatus = $scope.user.status.application
+        $scope.appStatus = $scope.user.status.completedApp
 
         // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
         if (!$scope.user.info.frq5) {

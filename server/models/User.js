@@ -136,21 +136,35 @@ var schema = new dynamoose.Schema({
         type: Object,
         schema: {
             // email verify status
-            verify: {
+            verified: {
                 type: Boolean,
                 required: true,
                 default: false
             },
 
             // completed application or not
-            application: {
+            completedApp: {
                 type: Boolean,
                 required: true,
                 default: false
             },
 
             // user accpeted or not 
-            acceptance: {
+            accepted: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+
+            // user confirmed his acceptance or not 
+            confirmed: {
+                type: Boolean,
+                required: true,
+                default: false
+            },
+
+            // user declined his acceptance or not 
+            declined: {
                 type: Boolean,
                 required: true,
                 default: false
