@@ -1,4 +1,4 @@
-
+var $ = require("jquery");
 var angular = require('angular');
 var uiRouter = require('angular-ui-router');
 

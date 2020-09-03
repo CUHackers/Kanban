@@ -3,6 +3,7 @@ angular.module('app')
      function($scope, $rootScope, AuthService, $state){
 
         $scope.user = $rootScope.currentUser;
+        $scope.showSidebar = false;
 
         $scope.isAdminStateActive = function(state) {
             return $state.includes(state);
@@ -12,10 +13,18 @@ angular.module('app')
             AuthService.logout();
         };
 
-        $scope.showSidebar = false;
         $scope.toggleSidebar = function(){
             $scope.showSidebar = !$scope.showSidebar;
             console.log($scope.showSidebar)
         };
+
+        // ng-click and ui-sref dont like each other, thanks for the hack quill
+        $('.option').on('click', function(){
+            $scope.showSidebar = false;
+        });
+
+        $('.logo').on('click', function(){
+            $scope.showSidebar = false;
+        });
 
     }])

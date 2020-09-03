@@ -5,13 +5,14 @@
 
 .content {
     padding-left:270px;
-    text-align: center;
     -webkit-transition: 0.5s;
 	transition: 0.5s;
 }
 
 .container {
+    text-align: center;
     padding: 0 5%;
+    padding-bottom: 10%;
 }
 
 .container .title {
@@ -27,5 +28,6 @@
 
     .container{
         padding: 10px;
+        padding-bottom: 10%;
     }
 }
