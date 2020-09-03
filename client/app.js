@@ -1,3 +1,7 @@
+
+var angular = require('angular');
+var uiRouter = require('angular-ui-router');
+
 var app = angular.module('app', ['ui.router']);
 
 var AuthService = require('./services/AuthService.js');

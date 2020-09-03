@@ -4,4 +4,24 @@
 @import 'application.css';
 @import 'workshop.css';
 @import 'base.css';
-@import 'verify.css'
+@import 'verify.css';
+
+.title{
+    text-transform: uppercase;
+    font-size: 2.5em;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 5px;
+    font-weight: 600;
+}
+
+.title:after {
+    content: " ";
+    width: 200px;
+    display: block;
+    margin: 1em auto 0em;
+    border-bottom: 4px solid #fff;
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+    border-bottom-color: #fff;
+}

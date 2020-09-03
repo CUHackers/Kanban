@@ -1,14 +1,16 @@
-var LoginCtrl = require('./controllers/loginController');
-var RegisterCtrl = require('./controllers/registerController');
-var sidebarCtrl = require('./controllers/sidebarController')
-var dashboardCtrl = require('./controllers/dashboardController')
-var verifyCtrl = require('./controllers/verifyController')
-var workshopCtrl = require('./controllers/workshopController')
-var applicationCtrl = require('./controllers/applicationController')
-var adminCtrl = require('./controllers/adminController')
-var adminUsersCtrl = require('./controllers/adminUsersController')
-var adminCheckInCtrl = require('./controllers/adminCheckInController')
-var confirmationCtrl = require('./controllers/confirmationController')
+var loginCtrl = require('./controllers/loginController');
+var registerCtrl = require('./controllers/registerController');
+var forgotCtrl = require('./controllers/forgotController');
+var sidebarCtrl = require('./controllers/sidebarController');
+var dashboardCtrl = require('./controllers/dashboardController');
+var verifyCtrl = require('./controllers/verifyController');
+var verifyCtrl = require('./controllers/resetController');
+var workshopCtrl = require('./controllers/workshopController');
+var applicationCtrl = require('./controllers/applicationController');
+var adminCtrl = require('./controllers/adminController');
+var adminUsersCtrl = require('./controllers/adminUsersController');
+var adminCheckInCtrl = require('./controllers/adminCheckInController');
+var confirmationCtrl = require('./controllers/confirmationController');
 
 angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
  function($stateProvider, $locationProvider, $urlRouterProvider){
@@ -29,6 +31,15 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         url: "/register",
         templateUrl: 'views/register.html',
         controller: 'registerController',
+        data: {
+            login: false
+        }
+    })
+
+    .state('forgot', {
+        url: "/forgot",
+        templateUrl: 'views/forgot.html',
+        controller: 'forgotController',
         data: {
             login: false
         }
@@ -139,6 +150,15 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             login: false
          }
     })
+
+    .state('reset', {
+        url: "/reset/:token",
+        templateUrl: "views/reset.html",
+        controller: 'resetController',
+        data: {
+          requireLogin: false
+        }
+      })
 
     .state('404', {
         url: "/404",

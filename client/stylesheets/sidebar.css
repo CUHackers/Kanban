@@ -1,10 +1,14 @@
 #sidebar{
-    width: 300px;
+    width: 270px;
     height: 100%;
     top: 0;
     left: 0;
     background: #5A6ADA;
     position: fixed;
+    overflow: auto;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    z-index: 999;
 }
 
 #sidebar .logo img{
@@ -36,8 +40,42 @@
     height: 0;
 }
 
-@media screen and (max-width: 768px) {
+.toggle {
+    position: fixed;
+    cursor: pointer;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translate3d(270px, 0, 0);
+    transform: translate3d(270px, 0, 0);
+    -webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+
+@media only screen and (max-width: 768px) {
     #sidebar{
-        display:none;
+        -webkit-transform: translate3d(-270px, 0, 0);
+	    transform: translate3d(-270px, 0, 0);
     }
+
+    .toggle{
+        visibility: visible;
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+	    transform: translate3d(0, 0, 0);
+    }
+
+    #sidebar.open{
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    #sidebar.open + .toggle{
+        -webkit-transform: translate3d(270px, 0, 0);
+        transform: translate3d(270px, 0, 0);
+    }
+
+
+
+    
 }

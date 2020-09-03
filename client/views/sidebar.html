@@ -1,4 +1,4 @@
-<div id="sidebar" ng-controller="sidebarController">
+<div id="sidebar" ng-class="{open : showSidebar}">
     <div class="logo">
         <img src="/assets/logo.png">
     </div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="option"
-        ui-sref-active="active"
+        ng-class="{active : isAdminStateActive('app.admin')}"
         ui-sref="app.admin.stats"
         ng-show="currentUser.admin">
         Admin
@@ -37,4 +37,8 @@
 
     <div class="divider"></div>
 
+</div>
+
+<div class="toggle" ng-click="toggleSidebar()">
+    <i class="big bordered inverted blue sidebar icon"></i>
 </div>

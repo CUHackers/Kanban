@@ -60,32 +60,29 @@ body{
     border-radius: 9px;
 }
 
-.outline .links{
-    display: flex;
-    text-align: center;
-    /* justify-content: center; */
-}
-
-.outline .links a{
-    color: #222;
+.outline #links a{
+    color: #fff;
+    font-weight: 550;
     text-decoration: none;
 }
 
-.outline .links a:hover{
+.outline #links a:hover{
     text-decoration: underline;
 }
 
-.outline .reg{
-    margin-right: 3em;
+#reg{
+    text-align: left;
+    padding-right: 5px;
 }
 
-.outline .pas{
-    margin-left: 3em;
+#pas{
+    text-align: right;
+    padding-left: 5px;
 }
 
 .outline .divider{
     border-bottom: 1px solid #343D3A;
     opacity: 50%;
-    margin: 2em 0;
+    margin: 2em 0 1.5em;
     height: 0;
 }
