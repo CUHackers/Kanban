@@ -1,0 +1,27 @@
+<!-- Forgot Page -->
+<div class="outline">
+<img class="centered ui image" src="/assets/logo_transparent-bg.png" alt="CUhackit Logo">
+<h2 class="centered ui header" id="title">Forgot Password? <br>No Worries!</h2>
+<h4 class="centered ui header" id="desc">Enter your Clemson email below for a password reset email.</h4>
+
+	
+    <div class="error" ng-show="error">{{error}}</div>
+	<div class="divider"></div>
+    <div>
+        <form ng-submit="register()" class="register">
+            <div>
+                <input class="ui big input" type = "email" id = "email" placeholder = "email" ng-model="info.email" required>
+            </div>
+            <div>
+                <button type="submit" class="centered ui button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+	<div class="divider"></div>
+	<div class = "links">
+		<a class = "login" href="login">Remembered your password? Log in here</a>
+	</div>
+</div>
+
+

@@ -74,6 +74,10 @@ body{
 	color:white;
 }
 
+#desc{
+	color:white;
+}
+
 .outline .divider{
     border-bottom: 1px solid #343D3A;
     opacity: 50%;
