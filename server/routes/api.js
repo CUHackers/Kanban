@@ -91,6 +91,24 @@ router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
     
 });
 
+/**
+ * updating user confirmation in the database
+ * id = :id
+ * body {
+ *  conf: conf 
+ * }
+ */
+router.put('/users/:id/confirmation',isOwnerOrAdmin, function(req, res){
+    var conf = req.body.conf;
+    var id = req.params.id;
+    UserController.updateConf(id, conf, function(err, user) {
+        if (err){
+            return res.status(400).send(err);
+        } 
+        return res.status(200).send(user);
+    });
+    
+});
 
 /**
 * Get all users or based on the filter

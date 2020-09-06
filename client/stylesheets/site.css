@@ -2,6 +2,7 @@
 @import 'sidebar.css';
 @import 'dashboard.css';
 @import 'application.css';
+@import 'confirmation.css';
 @import 'workshop.css';
 @import 'base.css';
 @import 'verify.css';
@@ -24,4 +25,8 @@
     border-bottom-width: 4px;
     border-bottom-style: solid;
     border-bottom-color: #fff;
+}
+
+fieldset {
+    border: 0;
 }

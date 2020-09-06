@@ -587,8 +587,8 @@ angular.module('app')
     }])
 },{"moment":106,"sweetalert":107}],7:[function(require,module,exports){
 angular.module('app')
-    .controller('applicationController', ['$scope', '$state', 'currentUser', 'UserService', 'Session', 
-     function($scope, $state, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
+     function($scope, currentUser, UserService, Session, $state){
 
         $scope.user = currentUser.data;
         $scope.appStatus = $scope.user.status.completedApp
@@ -600,21 +600,56 @@ angular.module('app')
 
         $scope.submitApp = function(){
             UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
+                $state.reload();
                 $scope.appStatus = true;
             });
         };
 
-        $scope.edit = function(){
+        $scope.view = function(){
             $scope.appStatus = false;
+        }
+
+        $scope.back = function(){
+            $scope.appStatus = true;
         }
 
     }])
 },{}],8:[function(require,module,exports){
 angular.module('app')
-    .controller('confirmationController', ['$scope',
-     function($scope){
+    .controller('confirmationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
+     function($scope, currentUser, UserService, Session, $state) {
+
+        $scope.user = currentUser.data;
+        $scope.confStatus = $scope.user.status.confirmed
 
 
+        // a little hack to sure optional fields will exist if textarea/input not clicked
+        function optionalCheck(data) {
+            if (!data){
+                data = "";
+            }
+        }
+
+        optionalCheck($scope.user.confirmation.address.street);
+        optionalCheck($scope.user.confirmation.address.apartNum);
+        optionalCheck($scope.user.confirmation.address.city);
+        optionalCheck($scope.user.confirmation.address.state);
+        optionalCheck($scope.user.confirmation.address.zip);
+
+        $scope.submitConf = function(){
+            UserService.updateConf(Session.getID(), $scope.user.confirmation).then(function(res){
+                $state.reload();
+                $scope.confStatus = true;
+            });
+        };
+
+        $scope.view = function(){
+            $scope.confStatus = false;
+        }
+
+        $scope.back = function(){
+            $scope.confStatus = true;
+        }
     }])
 },{}],9:[function(require,module,exports){
 var swal = require('sweetalert');
@@ -702,6 +737,10 @@ angular.module('app')
 
         // ng-click and ui-sref dont like each other, thanks for the hack quill
         $('.option').on('click', function(){
+            $scope.showSidebar = false;
+        });
+
+        $('.logo').on('click', function(){
             $scope.showSidebar = false;
         });
 
@@ -967,7 +1006,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             return transition.router.stateService.target("app.dashboard");
         }
 
-        if (requireAccepted && !Session.getUser().accepted) {
+        if (requireAccepted && !Session.getUser().status.accepted) {
             return transition.router.stateService.target("app.dashboard");
         }
 
@@ -1132,6 +1171,17 @@ angular.module('app').
         userService.updateInfo = function(id, info) {
             return $http.put('/api/users/' + id + '/info', {
                 info: info
+            });
+        }
+
+        /**
+         * updates user confirmation
+         * @param {String} id user id
+         * @param {Object} conf user confirmation form
+         */
+        userService.updateConf = function(id, conf) {
+            return $http.put('/api/users/' + id + '/confirmation', {
+                conf: conf
             });
         }
 

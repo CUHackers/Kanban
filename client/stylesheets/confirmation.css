@@ -1,0 +1,13 @@
+#confirmation .ui.form .field>label, p{
+    display: block;
+    text-align: left;
+}
+
+#confirmation .completeMsg {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+#confirmation .ui.bottom.attached.segment .button{
+    width: 200px;
+}

@@ -5,135 +5,139 @@
 
     <div class="ui segment" ng-show="!appStatus">
         <div class="ui large form">
-            <form ng-submit="submitApp()" class="application">
-                <div class="field">
-                    <label>Full Name</label>
-                    <input type = "text" id="full-name" placeholder="Full Name" ng-model="user.info.name" required>
-                </div>
+            <form ng-submit="submitApp()">
+                <fieldset ng-disabled="user.status.completedApp">
+                    <div class="field">
+                        <label>Full Name</label>
+                        <input type = "text" id="full-name" placeholder="Full Name" ng-model="user.info.name" required>
+                    </div>
 
-                <div class="field"> 
-                    <label>CUID</label>
-                    <input type = "text" id = "cuid" ng-model="user.info.cuid" required>
-                </div>
+                    <div class="field"> 
+                        <label>CUID</label>
+                        <input type = "text" id = "cuid" ng-model="user.info.cuid" required>
+                    </div>
 
-                <div class="field">
-                    <label>Is this your first semester at Clemson</label>
-                    <select ng-model="user.info.first" required>
-                        <option value=""></option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>Is this your first semester at Clemson</label>
+                        <select ng-model="user.info.first" required>
+                            <option value=""></option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>Sex</label>
-                    <select ng-model="user.info.sex" required>
-                        <option value=""></option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                        <option value="Other/Perfer not to say">Other/Perfer not to say</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>Sex</label>
+                        <select ng-model="user.info.sex" required>
+                            <option value=""></option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other/Perfer not to say">Other/Perfer not to say</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>Gender Pronouns</label>
-                    <input type = "text" id = "pronouns" ng-model="user.info.pronouns" required>
-                </div>
+                    <div class="field">
+                        <label>Gender Pronouns</label>
+                        <input type = "text" id = "pronouns" ng-model="user.info.pronouns" required>
+                    </div>
 
-                <div class="field">
-                    <label>Race/Ethnicity</label>
-                    <select ng-model="user.info.race" required>
-                        <option value=""></option>
-                        <option value="White">White</option>
-                        <option value="Black or African-American">Black or African-American</option>
-                        <option value="Asian American">Asian American</option>
-                        <option value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</option>
-                        <option value="Hispanic/Latinx">Hispanic/Latinx</option>
-                        <option value="Other/Perfer not to say">Other/Perfer not to say</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>Race/Ethnicity</label>
+                        <select ng-model="user.info.race" required>
+                            <option value=""></option>
+                            <option value="White">White</option>
+                            <option value="Black or African-American">Black or African-American</option>
+                            <option value="Asian American">Asian American</option>
+                            <option value="Native Hawaiian or Pacific Islander">Native Hawaiian or Pacific Islander</option>
+                            <option value="Hispanic/Latinx">Hispanic/Latinx</option>
+                            <option value="Other/Perfer not to say">Other/Perfer not to say</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>Do you have people you want to work with (Freshman only)? If so, how many?</label>
-                    <select ng-model="user.info.teammates" required>
-                        <option value=""></option>
-                        <option value="0">No Teammates</option>
-                        <option value="1">1 Teammate</option>
-                        <option value="2">2 Teammates</option>
-                        <option value="3">3 Teammates</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>Do you have people you want to work with (Freshman only)? If so, how many?</label>
+                        <select ng-model="user.info.teammates" required>
+                            <option value=""></option>
+                            <option value="0">No Teammates</option>
+                            <option value="1">1 Teammate</option>
+                            <option value="2">2 Teammates</option>
+                            <option value="3">3 Teammates</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>Rate your programming experience (note: this and all non-free-response questions do not affect your application, we're just curious)</label>
-                    <select ng-model="user.info.experience" required>
-                        <option value=""></option>
-                        <option value="1">1 - Never coded before</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5 - Expert</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>Rate your programming experience (note: this and all non-free-response questions do not affect your application, we're just curious)</label>
+                        <select ng-model="user.info.experience" required>
+                            <option value=""></option>
+                            <option value="1">1 - Never coded before</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5 - Expert</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>We will be using Discord primarily for communications at the event. Do you have a Discord account?</label>
-                    <select ng-model="user.info.discord" required>
-                        <option value=""></option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </select>
-                </div>
+                    <div class="field">
+                        <label>We will be using Discord primarily for communications at the event. Do you have a Discord account?</label>
+                        <select ng-model="user.info.discord" required>
+                            <option value=""></option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
 
-                <div class="field">
-                    <label>
-                        Why do you want to participate?
-                    </label>
-                    <textarea ng-model="user.info.frq1" required>
-                    </textarea>
-                </div>
+                    <div class="field">
+                        <label>
+                            Why do you want to participate?
+                        </label>
+                        <textarea ng-model="user.info.frq1" required>
+                        </textarea>
+                    </div>
 
-                <div class="field">
-                    <label>
-                        Do you have any video tutorial suggestions that we can prepare for you?
-                    </label>
-                    <textarea ng-model="user.info.frq2" required>
-                    </textarea>
-                </div>
+                    <div class="field">
+                        <label>
+                            Do you have any video tutorial suggestions that we can prepare for you?
+                        </label>
+                        <textarea ng-model="user.info.frq2" required>
+                        </textarea>
+                    </div>
 
-                <div class="field">
-                    <label>
-                        What kind of project do you have in mind? (No worries if you're not sure or open to anything)
-                    </label>
-                    <textarea ng-model="user.info.frq3" required>
-                    </textarea>
-                </div>
+                    <div class="field">
+                        <label>
+                            What kind of project do you have in mind? (No worries if you're not sure or open to anything)
+                        </label>
+                        <textarea ng-model="user.info.frq3" required>
+                        </textarea>
+                    </div>
 
-                <div class="field">
-                    <label>
-                        What vegetable are you?
-                    </label>
-                    <textarea ng-model="user.info.frq4" required>
-                    </textarea>
-                </div>
+                    <div class="field">
+                        <label>
+                            What vegetable are you?
+                        </label>
+                        <textarea ng-model="user.info.frq4" required>
+                        </textarea>
+                    </div>
 
-                <div class="field">
-                    <label>
-                        Is there anything we should know? (optional)
-                    </label>
-                    <textarea ng-model="user.info.frq5">
-                    </textarea>
-                </div>
+                    <div class="field">
+                        <label>
+                            Is there anything we should know? (optional)
+                        </label>
+                        <textarea ng-model="user.info.frq5">
+                        </textarea>
+                    </div>
 
-                <div class="field">
-                    <div class="ui segment" id="mlhcoc">
+                    <br>
+
+                    <div class="field">
                         <div>
                             <a target="_blank" and rel="noopener noreferrer" 
                             class="mlhlink" href="https://drive.google.com/file/d/1aCaHJ9nA2DNqkZ00jQgm_haJ_w4CIMtk/view?usp=sharing">
                                 MLH Code of Conduct
                             </a>
                         </div>
-                        <br>
+                    </div>
+
+                    <div class="field">
                         <label>
                             Do you agree to the MLH code of conduct?
                         </label>
@@ -143,25 +147,37 @@
                             <option value="false">No</option>
                         </select>
                     </div>
-                </div>
 
-                <div class="field">
-                    <button class="ui green button" type="submit">Submit</button>
-                </div>
+                    <div class="field" ng-hide="user.status.completedApp">
+                        <br>
+                        <button class="fluid ui green button" type="submit">Submit</button>
+                        <br>
+                    </div>
+                </fieldset>
             </form>
+
+            <div class="field" ng-show="user.status.completedApp">
+                <br>
+                <button class="fluid ui green button" ng-click="back()">Back</button>
+                <br>
+            </div>
         </div>
     </div>
 
     <div class="ui container" ng-show="appStatus">
-        <div class="ui attached icon info message">
-            <i class="check circle icon"></i>
-            <div class="content">
-                Your Application is Complete
-            </div>
+        <div class="ui top attached success message">
+            <i class="huge circular check icon"></i>
         </div>
+
         <div class="ui bottom attached segment">
-            <div class="ui blue button" ng-click="edit()">Edit</div>
-            <div class="ui green button" ui-sref="app.dashboard">Home</div>
+            <h2 class="completeMsg">Your Application is Complete</h2>
+            <br>
+            <div>
+                <button class="ui blue button" ng-click="view()">View Application</buton>
+                <button class="ui green button" ui-sref="app.dashboard">Home</button>
+            </div>
+            <br>
+            <br>
         </div>
     </div>
 </div>

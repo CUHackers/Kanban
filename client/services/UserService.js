@@ -21,6 +21,17 @@ angular.module('app').
         }
 
         /**
+         * updates user confirmation
+         * @param {String} id user id
+         * @param {Object} conf user confirmation form
+         */
+        userService.updateConf = function(id, conf) {
+            return $http.put('/api/users/' + id + '/confirmation', {
+                conf: conf
+            });
+        }
+
+        /**
          * gets users based on the query text and filter
          * @param {String} query the query text
          * @param {String} filter the search filter

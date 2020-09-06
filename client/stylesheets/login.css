@@ -44,7 +44,7 @@ body{
     border-color: #1e90ff;
 }
 
-.outline .login button[type = "login"] {
+.outline .login button[type = "submit"] {
     width: 240px;
     margin: 2em auto;
     padding: .7em;
