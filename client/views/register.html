@@ -1,27 +1,29 @@
 <!-- Register Page -->
-<img src="/assets/logo_transparent-bg.png" alt="CUhackit Logo">
-<h1>Register</h1>
-<div class="divider"></div>
-<div>
+<div class="outline">
+<img class="centered ui image" src="/assets/logo_transparent-bg.png" alt="CUhackit Logo">
+<h1 class="centered ui header">Sign Up</h1>
+
+	
     <div class="error" ng-show="error">{{error}}</div>
+	<div class="divider"></div>
     <div>
-        <form ng-submit="register()" class="user-info">
+        <form ng-submit="register()" class="register">
             <div>
-                <input type = "email" id = "email" placeholder = "email" ng-model="info.email" required>
+                <input class="ui big input" type = "email" id = "email" placeholder = "email" ng-model="info.email" required>
             </div>
             <div>
-                <input type = "password" id = "password" placeholder = "password" ng-model="info.password" required>
+                <input class = "ui big input" type = "password" id = "password" placeholder = "password" ng-model="info.password" required>
             </div>
             <div>
-                <button type="submit">Register</button>
+                <button type="submit" class="centered ui button">Register</button>
             </div>
         </form>
     </div>
-</div>
-	<br>
+
+	<div class="divider"></div>
 	<div class = "links">
 		<a class = "login" href="login">Already registered? Log in here</a>
 	</div>
-
+</div>
 
 
