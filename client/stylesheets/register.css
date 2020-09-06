@@ -1,0 +1,52 @@
+.outline .register input[type = "email"], .register input[type = "password"] {
+    width: 240px;
+    margin: 2em auto;
+    padding: 1em;
+    display: block;
+    border: 1px solid #696969;
+    outline: none;
+    transition: .25s;
+}
+
+.outline .register input[type = "email"]:focus , .register input[type = "password"]:focus {
+    width: 270px;
+    border-radius: 10px;
+    border-color: #1e90ff;
+}
+
+.outline .register button[type = "submit"] {
+    width: 240px;
+    margin: 2em auto;
+    padding: .7em;
+    display: block;
+    border: 1px solid #1e90ff;
+    background-color: #1e90ff;
+    color: #fff;
+    font-weight: 700;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+    border-radius: 9px;
+}
+
+.outline #links a{
+    color: #fff;
+    font-weight: 550;
+    text-decoration: none;
+}
+
+.outline #links a:hover{
+    text-decoration: underline;
+}
+
+#title{
+	color:white;
+}
+
+.outline .divider{
+    border-bottom: 1px solid #343D3A;
+    opacity: 50%;
+    margin: 2em 0 1.5em;
+    height: 0;
+}
