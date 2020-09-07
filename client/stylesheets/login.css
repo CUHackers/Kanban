@@ -12,9 +12,13 @@ body{
 
 .outline{
     width: 300px;
-    margin: 5% auto;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     padding: 1em 1em;
-    position: relative;
     /* background-color: skyblue; */
     background-image: linear-gradient(to bottom right, #4571C4, #7941BA);
     opacity: 90%;
@@ -28,7 +32,7 @@ body{
     margin-top: 1em;
 }
 
-.outline .login input[type = "email"], .login input[type = "password"] {
+.outline input[type = "email"], input[type = "password"] {
     width: 240px;
     margin: 2em auto;
     padding: 1em;
@@ -38,13 +42,13 @@ body{
     transition: .25s;
 }
 
-.outline .login input[type = "email"]:focus , .login input[type = "password"]:focus {
+.outline input[type = "email"]:focus , input[type = "password"]:focus {
     width: 270px;
     border-radius: 10px;
     border-color: #1e90ff;
 }
 
-.outline .login button[type = "submit"] {
+.outline button[type = "submit"] {
     width: 240px;
     margin: 2em auto;
     padding: .7em;

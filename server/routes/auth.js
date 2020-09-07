@@ -70,7 +70,7 @@ router.post('/verify', function(req, res){
     if (id) {
         UserController.sendVerificationEmail(id, function(err, user){
             if (err || !user){
-                return res.status(400).send();
+                return res.status(400).send(err);
             } 
             return res.status(200).send();
         });
@@ -89,8 +89,49 @@ router.get('/verify/:token', function(req, res){
         if (err || !user){
             return res.status(400).send(err);
         }
+        delete user.password;
         return res.status(200).json(user);
     })
 })
+
+/**
+ * send reset passsword email to user
+ * body {
+ *  email: email,
+ * }
+ */
+router.post('/reset', function(req, res){
+    var email = req.body.email;
+    if (email) {
+        UserController.sendResetEmail(email, function(err){
+            if (err){
+                return res.status(400).send(err);
+            } 
+            return res.status(200).send();
+        });
+    } 
+    else {
+        return res.status(400).send();
+    }
+})
+
+/**
+* resets user password.
+* {
+*   token: token
+*   password: password
+* }
+*/
+router.post('/reset/password', function(req, res){
+    var pass = req.body.password;
+    var token = req.body.token;
+
+    UserController.resetPassword(token, pass, function(err, user){
+        if (err || !user){
+            return res.status(400).send(err);
+        }
+        return res.json(user);
+    });
+});
 
 module.exports = router

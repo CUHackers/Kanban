@@ -1,1 +1,23 @@
-<div class = "ui button">View</div>
+<div class="outline">
+    <div class="logo">
+        <img src="/assets/logo_transparent-bg.png">
+    </div>
+
+    <div class="divider"></div>
+	
+    <div class="ui negative message" ng-show="error">{{error}}</div>
+
+    <div>
+        <form ng-submit="changePassword()">
+            <div>
+                <input type = "password" id = "password" placeholder = "New Password" ng-model="password" required>
+            </div>
+            <div>
+                <input type = "password" id = "confirm" placeholder = "Confirm Password" ng-model="confirm" required>
+            </div>
+            <div>
+                <button type="submit" class="centered ui button">Reset Password</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -668,9 +668,17 @@ angular.module('app')
     }])
 },{"sweetalert":107}],10:[function(require,module,exports){
 angular.module('app')
-    .controller('forgotController', ['$scope',
-     function($scope){
+    .controller('forgotController', ['$scope', 'AuthService',
+     function($scope, AuthService) {
 
+        $scope.sendResetEmail = function() {
+            var email = $scope.email;
+            if (email) {
+                AuthService.sendResetEmail(email)
+                swal("Success!", "Check your email to reset your password.", "success");
+            }
+        
+        };
 
     }])
 },{}],11:[function(require,module,exports){
@@ -709,9 +717,31 @@ angular.module('app')
     }])
 },{}],13:[function(require,module,exports){
 angular.module('app')
-    .controller('resetController', ['$scope',
-     function($scope){
+    .controller('resetController', ['$scope', '$stateParams', '$state', 'AuthService',
+     function($scope, $stateParams, $state, AuthService){
 
+        var token = $stateParams.token;
+
+        $scope.changePassword = function() {
+            var password = $scope.password;
+            var confirm = $scope.confirm;
+
+            if (password !== confirm){
+                $scope.error = "Passwords don't match!";
+                $scope.confirm = "";
+                return;
+            }
+
+            AuthService.resetPassword(token, $scope.password, success => {
+                swal("Success!", "Your password has been changed!", "success").then(value => {
+                    $state.go("login");
+                });
+            },
+                err => {
+                    $scope.error = err.data.message;
+                }
+            );
+        }
 
     }])
 },{}],14:[function(require,module,exports){
@@ -1011,6 +1041,10 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         }
 
     });
+
+    $transitions.onSuccess({}, transition => {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      });
 })
 },{"./controllers/adminCheckInController":4,"./controllers/adminController":5,"./controllers/adminUsersController":6,"./controllers/applicationController":7,"./controllers/confirmationController":8,"./controllers/dashboardController":9,"./controllers/forgotController":10,"./controllers/loginController":11,"./controllers/registerController":12,"./controllers/resetController":13,"./controllers/sidebarController":14,"./controllers/verifyController":15,"./controllers/workshopController":16}],18:[function(require,module,exports){
 angular.module('app').
@@ -1103,6 +1137,7 @@ angular.module('app')
             });
         }
 
+        // verify user based on the email token 
         authService.verify = function(token, callback) {
             return $http
             .get('/auth/verify/' + token)
@@ -1112,6 +1147,24 @@ angular.module('app')
                 callback(null);
             });
         }
+
+        // send reset password email to user 
+        authService.sendResetEmail = function(email) {
+            return $http
+            .post('/auth/reset', {
+                email: email
+            });
+        }
+
+        // resets user password
+        authService.resetPassword = function(token, pass, onSuccess, onFailure){
+            return $http
+            .post('/auth/reset/password', {
+                token: token,
+                password: pass
+            })
+            .then(onSuccess, onFailure);
+        };
     
         return authService;
     }])

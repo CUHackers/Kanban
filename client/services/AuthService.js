@@ -75,6 +75,7 @@ angular.module('app')
             });
         }
 
+        // verify user based on the email token 
         authService.verify = function(token, callback) {
             return $http
             .get('/auth/verify/' + token)
@@ -84,6 +85,24 @@ angular.module('app')
                 callback(null);
             });
         }
+
+        // send reset password email to user 
+        authService.sendResetEmail = function(email) {
+            return $http
+            .post('/auth/reset', {
+                email: email
+            });
+        }
+
+        // resets user password
+        authService.resetPassword = function(token, pass, onSuccess, onFailure){
+            return $http
+            .post('/auth/reset/password', {
+                token: token,
+                password: pass
+            })
+            .then(onSuccess, onFailure);
+        };
     
         return authService;
     }])

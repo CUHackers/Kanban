@@ -280,7 +280,27 @@ User.methods.set("verifyEmailToken", function (token, callback) {
     });
 });
 
-
+/**
+ * Verify a temporary authentication token.
+ * @param  {[type]}   token    temporary auth token
+ * @param  {Function} callback args(err, id)
+ */
+User.methods.set("verifyTempAuthToken", function(token, callback) {
+    jwt.verify(token, process.env.JWT_SECRET, function(err, payload){
+  
+        if (err || !payload){
+            return callback(err);
+        }
+  
+        if (!payload.exp || Date.now() >= payload.exp * 1000){
+            return callback({
+                message: 'Token has expired.'
+            });
+        }
+  
+        return callback(null, payload.oldPass);
+    });
+});
 
 // instance methods
 
@@ -300,9 +320,25 @@ User.methods.document.set("generateToken", async function () {
     return jwt.sign(this.id, process.env.JWT_SECRET);
 });
 
+/**
+ * generate verification token based on email
+ */
 User.methods.document.set("generateEmailVerificationToken", async function() {
     return jwt.sign(this.email, process.env.JWT_SECRET);
 })
+
+/**
+ * generates temp token for password reset
+ * make it single use by using old password hash
+ * exception if user sets same password for new password
+ */
+User.methods.document.set("generateTempAuthToken", async function(){
+    return jwt.sign({
+        oldPass: this.password
+    }, process.env.JWT_SECRET, {
+        expiresIn: 60 * 30
+    });
+});
 
 
 module.exports = User

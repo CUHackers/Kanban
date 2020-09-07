@@ -139,7 +139,7 @@ UserController.loginWithPassword = function(email, password, callback){
     });
 }
 
-// VERIFICATION METHODS
+// EMAIL METHODS
 
 /**
  * sends email verification
@@ -151,7 +151,17 @@ UserController.sendVerificationEmail = function(id, callback) {
         if (err || !result) {
             return callback(err);
         }
+
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+        
         var user = result[0];
+        if(user) {
+            delete user.password;
+        }
         var token = await user.generateEmailVerificationToken();
         Mailer.sendVerificationEmail(user.email, token);
         return callback(null, user);
@@ -182,12 +192,110 @@ UserController.verifyEmail = function(token, callback) {
                         $SET: {
                             status: status
                         }
-                    }, callback)
+                    }, 
+                    function(err, u){
+                        if(err) {
+                            return callback({
+                                message: err
+                            });
+                        }
+                        else {
+                            delete u.password;
+                            return callback(null, u);
+                        }
+                    }
+                )
             })
         }
     })
 }
 
+/**
+ * Send password reset email to user
+ * @param {String} email user email
+ * @param {Function} callback 
+ */
+UserController.sendResetEmail = function(email, callback) {
+    User.query("email").eq(email).exec(async function(err, result){
+        if (err){
+            return callback(err);
+        }
+
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+
+        var user = result[0];
+        var token = await user.generateTempAuthToken();
+        //Mailer.sendPasswordResetEmail(email, token, callback);
+
+    })
+}
+
+/**
+ * resets usre password
+ * @param {String} token temp auth token 
+ * @param {String} password new password
+ * @param {Function} callback 
+ */
+UserController.resetPassword = function(token, password, callback){
+    if (!password || !token){
+        return callback({
+            message: 'Bad arguments'
+        });
+    }
+    
+    if (password.length < 6){
+        return callback({
+            message: 'Password must be 6 or more characters.'
+        });
+    }
+
+    User.verifyTempAuthToken(token, function(err, oldPass) {
+        if(err || !oldPass){
+            return callback(err);
+        }
+
+        User.scan('password').eq(oldPass).exec(async function(err, result) {
+
+            if (err) {
+                return callback({
+                    message: err
+                });
+            }
+
+            if (result.count === 0) {
+                return callback({
+                    message: "Invalid Token"
+                });
+            }
+
+            var newPass = await User.hashPassword(password); 
+            User.update(
+                {
+                    email: user.email.toLowerCase()
+                },
+                {
+                    $SET: {
+                        password: newPass
+                    }
+                }, 
+                function(err, u){
+                    if(err) {
+                        return callback({
+                            message: err
+                        });
+                    }
+                    else {
+                        delete u.password;
+                        return callback(null, u);
+                    }
+            })
+        })
+    })
+}
 
 // GETTER METHODS
 
@@ -197,13 +305,20 @@ UserController.verifyEmail = function(token, callback) {
  * @param {Function} callback callback function 
  */
 UserController.getUserById = function(id, callback) {
-    User.scan('id').eq(id).exec(function(err, user){
-        if (err) {
+    User.scan('id').eq(id).exec(function(err, result){
+        if (err || !result) {
+            return callback({
+                message: err
+            });
+        }
+
+        if (result.count === 0) {
             return callback({
                 message: "No user found"
-              });
+            });
         }
-        var u = user[0];
+
+        var u = result[0];
         delete u.password;
         return callback(null, u);
     });
@@ -273,13 +388,19 @@ UserController.getAll = function(callback) {
 UserController.updateInfo = function(id, info, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
 
-        if (err) {
+        if (err || !result) {
             return callback({
                 message: err
             });
         }
 
-        user = result[0];
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+
+        var user = result[0];
         // user completes application
         user.status.completedApp = true;
         var status = user.status;
@@ -317,13 +438,19 @@ UserController.updateInfo = function(id, info, callback) {
 UserController.updateConf = function(id, conf, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
 
-        if (err) {
+        if (err || !result) {
             return callback({
                 message: err
             });
         }
 
-        user = result[0];
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+
+        var user = result[0];
         // user completes application
         user.status.confirmed = true;
         var status = user.status;
@@ -360,13 +487,19 @@ UserController.updateConf = function(id, conf, callback) {
 UserController.assignID = function(id, rfid, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
 
-        if (err) {
+        if (err || result) {
             return callback({
                 message: err
             });
         }
 
-        user = result[0];
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+
+        var user = result[0];
         // make sure rfid is not already assigned
         User.scan('rfid').eq(rfid).exec(function(err, result) {
 
@@ -419,7 +552,7 @@ UserController.assignID = function(id, rfid, callback) {
 UserController.checkin = function(rfid, callback) {
     User.scan('rfid').eq(rfid).exec(function(err, result) {
 
-        if (err) {
+        if (err || !result) {
             return callback({
                 message: err
             });
@@ -432,7 +565,7 @@ UserController.checkin = function(rfid, callback) {
             });
         }
 
-        user = result[0];
+        var user = result[0];
         // check in/out based on current status
         if (user.status.checkin) {
             // check out user
@@ -496,13 +629,19 @@ UserController.checkin = function(rfid, callback) {
 UserController.acceptUser = function(id, callback) {
     User.scan('id').eq(id).exec(function(err, result) {
 
-        if (err) {
+        if (err || !result) {
             return callback({
                 message: err
             });
         }
 
-        user = result[0];
+        if (result.count === 0) {
+            return callback({
+                message: "No user found"
+            });
+        }
+
+        var user = result[0];
         user.status.accepted = true;
         var status = user.status;
 

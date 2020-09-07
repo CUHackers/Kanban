@@ -192,6 +192,10 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             return transition.router.stateService.target("app.dashboard");
         }
 
+        if (transition.to().name === 'forgot' && Session.getToken()) {
+            return transition.router.stateService.target("app.dashboard");
+        }
+
         // check if user logged in
         if (requireLogin && !Session.getToken()) {
             return transition.router.stateService.target("login");
@@ -214,4 +218,8 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         }
 
     });
+
+    $transitions.onSuccess({}, transition => {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      });
 })
