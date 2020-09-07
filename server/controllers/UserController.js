@@ -229,8 +229,7 @@ UserController.sendResetEmail = function(email, callback) {
 
         var user = result[0];
         var token = await user.generateTempAuthToken();
-        //Mailer.sendPasswordResetEmail(email, token, callback);
-
+        Mailer.sendPasswordResetEmail(email, token, callback);
     })
 }
 
@@ -272,6 +271,7 @@ UserController.resetPassword = function(token, password, callback){
                 });
             }
 
+            var user = result[0];
             var newPass = await User.hashPassword(password); 
             User.update(
                 {
@@ -289,6 +289,7 @@ UserController.resetPassword = function(token, password, callback){
                         });
                     }
                     else {
+                        Mailer.sendPasswordChangedEmail(u.email);
                         delete u.password;
                         return callback(null, u);
                     }
