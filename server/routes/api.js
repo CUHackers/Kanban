@@ -37,7 +37,7 @@ function isAdmin(req, res, next){
 
 /**
 *   check if you are owner or admin
-*   used for updating user info 
+*   used for updating user info
 */
 function isOwnerOrAdmin(req, res, next){
     var token = getToken(req);
@@ -59,7 +59,7 @@ function isOwnerOrAdmin(req, res, next){
 }
 
 /**
- * get user based on id 
+ * get user based on id
  * id = :id
  */
 router.get('/users/:id', isOwnerOrAdmin, function(req, res){
@@ -76,7 +76,7 @@ router.get('/users/:id', isOwnerOrAdmin, function(req, res){
  * updating user info in the database
  * id = :id
  * body {
- *  info: info 
+ *  info: info
  * }
  */
 router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
@@ -85,17 +85,17 @@ router.put('/users/:id/info',isOwnerOrAdmin, function(req, res){
     UserController.updateInfo(id, info, function(err, user) {
         if (err){
             return res.status(400).send(err);
-        } 
+        }
         return res.status(200).send(user);
     });
-    
+
 });
 
 /**
  * updating user confirmation in the database
  * id = :id
  * body {
- *  conf: conf 
+ *  conf: conf
  * }
  */
 router.put('/users/:id/confirmation',isOwnerOrAdmin, function(req, res){
@@ -104,10 +104,10 @@ router.put('/users/:id/confirmation',isOwnerOrAdmin, function(req, res){
     UserController.updateConf(id, conf, function(err, user) {
         if (err){
             return res.status(400).send(err);
-        } 
+        }
         return res.status(200).send(user);
     });
-    
+
 });
 
 /**
@@ -120,15 +120,15 @@ router.get('/users', isAdmin, function(req, res){
         UserController.getUsers(query, function(err, users) {
             if (err){
                 return res.status(400).send(err);
-            } 
+            }
             return res.status(200).send(users);
             });
-    } 
+    }
     else {
         UserController.getAll(function(err, users) {
             if (err){
                 return res.status(400).send(err);
-            } 
+            }
             return res.status(200).send(users);
         });
     }
@@ -143,7 +143,7 @@ router.post('/users/:id/assign', isAdmin, function(req, res){
     UserController.assignID(id, rfid, function(err, user) {
         if (err){
             return res.status(400).send(err);
-        } 
+        }
         return res.status(200).send(user);
     })
 })
@@ -156,7 +156,7 @@ router.post('/users/checkin', isAdmin, function(req, res){
     UserController.checkin(rfid, function(err, user) {
         if (err){
             return res.status(400).send(err);
-        } 
+        }
         return res.status(200).send(user);
     })
 })
@@ -169,7 +169,20 @@ router.post('/users/:id/accept', isAdmin, function(req, res){
     UserController.acceptUser(id, function(err, user) {
         if (err){
             return res.status(400).send(err);
-        } 
+        }
+        return res.status(200).send(user);
+    })
+})
+
+/**
+ * checks in/out of an user based on the rfid
+ */
+router.post('/users/decline', function(req, res){
+    var intent = req.body.intent;
+    UserController.decline(intent, function(err, user) {
+        if (err){
+            return res.status(400).send(err);
+        }
         return res.status(200).send(user);
     })
 })
