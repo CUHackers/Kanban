@@ -306,7 +306,50 @@ UserController.updateInfo = function(id, info, callback) {
                 }
         })
     });
+}
 
+/**
+ * updates user info in the database 
+ * @param {String} id user id 
+ * @param {Object} conf confirmation objects that contains user confirmation form data
+ * @param {Function} callback callback function 
+ */
+UserController.updateConf = function(id, conf, callback) {
+    User.scan('id').eq(id).exec(function(err, result) {
+
+        if (err) {
+            return callback({
+                message: err
+            });
+        }
+
+        user = result[0];
+        // user completes application
+        user.status.confirmed = true;
+        var status = user.status;
+
+        User.update(
+            {
+                email: user.email.toLowerCase()
+            },
+            {
+                $SET: {
+                    confirmation: conf,
+                    status: status
+                }
+            }, 
+            function(err, u){
+                if(err) {
+                    return callback({
+                        message: err
+                    });
+                }
+                else {
+                    delete u.password;
+                    return callback(null, u);
+                }
+        })
+    })
 }
 
 /**

@@ -1,6 +1,6 @@
 angular.module('app')
-    .controller('applicationController', ['$scope', '$state', 'currentUser', 'UserService', 'Session', 
-     function($scope, $state, currentUser, UserService, Session){
+    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
+     function($scope, currentUser, UserService, Session, $state){
 
         $scope.user = currentUser.data;
         $scope.appStatus = $scope.user.status.completedApp
@@ -12,12 +12,17 @@ angular.module('app')
 
         $scope.submitApp = function(){
             UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
+                $state.reload();
                 $scope.appStatus = true;
             });
         };
 
-        $scope.edit = function(){
+        $scope.view = function(){
             $scope.appStatus = false;
+        }
+
+        $scope.back = function(){
+            $scope.appStatus = true;
         }
 
     }])

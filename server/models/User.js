@@ -176,11 +176,54 @@ var schema = new dynamoose.Schema({
                 required: true,
                 default: false
             }
-        
         }
-
-    }
+    },
     
+    confirmation: {
+        type: Object,
+        schema: {
+            phone: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            address: {
+                type: Object,
+                schema: {
+                    street: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    apartNum: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    city: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    state: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    zip: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+                }
+            }
+        }
+    }
 }, 
 {
     'timestamps': true

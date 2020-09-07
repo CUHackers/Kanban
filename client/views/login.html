@@ -1,25 +1,32 @@
 <div class="outline">
+
     <div class="logo">
         <img src="/assets/logo_transparent-bg.png">
     </div>
+
     <div class="divider"></div>
-    <div class="error" ng-show="error">{{error}}</div>
+
+    <div class="ui negative message" ng-show="error">{{error}}</div>
+
     <div>
         <form ng-submit="login()" class="login">
             <div>
                 <input type="email" id="email" placeholder="email" ng-model="email">
             </div>
             <div>
-                <input type="password" id="password" placeholder="password" ng-model="password">
+                <input type="password" id="password" placeholder="password" ng-model="password" required>
             </div>
             <div>
-                <button type="login">Login</button>
+                <button type="submit">Login</button>
             </div>
         </form>
     </div>
+
     <div class="divider"></div>
+
     <div class= "ui grid" id="links">
-        <a class="eight wide column" id="reg" href="/register"> Register</a>
-        <a class="eight wide column" id="pas" href="/forgot"> Forgot Password</a>
+        <a class="four wide column" id="reg" ui-sref="register"> Register</a>
+        <div class="four wide column"></div>
+        <a class="eight wide column" id="pas" ui-sref="forgot"> Forgot Password</a>
     </div>
 </div>

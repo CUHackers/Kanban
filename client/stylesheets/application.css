@@ -3,24 +3,15 @@
     text-align: left;
 }
 
-#application .ui.form .field>button {
-    margin-top: 20px;
-    width: 100%;
-}
-
-#application .ui.form .field #mlhcoc>label {
-    display: block;
-    text-align: left;
-}
-
 .mlhlink {
     font-size: larger;
 }
 
-#application .application .button {
-    cursor: pointer;
+#application .completeMsg {
+    font-size: x-large;
+    font-weight: 700;
 }
 
-#application .complete .option:hover{
-    cursor: pointer;
+#application .ui.bottom.attached.segment .button{
+    width: 200px;
 }
