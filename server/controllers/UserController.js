@@ -333,7 +333,7 @@ UserController.getUserById = function(id, callback) {
 UserController.getUsers = function(query, callback) {
     var searchText = query.query;
     var filter = query.filter;
-    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt', 'confirmation'];
 
     if (filter) {
         User.scan(filter).contains(searchText).attributes(attributes).exec(function(err, result) {
@@ -366,7 +366,7 @@ UserController.getUsers = function(query, callback) {
  * @param {*} callback callback function
  */
 UserController.getAll = function(callback) {
-    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt'];
+    const attributes = ['email', 'id', 'rfid', 'info', 'status', 'createdAt', 'updatedAt', 'confirmation'];
 
     User.scan().attributes(attributes).exec(function(err, result){
         if (err || !result) {

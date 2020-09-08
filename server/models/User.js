@@ -188,6 +188,12 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
+            shirt: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
             address: {
                 type: Object,
                 schema: {

@@ -9,23 +9,21 @@ angular.module('app')
         $scope.selectedUser = {};
 
         $('.ui.dimmer').remove();
-        $scope.selectedUser.sections = generateSections({status: '', info: ''});
+        $scope.selectedUser.sections = generateSections({status: '', confirmation: {
+            address: []
+          }, info: ''});
 
         function updateTable(data){
             // different filter for accepted/verified users
-            if ($scope.filter === 'accepted') {
-                data.forEach(function(x, index){
-                    if (!x.status.accepted) {
-                        data.splice(index, 1);
-                    }
+            if ($scope.filter === 'accpeted') {
+                data = data.filter(function(currUser) {
+                    return currUser.status.accepted;
                 });
                 $scope.users = data;
             }
             else if ($scope.filter === 'verified') {
-                data.forEach(function(x, index){
-                    if (!x.status.verified) {
-                        data.splice(index, 1);
-                    }
+                data = data.filter(function(currUser) {
+                    return currUser.status.verified;
                 });
                 $scope.users = data;
             }
@@ -252,6 +250,35 @@ angular.module('app')
                             value: user.info.frq5
                         }
                         
+                    ]
+                },
+                {
+                    name: 'Confirmation',
+                    fields: [
+                        {
+                            name: 'Phone Number',
+                            value: user.confirmation.phone
+                        },
+                        {
+                            name: 'T-shirt Size',
+                            value: user.confirmation.shirt
+                        },
+                        {
+                            name: 'Street',
+                            value: user.confirmation.address.street + ' ' + user.confirmation.address.apartNum
+                        },
+                        {
+                            name: 'City',
+                            value: user.confirmation.address.city
+                        },
+                        {
+                            name: 'State',
+                            value: user.confirmation.address.state
+                        },
+                        {
+                            name: 'Zip Code',
+                            value: user.confirmation.address.zip
+                        }
                     ]
                 }
             ];

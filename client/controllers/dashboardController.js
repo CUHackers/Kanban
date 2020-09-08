@@ -7,7 +7,7 @@ angular.module('app')
         
         $scope.sendEmail = function(){
             AuthService.sendVerificationEmail().then(function(res){
-                swal("verification email has been sent.");
+                swal("Verification email has been sent.");
             })
         };
 

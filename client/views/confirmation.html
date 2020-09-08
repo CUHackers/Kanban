@@ -109,6 +109,18 @@
                         </div>  
                     </div>
 
+                    <div class="field">
+                        <label>T-shirt Size</label>
+                        <select ng-model="user.confirmation.shirt" required>
+                            <option value=""></option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium </option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                            <option value="XXL">XX-Large</option>
+                        </select>
+                    </div>
+
                     <div class="field" ng-hide="user.status.confirmed">
                         <br>
                         <button class="fluid ui green button" type="submit">Submit</button>
