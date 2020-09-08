@@ -65,8 +65,8 @@ angular.module('app').
             return $http.post('/api/users/' + id + '/accept');
         }
 
-        userService.decline = function(intent) {
-            return $http.post('/api/users/decline');
+        userService.decline = function(id) {
+            return $http.post('/api/users/' + id + '/decline');
         }
 
         return userService;

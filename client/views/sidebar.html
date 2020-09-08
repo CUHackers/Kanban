@@ -11,32 +11,36 @@
         Home
     </div>
 
-    <div class="option" 
-        ui-sref-active="active"
-        ui-sref="app.application"
-        ng-show="currentUser.status.verified">
-        Application
-    </div>
+    <div ng-show="currentUser.status.verified">
+        <div class="option" 
+            ui-sref-active="active"
+            ui-sref="app.application"
+            ng-show="!currentUser.status.declined">
+            Application
+        </div>
 
-    <div class="option" 
-        ui-sref-active="active"
-        ui-sref="app.confirmation"
-        ng-show="currentUser.status.accepted">
-        Confirmation
-    </div>
+        <div class="option" 
+            ui-sref-active="active"
+            ui-sref="app.confirmation"
+            ng-show="currentUser.status.accepted  && !currentUser.status.declined">
+            Confirmation
+        </div>
 
-    <div class="option"
-        ui-sref-active="active"
-        ui-sref="app.workshop"
-        ng-show="currentUser.status.verified">
-        Workshop
-    </div>
+        <!-- Hide for hello world
+        <div class="option"
+            ui-sref-active="active"
+            ui-sref="app.workshop"
+            ng-show="currentUser.status.verified">
+            Workshop
+        </div>
+        -->
 
-    <div class="option"
-        ng-class="{active : isAdminStateActive('app.admin')}"
-        ui-sref="app.admin.stats"
-        ng-show="currentUser.admin">
-        Admin
+        <div class="option"
+            ng-class="{active : isAdminStateActive('app.admin')}"
+            ui-sref="app.admin.stats"
+            ng-show="currentUser.admin">
+            Admin
+        </div>
     </div>
 
     <div class="option" ng-click="logout()"> 

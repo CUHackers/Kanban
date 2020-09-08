@@ -167,6 +167,16 @@ angular.module('app')
                             type: 'boolean'
                         },
                         {
+                            name: 'Confirmed',
+                            value: user.status.confirmed,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'Declined',
+                            value: user.status.declined,
+                            type: 'boolean'
+                        },
+                        {
                             name: 'Checked In',
                             value:  user.status.checkin,
                             type: 'boolean'

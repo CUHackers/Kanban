@@ -213,7 +213,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             return transition.router.stateService.target("app.dashboard");
         }
 
-        if (requireAccepted && !Session.getUser().status.accepted) {
+        if (requireAccepted && (!Session.getUser().status.accepted || Session.getUser().status.declined)) {
             return transition.router.stateService.target("app.dashboard");
         }
 

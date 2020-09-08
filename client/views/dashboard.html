@@ -11,32 +11,95 @@
                 Status:
             </h1>
 
-            <div class="status-red" id="status" ng-if="!user.status.verified">
-                Your email is not verified
+            <div ng-if="!user.status.verified">
+                <div class="status-red" id="status">
+                    Unverfied
+                </div>
+                
+                <div class="ui divider"></div>
+
+                <p>Click the button below to send a verification email to verify your account, so you can start your application for Hello World!</p>
+
+                <div class="ui blue large button" ng-click="sendEmail()">
+                    Send Verification Email
+                </div>
             </div>
 
-            <div class="status-green" id="status" ng-if="user.status.verified">
-                Your email is verified
+            <div ng-if="user.status.verified && !user.status.completedApp">
+                <div class="status-green" id="status">
+                    Email Verified
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>Go to the application page to complete your application for Hello World!</p>
+                <p>You will not be considered for Hello World if you don't complete your applcation.</p>
+
+                <div class="ui blue large button" ui-sref="app.application">
+                    Start Application
+                </div>
             </div>
 
-            <div class="ui divider" ng-if="!user.status.verified"></div>
+            <div ng-if="user.status.completedApp && !user.status.accepted">
+                <div class="status-green" id="status">
+                    Application Complete
+                </div>
 
-            <div class="ui blue large button" ng-if="!user.status.verified" ng-click="sendEmail()">Send Verification Email</div>
+                <div class="ui divider"></div>
 
-            <div class="ui blue large button" ng-if="user.status.verified" ui-sref="app.application">Edit Application</div>
+                <p>Your application has been submitted!</p>
+                <p>You will be notified if you are accepted for Hello World</p>
 
-            <div class="ui divider" ng-if="user.status.verified"></div>
-
-            <h1 class="ui confirm attendance" ng-if="user.status.verified">
-              Will we have the pleasure of seeing you face?
-            </h1>
-
-            <div class="attendanceButton" ng-if="user.status.verified">
-              <a> I will be in attendance </a>
+                <div class="ui blue large button" ui-sref="app.application">
+                    View Application
+                </div>
             </div>
 
-            <div class="attendanceButton" ng-if="user.status.verified">
-              <a> I won't be in attendance </a>
+            <div ng-if="user.status.accepted && !user.status.confirmed && !user.status.declined">
+                <div class="status-green" id="status">
+                    Accepted
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>Congraudation! You are accepted for Hello World 2020</p>
+                <p>Will we have the pleasure of seeing you face?</p>
+                <p>Please confirm your attendance by completing the confirmation form or decline admission</p>
+
+                <div class="ui green large button" ui-sref="app.confirmation">
+                    I will be in attendance
+                </div>
+
+                <div class="ui red large button" ng-click="decline()">
+                    I won't be in attendance
+                </div>
+            </div>
+
+            <div ng-if="user.status.confirmed && !user.status.declined">
+                <div class="status-green" id="status">
+                    Confirmed
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>Your confirmation has been submitted!</p>
+                <p>Can't wait to see you at Hello World</p>
+
+                <div class="ui blue large button" ui-sref="app.confirmation">
+                    View Confirmation
+                </div>
+            </div>
+
+            <div ng-if="user.status.declined && !user.status.confirmed">
+                <div class="status-red" id="status">
+                    Declined
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>You declined your admission for Hello World</p>
+                <p>Sad to hear that you won't be here for Hello World :(</p>
+                <br>
             </div>
 
         </div>

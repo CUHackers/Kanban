@@ -670,12 +670,12 @@ UserController.acceptUser = function(id, callback) {
 }
 
 /**
- * checks in/out of an user based on rfid
- * @param {String} intent intent of attendance of an user
+ * declines an user
+ * @param {String} id id of user
  * @param {*} callback
  */
-UserController.decline = function(intent, callback) {
-    User.scan('intent').eq(rfid).exec(function(err, result) {
+UserController.decline = function(id, callback) {
+    User.scan('id').eq(id).exec(function(err, result) {
 
         if (err || !result) {
             return callback({
@@ -683,66 +683,35 @@ UserController.decline = function(intent, callback) {
             });
         }
 
-        // if no user is associated with rfid
         if (result.count === 0) {
             return callback({
-                message: "RFID is not assigned to any user"
+                message: "No user found"
             });
         }
 
         var user = result[0];
-        // check in/out based on current status
-        if (user.status.checkin) {
-            // check out user
-            user.status.checkin = false;
-            var status = user.status;
-            User.update(
-                {
-                    email: user.email.toLowerCase()
-                },
-                {
-                    $SET: {
-                        status: status
-                    }
-                },
-                function(err, u){
-                    if(err) {
-                        return callback({
-                            message: err
-                        });
-                    }
-                    else {
-                        delete u.password;
-                        return callback(null, u);
-                    }
-            })
-        }
-        else {
-            // check in user
-            user.status.checkin = true;
-            var status = user.status;
-            User.update(
-                {
-                    email: user.email.toLowerCase()
-                },
-                {
-                    $SET: {
-                        status: status
-                    }
-                },
-                function(err, u){
-                    if(err) {
-                        return callback({
-                            message: err
-                        });
-                    }
-                    else {
-                        delete u.password;
-                        return callback(null, u);
-                    }
-            })
-        }
-
+        user.status.declined = true;
+        var status = user.status;
+        User.update(
+            {
+                email: user.email.toLowerCase()
+            },
+            {
+                $SET: {
+                    status: status
+                }
+            },
+            function(err, u){
+                if(err) {
+                    return callback({
+                        message: err
+                    });
+                }
+                else {
+                    delete u.password;
+                    return callback(null, u);
+                }
+        })
     })
 }
 

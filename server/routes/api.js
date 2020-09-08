@@ -175,11 +175,11 @@ router.post('/users/:id/accept', isAdmin, function(req, res){
 })
 
 /**
- * checks in/out of an user based on the rfid
+ * declines admission for user
  */
-router.post('/users/decline', function(req, res){
-    var intent = req.body.intent;
-    UserController.decline(intent, function(err, user) {
+router.post('/users/:id/decline', isOwnerOrAdmin, function(req, res){
+    var id = req.params.id;
+    UserController.decline(id, function(err, user) {
         if (err){
             return res.status(400).send(err);
         }

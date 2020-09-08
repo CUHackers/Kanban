@@ -26,6 +26,12 @@
     margin-bottom: .5em;
 }
 
+#dashboard p{
+    text-align: center;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
 #dashboard .attendanceButton{
   appearance: button;
   -moz-appearance: button;

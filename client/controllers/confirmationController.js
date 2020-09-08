@@ -1,9 +1,10 @@
 angular.module('app')
-    .controller('confirmationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
-     function($scope, currentUser, UserService, Session, $state) {
+    .controller('confirmationController', ['$scope', 'currentUser', 'UserService', '$state',
+     function($scope, currentUser, UserService, $state) {
 
-        $scope.user = currentUser.data;
-        $scope.confStatus = $scope.user.status.confirmed
+        var user = currentUser.data;
+        $scope.user = user;
+        $scope.confStatus = $scope.user.status.confirmed;
 
 
         // a little hack to sure optional fields will exist if textarea/input not clicked
@@ -20,7 +21,7 @@ angular.module('app')
         optionalCheck($scope.user.confirmation.address.zip);
 
         $scope.submitConf = function(){
-            UserService.updateConf(Session.getID(), $scope.user.confirmation).then(function(res){
+            UserService.updateConf(user.id, $scope.user.confirmation).then(function(res){
                 $state.reload();
                 $scope.confStatus = true;
             });

@@ -1,8 +1,9 @@
 angular.module('app')
-    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
-     function($scope, currentUser, UserService, Session, $state){
+    .controller('applicationController', ['$scope', 'currentUser', 'UserService', '$state',
+     function($scope, currentUser, UserService, $state){
 
-        $scope.user = currentUser.data;
+        var user = currentUser.data;
+        $scope.user = user;
         $scope.appStatus = $scope.user.status.completedApp
 
         // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
@@ -11,7 +12,7 @@ angular.module('app')
         }
 
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
+            UserService.updateInfo(user.id, $scope.user.info).then(function(res){
                 $state.reload();
                 $scope.appStatus = true;
             });

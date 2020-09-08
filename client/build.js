@@ -494,6 +494,16 @@ angular.module('app')
                             type: 'boolean'
                         },
                         {
+                            name: 'Confirmed',
+                            value: user.status.confirmed,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'Declined',
+                            value: user.status.declined,
+                            type: 'boolean'
+                        },
+                        {
                             name: 'Checked In',
                             value:  user.status.checkin,
                             type: 'boolean'
@@ -614,10 +624,11 @@ angular.module('app')
     }])
 },{"moment":106,"sweetalert":107}],7:[function(require,module,exports){
 angular.module('app')
-    .controller('applicationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
-     function($scope, currentUser, UserService, Session, $state){
+    .controller('applicationController', ['$scope', 'currentUser', 'UserService', '$state',
+     function($scope, currentUser, UserService, $state){
 
-        $scope.user = currentUser.data;
+        var user = currentUser.data;
+        $scope.user = user;
         $scope.appStatus = $scope.user.status.completedApp
 
         // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
@@ -626,7 +637,7 @@ angular.module('app')
         }
 
         $scope.submitApp = function(){
-            UserService.updateInfo(Session.getID(), $scope.user.info).then(function(res){
+            UserService.updateInfo(user.id, $scope.user.info).then(function(res){
                 $state.reload();
                 $scope.appStatus = true;
             });
@@ -643,11 +654,12 @@ angular.module('app')
     }])
 },{}],8:[function(require,module,exports){
 angular.module('app')
-    .controller('confirmationController', ['$scope', 'currentUser', 'UserService', 'Session', '$state',
-     function($scope, currentUser, UserService, Session, $state) {
+    .controller('confirmationController', ['$scope', 'currentUser', 'UserService', '$state',
+     function($scope, currentUser, UserService, $state) {
 
-        $scope.user = currentUser.data;
-        $scope.confStatus = $scope.user.status.confirmed
+        var user = currentUser.data;
+        $scope.user = user;
+        $scope.confStatus = $scope.user.status.confirmed;
 
 
         // a little hack to sure optional fields will exist if textarea/input not clicked
@@ -664,7 +676,7 @@ angular.module('app')
         optionalCheck($scope.user.confirmation.address.zip);
 
         $scope.submitConf = function(){
-            UserService.updateConf(Session.getID(), $scope.user.confirmation).then(function(res){
+            UserService.updateConf(user.id, $scope.user.confirmation).then(function(res){
                 $state.reload();
                 $scope.confStatus = true;
             });
@@ -682,15 +694,49 @@ angular.module('app')
 var swal = require('sweetalert');
 
 angular.module('app')
-    .controller('dashboardController', ['$scope', 'currentUser', 'AuthService', function($scope, currentUser, AuthService){
+    .controller('dashboardController', ['$scope', '$rootScope', 'currentUser', 'AuthService', 'UserService',
+     function($scope, $rootScope, currentUser, AuthService,UserService){
 
-        $scope.user = currentUser.data
+        var user = currentUser.data;
+        $scope.user = user;
+
         
         $scope.sendEmail = function(){
             AuthService.sendVerificationEmail().then(function(res){
                 swal("Verification email has been sent.");
             })
         };
+
+        $scope.decline = function(){
+            swal({
+                title: "Warning",
+                text: "Are you sure you want to decline your admission?",
+                icon: "warning",
+                button: {
+                    cancel: {
+                        text: "Cancel",
+                        value: null,
+                        visible: true
+                    },
+                    confirm: {
+                        text: "Yes, I can't make it",
+                        value: true,
+                        visible: true,
+                        className: "danger-button"
+                    }
+                },
+            })
+            .then(value => {
+                if (!value) {
+                  return;
+                }
+
+                UserService.decline(user.id).then(res => {
+                    $rootScope.currentUser = res.data;
+                    $scope.user = res.data;
+                })
+            })
+        }
 
     }])
 },{"sweetalert":107}],10:[function(require,module,exports){
@@ -1067,7 +1113,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             return transition.router.stateService.target("app.dashboard");
         }
 
-        if (requireAccepted && !Session.getUser().status.accepted) {
+        if (requireAccepted && (!Session.getUser().status.accepted || Session.getUser().status.declined)) {
             return transition.router.stateService.target("app.dashboard");
         }
 
@@ -1237,9 +1283,9 @@ angular.module('app').
     }])
 },{}],21:[function(require,module,exports){
 angular.module('app').
-    factory('UserService', ['$http', 'Session', function ($http, Session){ 
+    factory('UserService', ['$http', 'Session', function ($http, Session){
         var userService = {};
-        
+
         /**
          * get the current user using id
          */
@@ -1248,7 +1294,7 @@ angular.module('app').
         }
 
         /**
-         * updates user info 
+         * updates user info
          * @param {String} id user id
          * @param {Object} info basic registration info
          */
@@ -1284,7 +1330,7 @@ angular.module('app').
         }
 
         /**
-         * assign RFID to an user adn check in 
+         * assign RFID to an user adn check in
          * @param {String} id uid of user
          */
         userService.assignID = function(id, rfid) {
@@ -1303,9 +1349,14 @@ angular.module('app').
             return $http.post('/api/users/' + id + '/accept');
         }
 
+        userService.decline = function(id) {
+            return $http.post('/api/users/' + id + '/decline');
+        }
+
         return userService;
 
     }])
+
 },{}],22:[function(require,module,exports){
 (function (global){
 "use strict";
