@@ -1,7 +1,7 @@
 angular.module('app').
-    factory('UserService', ['$http', 'Session', function ($http, Session){ 
+    factory('UserService', ['$http', 'Session', function ($http, Session){
         var userService = {};
-        
+
         /**
          * get the current user using id
          */
@@ -10,7 +10,7 @@ angular.module('app').
         }
 
         /**
-         * updates user info 
+         * updates user info
          * @param {String} id user id
          * @param {Object} info basic registration info
          */
@@ -46,7 +46,7 @@ angular.module('app').
         }
 
         /**
-         * assign RFID to an user adn check in 
+         * assign RFID to an user adn check in
          * @param {String} id uid of user
          */
         userService.assignID = function(id, rfid) {
@@ -63,6 +63,10 @@ angular.module('app').
 
         userService.accpetUser = function(id) {
             return $http.post('/api/users/' + id + '/accept');
+        }
+
+        userService.decline = function(intent) {
+            return $http.post('/api/users/decline');
         }
 
         return userService;

@@ -19,11 +19,25 @@
                 Your email is verified
             </div>
 
-            <div class="ui divider"></div>
+            <div class="ui divider" ng-if="!user.status.verified"></div>
 
             <div class="ui blue large button" ng-if="!user.status.verified" ng-click="sendEmail()">Send Verification Email</div>
 
             <div class="ui blue large button" ng-if="user.status.verified" ui-sref="app.application">Edit Application</div>
+
+            <div class="ui divider" ng-if="user.status.verified"></div>
+
+            <h1 class="ui confirm attendance" ng-if="user.status.verified">
+              Will we have the pleasure of seeing you face?
+            </h1>
+
+            <div class="attendanceButton" ng-if="user.status.verified">
+              <a> I will be in attendance </a>
+            </div>
+
+            <div class="attendanceButton" ng-if="user.status.verified">
+              <a> I won't be in attendance </a>
+            </div>
 
         </div>
 

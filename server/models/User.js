@@ -56,7 +56,7 @@ var schema = new dynamoose.Schema({
                 required: true,
                 default: ""
             },
-        
+
             sex: {
                 type: String,
                 required: true,
@@ -149,21 +149,21 @@ var schema = new dynamoose.Schema({
                 default: false
             },
 
-            // user accpeted or not 
+            // user accpeted or not
             accepted: {
                 type: Boolean,
                 required: true,
                 default: false
             },
 
-            // user confirmed his acceptance or not 
+            // user confirmed their acceptance or not
             confirmed: {
                 type: Boolean,
                 required: true,
                 default: false
             },
 
-            // user declined his acceptance or not 
+            // user declined their acceptance or not
             declined: {
                 type: Boolean,
                 required: true,
@@ -178,7 +178,7 @@ var schema = new dynamoose.Schema({
             }
         }
     },
-    
+
     confirmation: {
         type: Object,
         schema: {
@@ -230,7 +230,7 @@ var schema = new dynamoose.Schema({
             }
         }
     }
-}, 
+},
 {
     'timestamps': true
 });
@@ -249,7 +249,7 @@ User.methods.set("findEmail", async function (email) {
 });
 
 /**
- * hash user password 
+ * hash user password
  * @param {String} password user password
  */
 User.methods.set("hashPassword", async function (password) {
@@ -277,7 +277,7 @@ User.methods.set("verifyToken", function (token, callback) {
 });
 
 /**
- * verify email token and return email string 
+ * verify email token and return email string
  *  @param {String} token email auth token
  */
 User.methods.set("verifyEmailToken", function (token, callback) {
@@ -293,17 +293,17 @@ User.methods.set("verifyEmailToken", function (token, callback) {
  */
 User.methods.set("verifyTempAuthToken", function(token, callback) {
     jwt.verify(token, process.env.JWT_SECRET, function(err, payload){
-  
+
         if (err || !payload){
             return callback(err);
         }
-  
+
         if (!payload.exp || Date.now() >= payload.exp * 1000){
             return callback({
                 message: 'Token has expired.'
             });
         }
-  
+
         return callback(null, payload.oldPass);
     });
 });
@@ -311,7 +311,7 @@ User.methods.set("verifyTempAuthToken", function(token, callback) {
 // instance methods
 
 /**
- * check password 
+ * check password
  * @param {String} password user password
  */
 User.methods.document.set("checkPassword", async function (password) {
