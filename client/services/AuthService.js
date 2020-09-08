@@ -80,7 +80,7 @@ angular.module('app')
             return $http
             .get('/auth/verify/' + token)
             .then(function successCallback(response) {
-                callback(response.data);
+                callback(response);
             }, function errorCallback(response) {
                 callback(null);
             });

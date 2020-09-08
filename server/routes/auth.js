@@ -89,7 +89,6 @@ router.get('/verify/:token', function(req, res){
         if (err || !user){
             return res.status(400).send(err);
         }
-        delete user.password;
         return res.status(200).json(user);
     })
 })
