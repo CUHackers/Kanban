@@ -835,7 +835,6 @@ angular.module('app')
 
         $scope.toggleSidebar = function(){
             $scope.showSidebar = !$scope.showSidebar;
-            console.log($scope.showSidebar)
         };
 
         // ng-click and ui-sref dont like each other, thanks for the hack quill

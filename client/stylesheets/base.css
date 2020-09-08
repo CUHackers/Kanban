@@ -20,7 +20,7 @@
     padding: 1.5em 0;
 }
 
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .content {
         padding-left: 0;
         text-align: center;
