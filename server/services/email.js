@@ -32,7 +32,7 @@ transporter.use('compile', hbs({
 controller.sendVerificationEmail = function(email, token, callback) {
     // send mail with defined transport object
     transporter.sendMail({
-        from: '"CUhackit 👻" <foo@example.com>', // sender address
+        from: '"CUhackit 👻" <cucheckin@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'CUhackit - Verify Your Email ✔',
         template: 'index',
@@ -55,7 +55,7 @@ controller.sendVerificationEmail = function(email, token, callback) {
 controller.sendPasswordResetEmail = function(email, token, callback) {
     // send mail with defined transport object
     transporter.sendMail({
-        from: '"CUhackit 👻" <foo@example.com>', // sender address
+        from: '"CUhackit 👻" <cucheckin@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'CUhackit - Password Reset ✔',
         template: 'reset',
@@ -78,7 +78,7 @@ controller.sendPasswordResetEmail = function(email, token, callback) {
 controller.sendPasswordChangedEmail =function(email) {
     // send mail with defined transport object
     transporter.sendMail({
-        from: '"CUhackit 👻" <foo@example.com>', // sender address
+        from: '"CUhackit 👻" <cucheckin@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'CUhackit - Password Update ✔',
         template: 'password'
