@@ -29,6 +29,12 @@ angular.module('app').
             return JSON.parse($window.localStorage.user);
         };
 
+        //setter
+        session.setUser = function(user){
+            $window.localStorage.currentUser = JSON.stringify(user);
+            $rootScope.currentUser = user;
+        };
+
         return session;
 
 

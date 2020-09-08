@@ -850,8 +850,8 @@ angular.module('app')
     }])
 },{}],15:[function(require,module,exports){
 angular.module('app')
-    .controller('verifyController', ['$scope', '$rootScope', '$stateParams', 'AuthService',
-     function($scope, $rootScope, $stateParams, AuthService){
+    .controller('verifyController', ['$scope', 'Session', '$stateParams', 'AuthService',
+     function($scope, Session, $stateParams, AuthService){
 
         var token = $stateParams.token;
 
@@ -860,7 +860,7 @@ angular.module('app')
         if (token) {
             AuthService.verify(token, function(res) {
                 if (res) {
-                    $rootScope.currentUser = res.data;
+                    Session.setUser(res.data);
                     $scope.verify = true;
                     $scope.loading = false;
                 }
@@ -1277,6 +1277,12 @@ angular.module('app').
 
         session.getUser = function() {
             return JSON.parse($window.localStorage.user);
+        };
+
+        //setter
+        session.setUser = function(user){
+            $window.localStorage.currentUser = JSON.stringify(user);
+            $rootScope.currentUser = user;
         };
 
         return session;
