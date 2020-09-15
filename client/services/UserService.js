@@ -1,3 +1,5 @@
+var json2csv = require('json2csv').parse;
+
 angular.module('app').
     factory('UserService', ['$http', 'Session', function ($http, Session){
         var userService = {};
@@ -55,18 +57,53 @@ angular.module('app').
             });
         }
 
+        /**
+         * check in/ check out user for rfid
+         * @param {String} rfid 
+         */
         userService.checkin = function(rfid) {
             return $http.post('/api/users/checkin', {
                 rfid: rfid
             });
         }
 
+        /**
+         * accepts user to the hackathon
+         * @param {String} id user uid 
+         */
         userService.accpetUser = function(id) {
             return $http.post('/api/users/' + id + '/accept');
         }
 
+        /**
+         * declines admission for hackathon
+         * @param {String} id uid 
+         */
         userService.decline = function(id) {
             return $http.post('/api/users/' + id + '/decline');
+        }
+
+        userService.exportCSV = function(data) {
+            var filename = 'cuhackit_users.csv'
+            var fields = ['info.name', 'email','info.cuid','info.sex','info.race'];
+            var csv;
+            try {
+                csv = json2csv(data, {fields});
+            }
+            catch (err) {
+                return res.status(500).send(err);
+            }
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            var clickEvent = new MouseEvent("click", {
+                "view": window,
+                "bubbles": true,
+                "cancelable": false
+            });
+            link.dispatchEvent(clickEvent);
         }
 
         return userService;

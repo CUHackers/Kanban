@@ -13,8 +13,7 @@
             </div>
         </div>
 
-        <div class="six wide column">
-            <i class="filter icon"></i>
+        <div class="three wide column">
             <select class="ui dropdown" ng-model="filter">
                 <option value="">Search Filter</option>
                 <option value="info.cuid">CUID</option>
@@ -22,7 +21,13 @@
                 <option value="info.name">Name</option>
                 <option value="accpeted">Accepted Users</option>
                 <option value="verified">Verified Users</option>
+                <option value="completedApp">Completed Application</option>
+                <option value="incompleteApp">Incomplete Application</option>
             </select>
+        </div>
+
+        <div class="three wide column">
+            <button class="ui teal button" ng-click="exportCSV()">Export to CSV</button>
         </div>
 
         <div class="sixteen wide column">

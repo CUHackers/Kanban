@@ -27,6 +27,18 @@ angular.module('app')
                 });
                 $scope.users = data;
             }
+            else if ($scope.filter === 'completedApp') {
+                data = data.filter(function(currUser) {
+                    return currUser.status.completedApp;
+                });
+                $scope.users = data;
+            }
+            else if ($scope.filter === 'incompleteApp') {
+                data = data.filter(function(currUser) {
+                    return currUser.status.verified && !currUser.status.completedApp;
+                });
+                $scope.users = data;
+            }
             else {
                 $scope.users = data;
             }
@@ -34,9 +46,10 @@ angular.module('app')
 
         // query for the user table, watches the search input
         $scope.$watchGroup(['queryText','filter'], function(query){
-            queryText = query[0];
-            filter = query[1];
-            if (filter === 'accepted' || filter === 'verified') {
+            let queryText = query[0];
+            let filter = query[1];
+            if (filter === 'accepted' || filter === 'verified' || filter === 'completedApp'
+             || filter === 'incompleteApp') {
                 UserService.getUsers(queryText, null).then(res => {
                     updateTable(res.data);
                 });
@@ -53,6 +66,10 @@ angular.module('app')
             $scope.selectedUser = user;
             $scope.selectedUser.sections = generateSections(user);
             $('.long.user.modal').modal('show');
+        }
+
+        $scope.exportCSV = function() {
+            UserService.exportCSV($scope.users);
         }
 
         // accepts users
