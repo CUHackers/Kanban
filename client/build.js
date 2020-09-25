@@ -2420,6 +2420,27 @@ angular.module('app')
             UserService.exportCSV($scope.users);
         }
 
+        $scope.getStatus = function(status) {
+            if (!status.verified) {
+                return 'Unverified'
+            }
+            else if (status.verified && !status.completedApp) {
+                return 'Incomplete Application'
+            }
+            else if (status.completedApp && !status.accepted) {
+                return 'Completed Application'
+            }
+            else if (status.accepted && !status.confirmed && !status.declined) {
+                return 'Accepted'
+            }
+            else if (status.confirmed && !status.declined) {
+                return 'Confirmed'
+            }
+            else if (status.declined && !status.confirmed) {
+                return 'Declined'
+            }
+        }
+
         // accepts users
         $scope.accpetUser = function($event, user, index) {
             $event.stopPropagation();
@@ -2623,8 +2644,11 @@ angular.module('app')
                         {
                             name: 'Is there anything we should know?',
                             value: user.info.frq5
+                        },
+                        {
+                            name: 'Where did you hear about HW?',
+                            value: user.info.frq6
                         }
-                        
                     ]
                 },
                 {
@@ -2669,10 +2693,15 @@ angular.module('app')
         $scope.user = user;
         $scope.appStatus = $scope.user.status.completedApp
 
-        // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
-        if (!$scope.user.info.frq5) {
-            $scope.user.info.frq5 = "";
+        // a little hack to sure optional fields will exist if textarea/input not clicked
+        function optionalCheck(data) {
+            if (!data){
+                data = "";
+            }
         }
+
+        optionalCheck($scope.user.info.frq5);
+        optionalCheck($scope.user.info.frq6);
 
         $scope.submitApp = function(){
             UserService.updateInfo(user.id, $scope.user.info).then(function(res){

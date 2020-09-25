@@ -6,10 +6,15 @@ angular.module('app')
         $scope.user = user;
         $scope.appStatus = $scope.user.status.completedApp
 
-        // since frq5 is optional, a little hack to sure frq5 will be in info if textarea not clicked
-        if (!$scope.user.info.frq5) {
-            $scope.user.info.frq5 = "";
+        // a little hack to sure optional fields will exist if textarea/input not clicked
+        function optionalCheck(data) {
+            if (!data){
+                data = "";
+            }
         }
+
+        optionalCheck($scope.user.info.frq5);
+        optionalCheck($scope.user.info.frq6);
 
         $scope.submitApp = function(){
             UserService.updateInfo(user.id, $scope.user.info).then(function(res){

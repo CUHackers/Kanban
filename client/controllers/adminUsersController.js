@@ -72,6 +72,27 @@ angular.module('app')
             UserService.exportCSV($scope.users);
         }
 
+        $scope.getStatus = function(status) {
+            if (!status.verified) {
+                return 'Unverified'
+            }
+            else if (status.verified && !status.completedApp) {
+                return 'Incomplete Application'
+            }
+            else if (status.completedApp && !status.accepted) {
+                return 'Completed Application'
+            }
+            else if (status.accepted && !status.confirmed && !status.declined) {
+                return 'Accepted'
+            }
+            else if (status.confirmed && !status.declined) {
+                return 'Confirmed'
+            }
+            else if (status.declined && !status.confirmed) {
+                return 'Declined'
+            }
+        }
+
         // accepts users
         $scope.accpetUser = function($event, user, index) {
             $event.stopPropagation();
@@ -275,8 +296,11 @@ angular.module('app')
                         {
                             name: 'Is there anything we should know?',
                             value: user.info.frq5
+                        },
+                        {
+                            name: 'Where did you hear about HW?',
+                            value: user.info.frq6
                         }
-                        
                     ]
                 },
                 {

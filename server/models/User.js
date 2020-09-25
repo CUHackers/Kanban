@@ -119,7 +119,13 @@ var schema = new dynamoose.Schema({
 
             frq5: {
                 type: String,
-                required: true,
+                required: false,
+                default: ""
+            },
+
+            frq6: {
+                type: String,
+                required: false,
                 default: ""
             },
 
