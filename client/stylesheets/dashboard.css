@@ -24,6 +24,7 @@
 #dashboard .button{
     margin-top: .5em;
     margin-bottom: .5em;
+    width: 200px;
 }
 
 #dashboard p{

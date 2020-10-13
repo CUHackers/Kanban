@@ -85,6 +85,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         }
     })
 
+    /** hide for now
     .state('app.confirmation', {
         url: "/confirmation",
         templateUrl: 'views/confirmation.html',
@@ -99,6 +100,7 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             accepted: true
         }
     })
+    **/
 
     .state('app.workshop', {
         url: "/workshop",
