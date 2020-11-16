@@ -55,6 +55,18 @@
                     </div>
 
                     <div class="field">
+                        <label>T-shirt Size</label>
+                        <select ng-model="user.info.shirt" required>
+                            <option value=""></option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium </option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                            <option value="XXL">XX-Large</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
                         <label>Do you have people you want to work with (Freshman only)? If so, how many?</label>
                         <select ng-model="user.info.teammates" required>
                             <option value=""></option>
@@ -134,26 +146,24 @@
                         </textarea>
                     </div>
 
-                    <br>
+                    <div class="ui divider"></div>
 
-                    <div class="field">
-                        <div>
-                            <a target="_blank" and rel="noopener noreferrer" 
-                            class="mlhlink" href="https://drive.google.com/file/d/1aCaHJ9nA2DNqkZ00jQgm_haJ_w4CIMtk/view?usp=sharing">
-                                MLH Code of Conduct
-                            </a>
+                    <div class="field" id="checkbox">
+                        <div class="ui checkbox">
+                            <input type="checkbox" ng-model="user.info.mlh" required>
+                            <label>I have read and agree to the
+                                <a target="_blank" and rel="noopener noreferrer" href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+                                    <b>MLH Code of Conduct.</b>
+                                </a>
+                            </label>
                         </div>
                     </div>
 
-                    <div class="field">
-                        <label>
-                            Do you agree to the MLH code of conduct?
-                        </label>
-                        <select ng-model="user.info.mlh" required>
-                            <option value=""></option>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
+                    <div class="field" id="checkbox">
+                        <div class="ui checkbox">
+                            <input type="checkbox" ng-model="user.info.auth" required>
+                            <label>I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.</label>
+                        </div>
                     </div>
 
                     <br>

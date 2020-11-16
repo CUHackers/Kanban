@@ -1,9 +1,18 @@
-#application .ui.form .field>label {
+#application .ui.form .field{
     display: block;
     text-align: left;
+    margin: 30px 30px;
 }
 
-.mlhlink {
+#application .ui.divider {
+    margin: 50px 30px;
+}
+
+#application #checkbox {
+    margin-bottom: 0;
+}
+
+#application #checkbox .ui.checkbox{
     font-size: larger;
 }
 
