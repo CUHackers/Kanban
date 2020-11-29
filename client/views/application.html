@@ -40,6 +40,28 @@
                         </select>
                     </div>
 
+                    <div class="field" id="input">
+                        <label>What is Your Major?</label>
+                        <input type = "text" ng-model="user.info.major" required>
+                    </div>
+
+                    <div class="field" id="input">
+                        <label>What is Your Most Current Level of Study?</label>
+                        <select ng-model="user.info.level" required>
+                            <option value=""></option>
+                            <option value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="grad student">Grad Student</option>
+                        </select>
+                    </div>
+
+                    <div class="field" id="input">
+                        <label>Gender Pronouns</label>
+                        <input type = "text" id = "pronouns" ng-model="user.info.pronouns" required>
+                    </div>
+
                     <div class="field" id="address">
                         <label>Address</label>
                         <p>

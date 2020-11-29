@@ -63,6 +63,18 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
+            major: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            level: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
             address: {
                 type: Object,
                 schema: {
