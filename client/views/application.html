@@ -7,26 +7,12 @@
         <div class="ui large form">
             <form ng-submit="submitApp()">
                 <fieldset ng-disabled="user.status.completedApp">
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>Full Name</label>
                         <input type = "text" id="full-name" placeholder="Full Name" ng-model="user.info.name" required>
                     </div>
 
-                    <div class="field"> 
-                        <label>CUID</label>
-                        <input type = "text" id = "cuid" ng-model="user.info.cuid" required>
-                    </div>
-
-                    <div class="field">
-                        <label>Is this your first semester at Clemson</label>
-                        <select ng-model="user.info.first" required>
-                            <option value=""></option>
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>Sex</label>
                         <select ng-model="user.info.sex" required>
                             <option value=""></option>
@@ -36,12 +22,12 @@
                         </select>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>Gender Pronouns</label>
                         <input type = "text" id = "pronouns" ng-model="user.info.pronouns" required>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>Race/Ethnicity</label>
                         <select ng-model="user.info.race" required>
                             <option value=""></option>
@@ -54,7 +40,105 @@
                         </select>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="address">
+                        <label>Address</label>
+                        <p>
+                            If you wants swags (For U.S. only)!
+                        </p>
+                        <div class="fields">
+                            <div class="twelve wide field">
+                                <input type="text" ng-model="user.info.address.street" placeholder="123 Street Name">
+                            </div>
+                            <div class="four wide field">
+                                <input type="text" ng-model="user.info.address.apartNum" placeholder="Apt #">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field" id="address">
+                        <div class="two fields">
+                            <div class="eight wide field">
+                                <label>City</label>
+                                <input type="text" ng-model="user.info.address.city" placeholder="Clemson">
+                            </div>
+                        
+                            <div class="eight wide field">
+                                <label>State</label>
+                                <select class="ui fluid dropdown" ng-model="user.info.address.state">
+                                    <option value="">State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field" id="address">
+                        <div class="two fields">
+                            <div class="eight wide field">
+                                <label>Country</label>
+                                <select class="ui fluid dropdown" disabled>
+                                    <option value="">United States</option>
+                                </select>
+                            </div>
+
+                            <div class="eight wide field">
+                                <label>Zip Code</label>
+                                <input type="text" ng-model="user.info.address.zip" pattern="[0-9]{5}" maxlength="5" placeholder="12345">
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="field" id="input">
                         <label>T-shirt Size</label>
                         <select ng-model="user.info.shirt" required>
                             <option value=""></option>
@@ -66,19 +150,8 @@
                         </select>
                     </div>
 
-                    <div class="field">
-                        <label>Do you have people you want to work with (Freshman only)? If so, how many?</label>
-                        <select ng-model="user.info.teammates" required>
-                            <option value=""></option>
-                            <option value="0">No Teammates</option>
-                            <option value="1">1 Teammate</option>
-                            <option value="2">2 Teammates</option>
-                            <option value="3">3 Teammates</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label>Rate your programming experience (note: this and all non-free-response questions do not affect your application, we're just curious)</label>
+                    <div class="field" id="input">
+                        <label>Rate your programming experience</label>
                         <select ng-model="user.info.experience" required>
                             <option value=""></option>
                             <option value="1">1 - Never coded before</option>
@@ -89,7 +162,7 @@
                         </select>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>We will be using Discord primarily for communications at the event. Do you have a Discord account?</label>
                         <select ng-model="user.info.discord" required>
                             <option value=""></option>
@@ -98,57 +171,79 @@
                         </select>
                     </div>
 
-                    <div class="field">
+                    <div class="grouped fields" id="input">
                         <label>
-                            Why do you want to participate?
+                            Which of these companies would you be interested in joining a 1-on-1 call with a recruiter for
                         </label>
-                        <textarea ng-model="user.info.frq1" required>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" ng-model="user.info.recruiter.aws">
+                                <label>AWS</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" ng-model="user.info.recruiter.bluecross">
+                                <label>BlueCross BlueShield</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" ng-model="user.info.recruiter.softdocs">
+                                <label>Softdocs</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" ng-model="user.info.recruiter.splunk">
+                                <label>Splunk</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field" id="input">
+                        <label>Would you be interested in a reverse CTF mini-event hosted by our Sponsor Splunk?</label>
+                        <select ng-model="user.info.ctf" required>
+                            <option value=""></option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="field" id="input">
+                        <label>
+                            Do you have any suggestions for workshops you'd like our sponsor AWS to host
+                        </label>
+                        <textarea ng-model="user.info.frq1">
                         </textarea>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>
-                            Do you have any video tutorial suggestions that we can prepare for you?
+                            Do you have any activity requests for us during the event (e.g. Among Us, trivia)?
                         </label>
-                        <textarea ng-model="user.info.frq2" required>
+                        <textarea ng-model="user.info.frq2">
                         </textarea>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>
-                            What kind of project do you have in mind? (No worries if you're not sure or open to anything)
+                            Is there anything we should know?
                         </label>
-                        <textarea ng-model="user.info.frq3" required>
+                        <textarea ng-model="user.info.frq3">
                         </textarea>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <label>
                             What vegetable are you?
                         </label>
-                        <textarea ng-model="user.info.frq4" required>
-                        </textarea>
-                    </div>
-
-                    <div class="field">
-                        <label>
-                            Is there anything we should know? (optional)
-                        </label>
-                        <textarea ng-model="user.info.frq5">
-                        </textarea>
-                    </div>
-
-                    <div class="field">
-                        <label>
-                            Where did you hear about Hello World? Include names if possible. (optional)
-                        </label>
-                        <textarea ng-model="user.info.frq6">
-                        </textarea>
+                        <input type = "text" ng-model="user.info.frq4" required>
                     </div>
 
                     <div class="ui divider"></div>
 
-                    <div class="field" id="checkbox">
+                    <div class="field" id="input">
                         <div class="ui checkbox">
                             <input type="checkbox" ng-model="user.info.mlh" required>
                             <label>I have read and agree to the
@@ -159,7 +254,7 @@
                         </div>
                     </div>
 
-                    <div class="field" id="checkbox">
+                    <div class="field" id="input">
                         <div class="ui checkbox">
                             <input type="checkbox" ng-model="user.info.auth" required>
                             <label>I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails, and occasional messages about hackathons in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.</label>
@@ -168,7 +263,7 @@
 
                     <br>
 
-                    <div class="field">
+                    <div class="field" id="input">
                         <div class="ui message">
                             <div class="header">
                                 IMPORTANT!
@@ -177,7 +272,7 @@
                         </div>
                     </div>
 
-                    <div class="field" ng-hide="user.status.completedApp">
+                    <div class="field" ng-hide="user.status.completedApp" id="input">
                         <br>
                         <button class="fluid ui green button" type="submit">Submit</button>
                         <br>
@@ -185,7 +280,7 @@
                 </fieldset>
             </form>
 
-            <div class="field" ng-show="user.status.completedApp">
+            <div class="field" ng-show="user.status.completedApp" id="input">
                 <br>
                 <button class="fluid ui green button" ng-click="back()">Back</button>
                 <br>
