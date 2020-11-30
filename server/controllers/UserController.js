@@ -23,7 +23,7 @@ UserController.createUser = async function(email, password, callback) {
 
     if (!email.endsWith(".edu")) {
         return callback({
-            message: "Use your Educational email"
+            message: "Use your educational email"
         });
     }
 
