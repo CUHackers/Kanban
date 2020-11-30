@@ -21,9 +21,9 @@ UserController.createUser = async function(email, password, callback) {
         });
     }
 
-    if (!email.endsWith("clemson.edu")) {
+    if (!email.endsWith(".edu")) {
         return callback({
-            message: "Use your Clemson email"
+            message: "Use your Educational email"
         });
     }
 
