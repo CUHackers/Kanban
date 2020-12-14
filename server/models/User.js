@@ -45,18 +45,6 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
-            cuid: {
-                type: String,
-                required: true,
-                default: ""
-            },
-
-            first: {
-                type: String,
-                required: true,
-                default: ""
-            },
-
             sex: {
                 type: String,
                 required: true,
@@ -75,7 +63,54 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
-            teammates: {
+            major: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            level: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            address: {
+                type: Object,
+                schema: {
+                    street: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    apartNum: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    city: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    state: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+
+                    zip: {
+                        type: String,
+                        required: true,
+                        default: ""
+                    },
+                }
+            },
+
+            shirt: {
                 type: String,
                 required: true,
                 default: ""
@@ -88,6 +123,41 @@ var schema = new dynamoose.Schema({
             },
 
             discord: {
+                type: String,
+                required: true,
+                default: ""
+            },
+
+            recruiter: {
+                type: Object,
+                schema: {
+                    aws: {
+                        type: Boolean,
+                        required: true,
+                        default: false
+                    },
+
+                    bluecross: {
+                        type: Boolean,
+                        required: true,
+                        default: false
+                    },
+
+                    softdocs: {
+                        type: Boolean,
+                        required: true,
+                        default: false
+                    },
+
+                    splunk: {
+                        type: Boolean,
+                        required: true,
+                        default: false
+                    },
+                }
+            },
+
+            ctf: {
                 type: String,
                 required: true,
                 default: ""
@@ -117,23 +187,17 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
-            frq5: {
-                type: String,
-                required: false,
-                default: ""
-            },
-
-            frq6: {
-                type: String,
-                required: false,
-                default: ""
-            },
-
             mlh: {
-                type: String,
+                type: Boolean,
                 required: true,
-                default: ""
+                default: false
             },
+
+            auth: {
+                type: Boolean,
+                required: true,
+                default: false
+            }
         }
 
     },
@@ -194,12 +258,6 @@ var schema = new dynamoose.Schema({
                 default: ""
             },
 
-            shirt: {
-                type: String,
-                required: true,
-                default: ""
-            },
-
             address: {
                 type: Object,
                 schema: {
@@ -241,7 +299,7 @@ var schema = new dynamoose.Schema({
     'timestamps': true
 });
 
-var User = dynamoose.model('UserTable', schema);
+var User = dynamoose.model('UserTable2020', schema);
 
 // static methods
 

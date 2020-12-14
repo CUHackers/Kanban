@@ -18,22 +18,34 @@
                 
                 <div class="ui divider"></div>
 
-                <p>Click the button below to send a verification email to verify your account, so you can start your application for Hello World!</p>
+                <p>Click the button below to send a verification email to verify your account, so you can start your application for CUhackit!</p>
 
                 <div class="ui blue large button" ng-click="sendEmail()">
                     Send Verification Email
                 </div>
             </div>
 
-            <div ng-if="user.status.verified && !user.status.completedApp">
+            <div ng-if="user.status.verified && !user.status.completedApp && regIsClosed">
+                <div class="status-red" id="status">
+                    Registration Closed
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>Registration for CUhackit 2021 is closed now :(</p>
+                <p>We will be back next year.</p>
+                <br>
+            </div>
+
+            <div ng-if="user.status.verified && !user.status.completedApp && !regIsClosed">
                 <div class="status-green" id="status">
                     Email Verified
                 </div>
 
                 <div class="ui divider"></div>
 
-                <p>Go to the application page to complete your application for Hello World!</p>
-                <p>You will not be considered for Hello World if you don't complete your applcation.</p>
+                <p>Go to the application page to complete your application for CUhackit!</p>
+                <p>You will not be considered for CUhackit if you don't complete your applcation.</p>
 
                 <div class="ui blue large button" ui-sref="app.application">
                     Start Application
@@ -48,7 +60,7 @@
                 <div class="ui divider"></div>
 
                 <p>Your application has been submitted!</p>
-                <p>You will be notified if you are accepted for Hello World</p>
+                <p>You will be notified if you are accepted for CUhackit</p>
 
                 <div class="ui blue large button" ui-sref="app.application">
                     View Application
@@ -62,8 +74,8 @@
 
                 <div class="ui divider"></div>
                 
-                <p>Congratulations! You are accepted for Hello World 2020</p>
-                <p>Click on the following buttons to join our discord and RSVP for Hello World</p>
+                <p>Congratulations! You are accepted for CUhackit 2021</p>
+                <p>Click on the following buttons to join our discord and RSVP for CUhackit</p>
                 <div>
                     <a class="ui blue button" href="https://discord.gg/tXnSSFM" target="_blank" rel="noopener noreferrer">
                         Discord

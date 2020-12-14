@@ -21,9 +21,9 @@ UserController.createUser = async function(email, password, callback) {
         });
     }
 
-    if (!email.endsWith("clemson.edu")) {
+    if (!email.endsWith(".edu")) {
         return callback({
-            message: "Use your Clemson email"
+            message: "Use your educational email"
         });
     }
 
@@ -349,7 +349,7 @@ UserController.getUsers = function(query, callback) {
         User.scan()
          .filter('email').contains(searchText).attributes(attributes).or()
          .filter('info.name').contains(searchText).attributes(attributes).or()
-         .filter('info.cuid').contains(searchText).attributes(attributes).or()
+         .filter('info.major').contains(searchText).attributes(attributes).or()
          .exec(function(err, result) {
             if (err || !result) {
                 return callback(err);

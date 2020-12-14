@@ -1,0 +1,23 @@
+<div class="ui segment">
+    <div class="ui stackable grid">
+        <div class="column">
+            <div class="ui form">
+                <div class="ui header">Set Registration Deadline</div>
+    
+                <div class="field">
+                    <label>
+                        Current Deadline: {{ formatDate(settings.timeClose) }}
+                    </label>
+                    <input type="datetime-local" ng-model="settings.timeClose">
+                </div>
+    
+                <div class="ui field">
+                    <div class="ui green button" ng-click="updateTimes()">
+                        Update
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

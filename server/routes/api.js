@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var UserController = require('../controllers/UserController');
+var SettingsController = require('../controllers/SettingsController')
 
 /**
  * helper function for checking permission
@@ -187,7 +188,32 @@ router.post('/users/:id/decline', isOwnerOrAdmin, function(req, res){
     })
 })
 
+// SETTINGS 
 
+/**
+ * gets the open and close time for registration
+ */
+router.get('/settings', function(req, res) {
+    SettingsController.getTime(function(err, time) {
+        if (err){
+            return res.status(400).send(err);
+        }
+        return res.status(200).send(time);
+    })
+})
+
+/**
+ * updates the close time for registration
+ */
+router.put('/settings/times', function(req, res) {
+    let close = req.body.timeClose;
+    SettingsController.updateTimes(close, function(err, result) {
+        if (err){
+            return res.status(400).send(err);
+        }
+        return res.status(200).send(result);
+    })
+})
 
 
 module.exports = router

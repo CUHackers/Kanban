@@ -1,10 +1,22 @@
-#application .ui.form .field>label {
+#application .ui.form #input{
     display: block;
     text-align: left;
+    margin: 30px 30px;
 }
 
-.mlhlink {
+#application .ui.form #address{
+    display: block;
+    text-align: left;
+    margin: 0px 30px;
+}
+
+#application .ui.divider {
+    margin-bottom: 20px;
+}
+
+#application .ui.checkbox{
     font-size: larger;
+    line-height: 20px;
 }
 
 #application .completeMsg {

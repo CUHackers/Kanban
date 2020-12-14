@@ -1,10 +1,11 @@
 var swal = require('sweetalert');
 
 angular.module('app')
-    .controller('dashboardController', ['$scope', '$rootScope', 'currentUser', 'AuthService', 'UserService',
-     function($scope, $rootScope, currentUser, AuthService,UserService){
+    .controller('dashboardController', ['$scope', '$rootScope', 'currentUser', 'AuthService', 'UserService', 'settings',
+     function($scope, $rootScope, currentUser, AuthService, UserService, settings){
 
         var user = currentUser.data;
+        $scope.regIsClosed = Date.now() > settings.data.timeClose;
         $scope.user = user;
 
         

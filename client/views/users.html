@@ -16,7 +16,7 @@
         <div class="three wide column">
             <select class="ui dropdown" ng-model="filter">
                 <option value="">Search Filter</option>
-                <option value="info.cuid">CUID</option>
+                <option value="info.major">Major</option>
                 <option value="email">Email</option>
                 <option value="info.name">Name</option>
                 <option value="accpeted">Accepted Users</option>
@@ -71,7 +71,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>CUID</th>
+                        <th>Major</th>
                         <th>Sex</th>
                         <th>Ethnicity</th>
                         <th>Status</th>
@@ -82,7 +82,7 @@
                     <tr ng-click="selectUser(user)" ng-repeat="user in users">
                         <td class="collapsing">{{user.info.name}}</td>
                         <td class="collapsing">{{user.email}}</td>
-                        <td class="collapsing">{{user.info.cuid}}</td>
+                        <td class="collapsing">{{user.info.major}}</td>
                         <td class="collapsing">{{user.info.sex}}</td>
                         <td class="collapsing">{{user.info.race}}</td>
                         <td class="collapsing">{{getStatus(user.status)}}</td>
