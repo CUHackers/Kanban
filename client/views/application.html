@@ -6,7 +6,8 @@
     <div class="ui segment" ng-show="!appStatus">
         <div class="ui large form">
             <form ng-submit="submitApp()">
-                <fieldset ng-disabled="user.status.completedApp">
+                <fieldset ng-disabled="user.status.completedApp || regIsClosed">
+
                     <div class="field" id="input">
                         <label>Full Name</label>
                         <input type = "text" id="full-name" placeholder="Full Name" ng-model="user.info.name" required>

@@ -1,10 +1,12 @@
 angular.module('app')
-    .controller('applicationController', ['$scope', 'currentUser', 'UserService', '$state',
-     function($scope, currentUser, UserService, $state){
+    .controller('applicationController', ['$scope', 'currentUser', 'UserService', '$state', 'settings',
+     function($scope, currentUser, UserService, $state, settings){
 
         var user = currentUser.data;
         $scope.user = user;
-        $scope.appStatus = $scope.user.status.completedApp
+        $scope.appStatus = $scope.user.status.completedApp;
+        $scope.regIsClosed = Date.now() > settings.data.timeClose;
+
 
         // a little hack to sure optional fields will exist if textarea/input not clicked
         function optionalCheck(data) {

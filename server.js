@@ -14,6 +14,9 @@ dynamoose.aws.sdk.config.update({
     "region": process.env.REGION
 });
 
+// init databases
+var init = require('./init');
+
 // setup
 var port = process.env.PORT || 3000;
 

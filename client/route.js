@@ -1,3 +1,6 @@
+var UserService = require('./services/UserService.js')
+var SettingsService = require('./services/SettingsService.js')
+
 var loginCtrl = require('./controllers/loginController');
 var registerCtrl = require('./controllers/registerController');
 var forgotCtrl = require('./controllers/forgotController');
@@ -11,6 +14,7 @@ var adminCtrl = require('./controllers/adminController');
 var adminUsersCtrl = require('./controllers/adminUsersController');
 var adminCheckInCtrl = require('./controllers/adminCheckInController');
 var confirmationCtrl = require('./controllers/confirmationController');
+var settingsCtrl = require('./controllers/adminSettingsController')
 
 angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
  function($stateProvider, $locationProvider, $urlRouterProvider){
@@ -68,6 +72,9 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             currentUser: function(UserService){
                 return UserService.getCurrentUser();
             },
+            settings: function(SettingsService) {
+                return SettingsService.getTime();
+            }
         }
     })
 
@@ -79,6 +86,9 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
             currentUser: function(UserService){
                 return UserService.getCurrentUser();
             },
+            settings: function(SettingsService) {
+                return SettingsService.getTime();
+            }
         },
         data: {
             verified: true
@@ -142,6 +152,12 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
         url: "/admin/checkin",
         templateUrl: "views/checkin.html",
         controller: 'adminCheckInController'
+    })
+
+    .state('app.admin.settings', {
+        url: "/admin/settings",
+        templateUrl: "views/settings.html",
+        controller: 'adminSettingsController'
     })
 
     .state('verify', {

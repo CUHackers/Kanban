@@ -1,4 +1,3 @@
-var moment = require('moment');
 var swal = require('sweetalert');
 
 angular.module('app')
@@ -9,9 +8,10 @@ angular.module('app')
         $scope.selectedUser = {};
 
         $('.ui.dimmer').remove();
-        $scope.selectedUser.sections = generateSections({status: '', confirmation: {
-            address: []
-          }, info: ''});
+        $scope.selectedUser.sections = generateSections({status: '', info: {
+                address: [],
+                recruiter: []
+            }});
 
         function updateTable(data){
             // different filter for accepted/verified users
@@ -180,7 +180,9 @@ angular.module('app')
 
         function formatTime(time){
             if (time) {
-              return moment(time).format('MMMM Do YYYY, h:mm:ss a');
+              return new Date(time).toLocaleString(
+                'en-US'
+              );
             }
         }
 
@@ -250,12 +252,12 @@ angular.module('app')
                             value: user.info.name
                         },
                         {
-                            name: 'CUID',
-                            value: user.info.cuid
+                            name: 'Major',
+                            value: user.info.major
                         },
                         {
-                            name: 'First Semester At Clemson',
-                            value: user.info.first
+                            name: 'Level of Study',
+                            value: user.info.level
                         },
                         {
                             name: 'Gender Pronouns',
@@ -266,10 +268,6 @@ angular.module('app')
                             value: user.info.race
                         },
                         {
-                            name: 'Number of Teammates',
-                            value: user.info.teammates
-                        },
-                        {
                             name: 'Programming Experience',
                             value: user.info.experience
                         },
@@ -278,60 +276,78 @@ angular.module('app')
                             value: user.info.discord
                         },
                         {
-                            name: 'Why do you want to participate?',
+                            name: "Do you have any suggestions for workshops you'd like our sponsor AWS to host",
                             value: user.info.frq1
                         },
                         {
-                            name: 'Do you have any video tutorial suggestions that we can prepare for you?',
+                            name: 'Do you have any activity requests for us during the event (e.g. Among Us, trivia)?',
                             value: user.info.frq2
                         },
                         {
-                            name: 'What kind of project do you have in mind?',
+                            name: 'Is there anything we should know?',
                             value: user.info.frq3
                         },
                         {
                             name: 'What vegetable are you?',
                             value: user.info.frq4
-                        },
-                        {
-                            name: 'Is there anything we should know?',
-                            value: user.info.frq5
-                        },
-                        {
-                            name: 'Where did you hear about HW?',
-                            value: user.info.frq6
                         }
                     ]
                 },
                 {
-                    name: 'Confirmation',
+                    name: 'Personal Info',
                     fields: [
                         {
-                            name: 'Phone Number',
-                            value: user.confirmation.phone
-                        },
-                        {
                             name: 'T-shirt Size',
-                            value: user.confirmation.shirt
+                            value: user.info.shirt
                         },
                         {
                             name: 'Street',
-                            value: user.confirmation.address.street + ' ' + user.confirmation.address.apartNum
+                            value: user.info.address.street + ' ' + user.info.address.apartNum
                         },
                         {
                             name: 'City',
-                            value: user.confirmation.address.city
+                            value: user.info.address.city
                         },
                         {
                             name: 'State',
-                            value: user.confirmation.address.state
+                            value: user.info.address.state
                         },
                         {
                             name: 'Zip Code',
-                            value: user.confirmation.address.zip
+                            value: user.info.address.zip
                         }
                     ]
-                }
+                },
+                {
+                    name: 'Events',
+                    fields: [
+                        {
+                            name: 'AWS Session',
+                            value: user.info.recruiter.aws,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'BlueCross BlueShield Session',
+                            value: user.info.recruiter.bluecross,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'Softdocs Session',
+                            value: user.info.recruiter.softdocs,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'Splunk Session',
+                            value: user.info.recruiter.splunk,
+                            type: 'boolean'
+                        },
+                        {
+                            name: 'CTF Event',
+                            value: user.info.ctf,
+                            type: 'boolean'
+                        }
+                    ]
+                },
             ];
         }
 

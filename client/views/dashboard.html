@@ -25,7 +25,19 @@
                 </div>
             </div>
 
-            <div ng-if="user.status.verified && !user.status.completedApp">
+            <div ng-if="user.status.verified && !user.status.completedApp && regIsClosed">
+                <div class="status-red" id="status">
+                    Registration Closed
+                </div>
+
+                <div class="ui divider"></div>
+
+                <p>Registration for CUhackit 2021 is closed now :(</p>
+                <p>We will be back next year.</p>
+                <br>
+            </div>
+
+            <div ng-if="user.status.verified && !user.status.completedApp && !regIsClosed">
                 <div class="status-green" id="status">
                     Email Verified
                 </div>
