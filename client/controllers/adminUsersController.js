@@ -327,6 +327,11 @@ angular.module('app')
                             type: 'boolean'
                         },
                         {
+                            name: 'Microsoft Session',
+                            value: user.info.recruiter.microsoft,
+                            type: 'boolean'
+                        },
+                        {
                             name: 'BlueCross BlueShield Session',
                             value: user.info.recruiter.bluecross,
                             type: 'boolean'

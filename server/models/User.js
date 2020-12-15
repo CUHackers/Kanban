@@ -137,6 +137,12 @@ var schema = new dynamoose.Schema({
                         default: false
                     },
 
+                    microsoft: {
+                        type: Boolean,
+                        required: true,
+                        default: false
+                    },
+
                     bluecross: {
                         type: Boolean,
                         required: true,
