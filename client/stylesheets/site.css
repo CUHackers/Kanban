@@ -6,6 +6,7 @@
 @import 'workshop.css';
 @import 'base.css';
 @import 'verify.css';
+@import 'stats.css';
 
 .title{
     text-transform: uppercase;

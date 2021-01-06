@@ -348,7 +348,7 @@ angular.module('app')
                         },
                         {
                             name: 'CTF Event',
-                            value: user.info.ctf,
+                            value: user.info.ctf == 'true',
                             type: 'boolean'
                         }
                     ]
