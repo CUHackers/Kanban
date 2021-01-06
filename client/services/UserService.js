@@ -85,7 +85,7 @@ angular.module('app').
 
         userService.exportCSV = function(data) {
             var filename = 'cuhackit_users.csv'
-            var fields = ['info.name', 'email','info.cuid','info.sex','info.race'];
+            var fields = ['info.name', 'email','info.major','info.sex','info.race'];
             var csv;
             try {
                 csv = json2csv(data, {fields});

@@ -7,14 +7,15 @@ var forgotCtrl = require('./controllers/forgotController');
 var sidebarCtrl = require('./controllers/sidebarController');
 var dashboardCtrl = require('./controllers/dashboardController');
 var verifyCtrl = require('./controllers/verifyController');
-var verifyCtrl = require('./controllers/resetController');
+var resetCtrl = require('./controllers/resetController');
 var workshopCtrl = require('./controllers/workshopController');
 var applicationCtrl = require('./controllers/applicationController');
 var adminCtrl = require('./controllers/adminController');
 var adminUsersCtrl = require('./controllers/adminUsersController');
 var adminCheckInCtrl = require('./controllers/adminCheckInController');
 var confirmationCtrl = require('./controllers/confirmationController');
-var settingsCtrl = require('./controllers/adminSettingsController')
+var settingsCtrl = require('./controllers/adminSettingsController');
+var statsCtrl = require('./controllers/adminStatsController');
 
 angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
  function($stateProvider, $locationProvider, $urlRouterProvider){
@@ -139,7 +140,9 @@ angular.module('app').config(['$stateProvider', '$locationProvider', '$urlRouter
     })
 
     .state('app.admin.stats', {
-        url: "/admin"
+        url: "/admin",
+        templateUrl: "views/stats.html",
+        controller: 'adminStatsController'
     })
 
     .state('app.admin.users', {
