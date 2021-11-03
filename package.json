@@ -21,7 +21,7 @@
     "nodemon": "^2.0.6",
     "sweetalert": "^2.1.2",
     "uuid": "^8.2.0",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "angular": "^1.8.0"
